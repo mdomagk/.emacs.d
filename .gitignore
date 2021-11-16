@@ -3,9 +3,10 @@
 
 # But not these files...
 !.gitignore
+!site-lisp/*.el
 !init.el
 !config.org
-!site-lisp/*.el
+!README.md
 
 # ...even if they are in subdirectories
 !*/
