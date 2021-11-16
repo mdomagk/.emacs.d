@@ -1140,10 +1140,11 @@ It's simple. Bury the scratch buffer
        :hook ((prog-mode . hl-todo-mode)
               (yaml-mode . hl-todo-mode))
        :init
-       (setq hl-todo-keyword-faces
-             '(("TODO"   . "#FF0000")
-               ("FIXME"  . "#FF0000")
-               ("DEBUG"  . "#A020F0")))
+       (setq hl-todo-keyword-faces '(
+               ("TODO"   . (:weight bold :foreground "#FF0000"))
+               ("FIXME"  . (:weight bold :foreground "#FF0000"))
+               ("DEBUG"  . (:weight bold :foreground "#A020F0"))
+               ))
        :config
        (define-key hl-todo-mode-map (kbd "C-c p") 'hl-todo-previous)
        (define-key hl-todo-mode-map (kbd "C-c n") 'hl-todo-next)
