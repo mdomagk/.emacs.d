@@ -1,60 +1,26 @@
-﻿#+Title: My Emacs Configuration
-#+Changed: 15.11.2021
-* installation manual                                                   :custom:
-** download and unzip Emacs
-** create file "emacs-folder/site-lisp/site-start.el"
-#+begin_example
-(setenv "HOME" "D:/M-x")
-#+end_example
+﻿#+SEQ_TODO: TODO(t) FIX(f) DISABLED(i)
+#+TAGS: custom(c) usepackage(u) keybind(k) manual(m)
+#+TITLE: config.org
+#+SUBTITLE: literate emacs config
+#+Changed: 16.11.2021
 
-** create file "D:/M-x/.emacs"
-#+begin_example
-;;; .emacs --- Where all the magic begins
-;;
-;; This file loads Org-mode and then loads the rest of
-;; our Emacs initialization from Emacs lisp
-;; embedded in literate Org-mode files.
+* installation                                                          :manual:
+Add ~site-start.el~ in ~c:\Program Files\GNU Emacs\emacs_27.2\share\emacs\27.2\site-lisp\~ and add:
+#+begin_src lisp
+(setenv "HOME" "D:/Privat/Nextcloud")
+#+end_src
+to set path to ~.emacs.d/~ folder.
 
-;; Load up Org Mode and (now included) Org Babel for elisp
-;; embedded in Org Mode files
-(setq dotfiles-dir
-(file-name-directory
-(or (buffer-file-name) load-file-name)))
-
-(let* ((org-dir (expand-file-name
-"lisp" (expand-file-name
-"org" (expand-file-name
-"src" dotfiles-dir))))
-(org-contrib-dir (expand-file-name
-"lisp" (expand-file-name
-"contrib" (expand-file-name
-".." org-dir))))
-(load-path (append (list org-dir org-contrib-dir)
-(or load-path nil))))
-;; load up Org-mode and Org-babel
-(require 'org-install)
-(require 'ob-tangle))
-
-;; load up emacs.org literate org-mode file in this directory
-(mapc #'org-babel-load-file
-(directory-files
-(expand-file-name "~/.emacs.d/org")
-t "^emacs.org$"))
-
-;;; .emacs ends here
-#+end_example
-
-** start runemacs.exe
-
-* Initialize config and packages/
-
+* Initialize                                                            :custom:
+** custom.el
+Set a ~custom-file~ so Emacs leaves my init file alone.
 #+begin_src emacs-lisp
+(setq custom-file (expand-file-name "custom.el"))
+#+end_src
 
-;; set a `custom-file` so Emacs leaves my init file alone
-(setq custom-file (expand-file-name "~/.Dropbox/emacs.d/emacs-common-custom.el"))
-
-;; Set up package and use-package
-
+** use-package
+Set up ~package~ and ~use-package~.
+#+begin_src emacs-lisp
 (require 'package)
 (add-to-list 'package-archives
              '("melpa" . "https://melpa.org/packages/") t)
@@ -70,7 +36,6 @@ t "^emacs.org$"))
   (require 'use-package))
 (require 'bind-key)
 (setq use-package-always-ensure t)
-
 #+end_src
 
 * debugging                                                             :custom:
@@ -137,7 +102,7 @@ M-x getenv <RET> PATH <RET>
 (add-to-list 'default-frame-alist '(width . 84))
 #+end_src
 
-* TODO global settings                                                 :custom:
+* TODO global settings                                                  :custom:
 ** TODO no lockfiles (nextcloud .#* not working)
 - fix .sync-exclude.lst from Nextcloud
 #+begin_src emacs-lisp
@@ -1544,6 +1509,3 @@ It's simple. Bury the scratch buffer
 ;;  (set-face-background 'highlight-indentation-face "#f1f1f1")
 ;;  (set-face-background 'highlight-indentation-current-column-face "#d1d1d1"))
 #+end_src
-
-#+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
-.

@@ -1,9 +1,8 @@
-
-;;; config.org - literate emacs config
+;;; init.el
 
 (org-babel-load-file
  (expand-file-name
   "config.org"
   user-emacs-directory))
 
-;;; config.org ends here
+;;; init.el ends here
