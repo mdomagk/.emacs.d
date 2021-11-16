@@ -94,15 +94,8 @@ M-x getenv <RET> PATH <RET>
 #+begin_src emacs-lisp
 (setq user-full-name "Max Domagk")
 
-;;(set-default-font "Consolas-10") ;; emacs version < 27.1
-(set-frame-font "Consolas-9") ;; emacs version >= 27.1
-
-;; Fonts: Hack, Input, Source Code Pro, Fira Mono, DejaVu Sans Mono
-;; Source Code Pro-10:style=Light
-;; (when (string-equal system-name "EVMI60")
-;;   (set-frame-font "Consolas-10")
-;;   (add-to-list 'default-frame-alist
-;;                '(font . "Consolas-10")))
+;; additionl options KEEP-SIZE and FRAMES
+(set-frame-font "Consolas-9" nil t)
 
 (add-to-list 'default-frame-alist '(width . 84))
 #+end_src
