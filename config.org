@@ -1,21 +1,21 @@
-﻿#+TITLE: config.org
-#+TAGS: custom(c) usepackage(u) keybind(k) manual(m)
+﻿#+TAGS: custom(c) usepackage(u) keybind(k)
 #+SEQ_TODO: TODO(t) FIX(f) DISABLED(i)
+#+TITLE: config.org
 #+Changed: 16.11.2021
 
-* [0/2] TODOs
+* Literate Emacs config
+** [0/4] Tasks
 - [ ] Rerrange structure
 - [ ] Add tags ~keybind~
 - [ ] Clean unused packages
 - [ ] Fix fnmate Bug
 
-* installation                                                          :manual:
+** Installation
 Add ~site-start.el~ in ~c:\Program Files\GNU Emacs\emacs_27.2\share\emacs\27.2\site-lisp\~ and add:
 #+begin_src lisp
 (setenv "HOME" "D:/Privat/Nextcloud")
 #+end_src
 to set path to ~.emacs.d/~ folder.
-
 
 * use-package                                                           :custom:
 Set up ~package~ and ~use-package~.
