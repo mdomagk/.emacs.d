@@ -1,5 +1,5 @@
 ﻿#+TAGS: custom(c) usepackage(u) keybind(k)
-#+SEQ_TODO: TODO(t) FIX(f) DISABLED(i)
+#+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
 #+TITLE: config.org
 #+Changed: 16.11.2021
 
