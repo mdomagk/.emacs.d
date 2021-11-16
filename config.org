@@ -1,8 +1,13 @@
-﻿#+SEQ_TODO: TODO(t) FIX(f) DISABLED(i)
+﻿#+TITLE: config.org
 #+TAGS: custom(c) usepackage(u) keybind(k) manual(m)
-#+TITLE: config.org
-#+SUBTITLE: literate emacs config
+#+SEQ_TODO: TODO(t) FIX(f) DISABLED(i)
 #+Changed: 16.11.2021
+
+* [0/2] TODOs
+- [ ] Rerrange structure
+- [ ] Add tags ~keybind~
+- [ ] Clean unused packages
+- [ ] Fix fnmate Bug
 
 * installation                                                          :manual:
 Add ~site-start.el~ in ~c:\Program Files\GNU Emacs\emacs_27.2\share\emacs\27.2\site-lisp\~ and add:
@@ -11,14 +16,8 @@ Add ~site-start.el~ in ~c:\Program Files\GNU Emacs\emacs_27.2\share\emacs\27.2\s
 #+end_src
 to set path to ~.emacs.d/~ folder.
 
-* Initialize                                                            :custom:
-** custom.el
-Set a ~custom-file~ so Emacs leaves my init file alone.
-#+begin_src emacs-lisp
-(setq custom-file (expand-file-name "custom.el"))
-#+end_src
 
-** use-package
+* use-package                                                           :custom:
 Set up ~package~ and ~use-package~.
 #+begin_src emacs-lisp
 (require 'package)
@@ -36,6 +35,12 @@ Set up ~package~ and ~use-package~.
   (require 'use-package))
 (require 'bind-key)
 (setq use-package-always-ensure t)
+#+end_src
+
+* custom.el                                                             :custom:
+Set a ~custom-file~ so Emacs leaves my init file alone.
+#+begin_src emacs-lisp
+(setq custom-file (expand-file-name "custom.el"))
 #+end_src
 
 * debugging                                                             :custom:
@@ -1033,24 +1038,6 @@ It's simple. Bury the scratch buffer
 #+end_src
 
 
-* use-package                                                       :usepackage:
-#+begin_src emacs-lisp
-(require 'package)
-
-;; https://www.reddit.com/r/emacs/comments/cdei4p/failed_to_download_gnu_archive_bad_request/
-;;(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
-
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-
-(if (not (package-installed-p 'use-package))
-    (progn
-      (package-refresh-contents)
-      (package-install 'use-package)))
-
-(require 'use-package)
-
-#+end_src
-
 * ivy                                                               :usepackage:
 - http://oremacs.com/swiper/#introduction
 - https://sam217pa.github.io/2016/09/13/from-helm-to-ivy/
@@ -1313,7 +1300,7 @@ It's simple. Bury the scratch buffer
 * emacs speaks statistics                                           :usepackage:
 - c:\Program Files\R\R-4.1.0\library\base\R\Rprofile
 - add: .libPaths("D:/Daten/R/Library")
-** custom functions
+** FIX custom functions
 #+begin_src emacs-lisp
 (defun R_insert_pipe_operator ()
   "R - %>% operator or 'then' pipe operator"
