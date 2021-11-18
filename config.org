@@ -1,7 +1,7 @@
 ﻿#+TAGS: custom(c) usepackage(u) keybind(k)
 #+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
 #+TITLE: config.org
-#+Changed: 16.11.2021
+#+Changed: 18.11.2021
 
 * Literate Emacs config
 ** [0/4] Tasks
@@ -21,6 +21,7 @@ to set path to ~.emacs.d/~ folder.
 Set up ~package~ and ~use-package~.
 #+begin_src emacs-lisp
 (require 'package)
+(setq package-check-signature nil)
 (add-to-list 'package-archives
              '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
@@ -40,7 +41,7 @@ Set up ~package~ and ~use-package~.
 * custom.el                                                             :custom:
 Set a ~custom-file~ so Emacs leaves my init file alone.
 #+begin_src emacs-lisp
-(setq custom-file (expand-file-name "custom.el"))
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 #+end_src
 
 * debugging                                                             :custom:
@@ -1239,22 +1240,6 @@ It's simple. Bury the scratch buffer
 ;;(add-hook 'inferior-ess-mode-hook 'rainbow-delimiters-mode))
 #+end_src
 
-* rainbow-mode                                                      :usepackage:
-- https://elpa.gnu.org/packages/rainbow-mode.html
-#+begin_src emacs-lisp
-(use-package rainbow-mode
-  :ensure t
-  :pin gnu
-  :init
-  ;; python
-  (add-hook 'python-mode-hook 'rainbow-mode)
-  ;; emacs speaks statistics R
-  (add-hook 'ess-mode-hook 'rainbow-mode)
-  ;; lisp
-  (add-hook 'emacs-lisp-mode-hook 'rainbow-mode))
-#+end_src
-
-
 * goto-change                                                       :usepackage:
 #+begin_src emacs-lisp
 (use-package goto-chg
@@ -1311,7 +1296,7 @@ It's simple. Bury the scratch buffer
       (call-interactively 'ess-eval-region)
     (call-interactively 'ess-eval-line-and-step)))
 
-(defun tar-load-target-at-point ()
+(defun R_tar_load_target_at_point ()
   "call targets::tar_load on object at point to load it into environment."
   (interactive)
   (let ((target (symbol-at-point)))
@@ -1375,17 +1360,20 @@ It's simple. Bury the scratch buffer
   :commands R
   :init
   (require 'ess-site)
+  ;; Console
   (add-hook 'inferior-ess-mode-hook '(lambda ()
                                        ;;(local-set-key (kbd "C-c TAB") 'ess-complete-object-name)
                                        (local-set-key (kbd ";") 'ess-insert-assign)
                                        (local-set-key (kbd "M--") 'ess-insert-assign)
                                        (local-set-key (kbd "<backtab>") 'R_insert_pipe_operator)))
+  ;; Code
   (add-hook 'ess-mode-hook '(lambda ()
                               ;;(local-set-key (kbd "C-c TAB") 'ess-complete-object-name)
                               (local-set-key (kbd ";") 'ess-insert-assign)
                               (local-set-key (kbd "M--") 'ess-insert-assign)
                               (local-set-key (kbd "<backtab>") 'R_insert_pipe_operator)
                               (local-set-key [(shift return)] 'R_eval_current_line_and_step)
+                              (local-set-key (kbd "C-c C-l") 'R_tar_load_target_at_point)
                               ;;(local-set-key (kbd "") 'fnmate)
                               ;;(local-set-key (kbd "") 'fnmate-below)
                               ))
