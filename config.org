@@ -1031,6 +1031,18 @@ It's simple. Bury the scratch buffer
 (load "~/.emacs.d/site-lisp/xah-find.el")
 #+end_src
 
+* rainbow-mode                                                          :custom:
+minor mode sets background color to strings that match color names, e.g. #0000ff is displayed in white with a blue background
+#+begin_src emacs-lisp
+(load "~/.emacs.d/site-lisp/rainbow-mode.el")
+;; python
+(add-hook 'python-mode-hook 'rainbow-mode)
+;; emacs speaks statistics R
+(add-hook 'ess-mode-hook 'rainbow-mode)
+;; lisp
+(add-hook 'emacs-lisp-mode-hook 'rainbow-mode)
+#+end_src
+
 
 * ivy                                                               :usepackage:
 - http://oremacs.com/swiper/#introduction
@@ -1449,11 +1461,22 @@ It's simple. Bury the scratch buffer
   (forward-line -1))
 #+end_src
 
-* smartscan                                                         :usepackage:
+* symbol-overlay                                                    :usepackage:
 makes M-n and M-p look for the symbol at point
 #+begin_src emacs-lisp
-(use-package smartscan
-  :config (global-smartscan-mode t))
+(use-package symbol-overlay             ; Highlight symbols
+  :ensure t
+  :bind (:map symbol-overlay-mode-map
+              ("M-h" . symbol-overlay-put)
+              ("M-n" . symbol-overlay-jump-next)
+              ("M-p" . symbol-overlay-jump-prev))
+  :hook ((conf-mode . symbol-overlay-mode)
+         (html-mode . symbol-overlay-mode)
+         (prog-mode . symbol-overlay-mode)
+         (yaml-mode . symbol-overlay-mode))
+  :custom-face
+  ;; disable default highlight face "#B6D6FD"
+  (symbol-overlay-default-face '((t (:inherit default)))))
 #+end_src
 
 * DISABLED projectile                                               :usepackage:
