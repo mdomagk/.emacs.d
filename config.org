@@ -1449,6 +1449,13 @@ It's simple. Bury the scratch buffer
   (forward-line -1))
 #+end_src
 
+* smartscan                                                         :usepackage:
+makes M-n and M-p look for the symbol at point
+#+begin_src emacs-lisp
+(use-package smartscan
+  :config (global-smartscan-mode t))
+#+end_src
+
 * DISABLED projectile                                               :usepackage:
 - setting for 'ivy' completion
 - just use project.el (emacs 26.1+)
