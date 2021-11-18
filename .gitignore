@@ -3,8 +3,8 @@
 
 # But not these files...
 !.gitignore
-!site-lisp/xah-find.el
-!site-lisp/rainbow-mode.el
+!site-lisp/
 !init.el
 !config.org
 !README.md
+
