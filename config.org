@@ -1416,7 +1416,14 @@ minor mode sets background color to strings that match color names, e.g. #0000ff
   ;; was already indented, then try to complete the thing at point.
   (setq tab-always-indent 'complete)
   (setq ess-style 'RStudio)
-  (setq ess-indent-with-fancy-comments nil))
+  (setq ess-indent-with-fancy-comments nil)
+  ;; Dedicated windows(frames)
+  ;; https://ess.r-project.org/Manual/ess.html#Controlling-buffer-display
+  (setq display-buffer-alist
+      '(("^\\*R"
+         (display-buffer-reuse-window display-buffer-pop-up-frame)
+         (reusable-frames . 0)
+         (dedicated . nil)))))
 #+end_src
 
 * yaml-mode                                                         :usepackage:
