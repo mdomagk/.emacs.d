@@ -1475,9 +1475,9 @@ minor mode sets background color to strings that match color names, e.g. #0000ff
 #+end_src
 
 * symbol-overlay                                                    :usepackage:
-makes M-n and M-p look for the symbol at point
+makes M-n and M-p look for and M-h highlight the symbol at point
 #+begin_src emacs-lisp
-(use-package symbol-overlay             ; Highlight symbols
+(use-package symbol-overlay
   :ensure t
   :bind (:map symbol-overlay-mode-map
               ("M-h" . symbol-overlay-put)
@@ -1488,7 +1488,7 @@ makes M-n and M-p look for the symbol at point
          (prog-mode . symbol-overlay-mode)
          (yaml-mode . symbol-overlay-mode))
   :custom-face
-  ;; disable default highlight face "#B6D6FD"
+  ;; no highlighting
   (symbol-overlay-default-face '((t (:inherit default)))))
 #+end_src
 
