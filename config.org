@@ -4,7 +4,20 @@
 #+Changed: 19.11.2021
 
 * Literate Emacs config
-** [0/4] Tasks
+** [0/5] Tasks
+- [ ] Add transient for targets
+  - see: https://www.reddit.com/r/emacs/comments/f3o0v8/anyone_have_good_examples_for_transient/fhkcprc/
+
+  - similar to magit options after C-x g
+  - tar commands
+    - make (full, summary)
+    - visnetwork (all, targets only)
+    - prune
+    - read
+    - load
+  - fnmate
+  - start new R process
+
 - [ ] Rerrange structure
 - [ ] Add tags ~keybind~
 - [ ] Clean unused packages
