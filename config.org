@@ -1,7 +1,7 @@
 ﻿#+TAGS: custom(c) usepackage(u) keybind(k)
 #+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
 #+TITLE: config.org
-#+Changed: 18.11.2021
+#+Changed: 19.11.2021
 
 * Literate Emacs config
 ** [0/4] Tasks
@@ -363,9 +363,15 @@ https://emacs.stackexchange.com/questions/28736/emacs-pointcursor-movement-lag/2
 
 * keybindings                                                           :custom:
 How to Define [[http://xahlee.org/emacs/keyboard_shortcuts.html][Keyboard Shortcuts]] in Emacs
-** Project
+** Copy word/symbol at point
 #+begin_src emacs-lisp
-(global-set-key (kbd "C-x C-b")  'project-find-file)
+(defun my-save-symbol-at-point ()
+  "Make symbol at point the latest kill in the kill ring."
+  (interactive)
+  (let ((symbol (thing-at-point 'symbol)))
+    (when symbol (kill-new symbol))))
+
+(global-set-key (kbd "M-w")  'my-save-symbol-at-point)
 #+end_src
 
 ** ESC cancels all
