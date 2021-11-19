@@ -3,7 +3,8 @@
 
 # But not these files...
 !.gitignore
-!site-lisp/*.el
+!site-lisp/
 !init.el
 !config.org
 !README.md
+
