@@ -374,6 +374,11 @@ How to Define [[http://xahlee.org/emacs/keyboard_shortcuts.html][Keyboard Shortc
 (global-set-key (kbd "M-w")  'my-save-symbol-at-point)
 #+end_src
 
+** Project-find-file
+#+begin_src emacs-lisp
+(global-set-key (kbd "C-x C-b")  'project-find-file)
+#+end_src
+
 ** ESC cancels all
 #+begin_src emacs-lisp
 (setq auto-window-vscroll nil)
