@@ -1,10 +1,23 @@
 ﻿#+TAGS: custom(c) usepackage(u) keybind(k)
 #+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
 #+TITLE: config.org
-#+Changed: 16.11.2021
+#+Changed: 19.11.2021
 
 * Literate Emacs config
-** [0/4] Tasks
+** [0/5] Tasks
+- [ ] Add transient for targets
+  - see: https://www.reddit.com/r/emacs/comments/f3o0v8/anyone_have_good_examples_for_transient/fhkcprc/
+
+  - similar to magit options after C-x g
+  - tar commands
+    - make (full, summary)
+    - visnetwork (all, targets only)
+    - prune
+    - read
+    - load
+  - fnmate
+  - start new R process
+
 - [ ] Rerrange structure
 - [ ] Add tags ~keybind~
 - [ ] Clean unused packages
@@ -363,7 +376,18 @@ https://emacs.stackexchange.com/questions/28736/emacs-pointcursor-movement-lag/2
 
 * keybindings                                                           :custom:
 How to Define [[http://xahlee.org/emacs/keyboard_shortcuts.html][Keyboard Shortcuts]] in Emacs
-** Project
+** Copy word/symbol at point
+#+begin_src emacs-lisp
+(defun my-save-symbol-at-point ()
+  "Make symbol at point the latest kill in the kill ring."
+  (interactive)
+  (let ((symbol (thing-at-point 'symbol)))
+    (when symbol (kill-new symbol))))
+
+(global-set-key (kbd "M-w")  'my-save-symbol-at-point)
+#+end_src
+
+** Project-find-file
 #+begin_src emacs-lisp
 (global-set-key (kbd "C-x C-b")  'project-find-file)
 #+end_src
@@ -1031,6 +1055,18 @@ It's simple. Bury the scratch buffer
 (load "~/.emacs.d/site-lisp/xah-find.el")
 #+end_src
 
+* rainbow-mode                                                          :custom:
+minor mode sets background color to strings that match color names, e.g. #0000ff is displayed in white with a blue background
+#+begin_src emacs-lisp
+(load "~/.emacs.d/site-lisp/rainbow-mode.el")
+;; python
+(add-hook 'python-mode-hook 'rainbow-mode)
+;; emacs speaks statistics R
+(add-hook 'ess-mode-hook 'rainbow-mode)
+;; lisp
+(add-hook 'emacs-lisp-mode-hook 'rainbow-mode)
+#+end_src
+
 
 * ivy                                                               :usepackage:
 - http://oremacs.com/swiper/#introduction
@@ -1296,7 +1332,7 @@ It's simple. Bury the scratch buffer
       (call-interactively 'ess-eval-region)
     (call-interactively 'ess-eval-line-and-step)))
 
-(defun tar-load-target-at-point ()
+(defun R_tar_load_target_at_point ()
   "call targets::tar_load on object at point to load it into environment."
   (interactive)
   (let ((target (symbol-at-point)))
@@ -1360,17 +1396,20 @@ It's simple. Bury the scratch buffer
   :commands R
   :init
   (require 'ess-site)
+  ;; Console
   (add-hook 'inferior-ess-mode-hook '(lambda ()
                                        ;;(local-set-key (kbd "C-c TAB") 'ess-complete-object-name)
                                        (local-set-key (kbd ";") 'ess-insert-assign)
                                        (local-set-key (kbd "M--") 'ess-insert-assign)
                                        (local-set-key (kbd "<backtab>") 'R_insert_pipe_operator)))
+  ;; Code
   (add-hook 'ess-mode-hook '(lambda ()
                               ;;(local-set-key (kbd "C-c TAB") 'ess-complete-object-name)
                               (local-set-key (kbd ";") 'ess-insert-assign)
                               (local-set-key (kbd "M--") 'ess-insert-assign)
                               (local-set-key (kbd "<backtab>") 'R_insert_pipe_operator)
                               (local-set-key [(shift return)] 'R_eval_current_line_and_step)
+                              (local-set-key (kbd "C-c C-l") 'R_tar_load_target_at_point)
                               ;;(local-set-key (kbd "") 'fnmate)
                               ;;(local-set-key (kbd "") 'fnmate-below)
                               ))
@@ -1395,7 +1434,14 @@ It's simple. Bury the scratch buffer
   ;; was already indented, then try to complete the thing at point.
   (setq tab-always-indent 'complete)
   (setq ess-style 'RStudio)
-  (setq ess-indent-with-fancy-comments nil))
+  (setq ess-indent-with-fancy-comments nil)
+  ;; Dedicated windows(frames)
+  ;; https://ess.r-project.org/Manual/ess.html#Controlling-buffer-display
+  (setq display-buffer-alist
+      '(("^\\*R"
+         (display-buffer-reuse-window display-buffer-pop-up-frame)
+         (reusable-frames . 0)
+         (dedicated . nil)))))
 #+end_src
 
 * yaml-mode                                                         :usepackage:
@@ -1444,6 +1490,24 @@ It's simple. Bury the scratch buffer
   (interactive "sHeader: ")
   (insert (concat "```{r " header "}\n\n```"))
   (forward-line -1))
+#+end_src
+
+* symbol-overlay                                                    :usepackage:
+makes M-n and M-p look for and M-h highlight the symbol at point
+#+begin_src emacs-lisp
+(use-package symbol-overlay
+  :ensure t
+  :bind (:map symbol-overlay-mode-map
+              ("M-h" . symbol-overlay-put)
+              ("M-n" . symbol-overlay-jump-next)
+              ("M-p" . symbol-overlay-jump-prev))
+  :hook ((conf-mode . symbol-overlay-mode)
+         (html-mode . symbol-overlay-mode)
+         (prog-mode . symbol-overlay-mode)
+         (yaml-mode . symbol-overlay-mode))
+  :custom-face
+  ;; no highlighting
+  (symbol-overlay-default-face '((t (:inherit default)))))
 #+end_src
 
 * DISABLED projectile                                               :usepackage:
