@@ -448,6 +448,8 @@ move cursor to brackets
 (global-set-key (kbd "C-t") 'uncomment-region)
 (global-set-key (kbd "C-r") 'comment-region)
 
+(global-set-key (kbd "M-ö") 'comment-or-uncomment-region)
+
 ;; join following lines into 1 line (M-j)
 (global-set-key (kbd "M-j")
                 (lambda ()
