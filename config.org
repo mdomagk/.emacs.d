@@ -67,38 +67,37 @@ M-x getenv <RET> PATH <RET>
     (setq exec-path (append mypaths (list "." exec-directory)))))
 #+end_src
 
-* custom settings                                                       :custom:
-** general                                                              :custom:
-*** default font
+* general settings                                                      :custom:
+** default font
 additional options KEEP-SIZE and FRAMES
 #+begin_src emacs-lisp
 (set-frame-font "Consolas-9" nil t)
 #+end_src
 
-*** user name and e-mail
+** user name and e-mail
 #+begin_src emacs-lisp
 (setq user-full-name "Max Domagk")
 (setq user-mail-adress "mdomagk@posteo.de")
 #+end_src
 
 
-*** TODO disable lockfiles for now
+** TODO disable lockfiles for now
 nextcloud syncs .#* files and needs a fix for .sync-exclude.lst
 #+begin_src emacs-lisp
 (setq create-lockfiles nil)
 #+end_src
 
-*** set custom.el so emacs leaves my init file alone
+** set custom.el so emacs leaves my init file alone
 #+begin_src emacs-lisp
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 #+end_src
 
-*** debugging disabled
+** debugging disabled
 #+begin_src emacs-lisp
 (setq debug-on-error nil) ;; t nil
 #+end_src
 
-*** indendation with space
+** indendation with space
 #+begin_src emacs-lisp
 ;; use whitespaces instead of TAB
 (setq-default indent-tabs-mode nil)
@@ -111,7 +110,7 @@ nextcloud syncs .#* files and needs a fix for .sync-exclude.lst
 #+end_src
 
 
-*** encoding
+** encoding
 http://www.masteringemacs.org/articles/2012/08/09/working-coding-systems-unicode-emacs/
 #+begin_src emacs-lisp
 (prefer-coding-system 'utf-8)
@@ -130,7 +129,7 @@ http://www.masteringemacs.org/articles/2012/08/09/working-coding-systems-unicode
 (set-selection-coding-system 'utf-16-le)
 #+end_src
 
-*** define aliases for faster M-x
+** define aliases for faster M-x
 #+begin_src emacs-lisp
 (defalias 'qrr 'query-replace-regexp)
 (defalias 'lml 'list-matching-lines)
@@ -139,7 +138,7 @@ http://www.masteringemacs.org/articles/2012/08/09/working-coding-systems-unicode
 (defalias 'sl 'sort-lines)
 #+end_src
 
-*** window title
+** window title
 adjust window title to "emacs: path/actual-buffer"
 #+begin_src emacs-lisp
 (setq frame-title-format
@@ -150,12 +149,12 @@ adjust window title to "emacs: path/actual-buffer"
 #+end_src
 
 
-*** delete trailing whitespace
+** delete trailing whitespace
 #+begin_src emacs-lisp
 (add-hook 'before-save-hook (lambda () (delete-trailing-whitespace)))
 #+end_src
 
-*** update date on save
+** update date on save
 update date in header on save
 #+begin_src emacs-lisp
 (setq
@@ -171,69 +170,69 @@ update date in header on save
 (add-hook 'write-file-hooks 'time-stamp)
 #+end_src
 
-*** set default frame width
+** set default frame width
 #+begin_src emacs-lisp
 (add-to-list 'default-frame-alist '(width . 84))
 #+end_src
 
-*** disable startup message in scratch buffer
+** disable startup message in scratch buffer
 #+begin_src emacs-lisp
 (setq-default initial-scratch-message nil)
 #+end_src
 
-*** disable default splash screen
+** disable default splash screen
 #+begin_src emacs-lisp
 (setq inhibit-startup-message t)
 #+end_src
 
-*** remove auto-window-scroll (high CPU usage)
+** remove auto-window-scroll (high CPU usage)
 https://emacs.stackexchange.com/questions/28736/emacs-pointcursor-movement-lag/28746
 #+begin_src emacs-lisp
 (setq auto-window-vscroll nil)
 #+end_src
 
-*** turn off mouse interface
+** turn off mouse interface
 #+begin_src emacs-lisp
 (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 #+end_src
 
-*** set major-mode to text
+** set major-mode to text
 #+begin_src emacs-lisp
 (setq-default major-mode 'text-mode)
 #+end_src
 
-*** make alarm sound only
+** make alarm sound only
 visible (t), not visible (nil)
 #+begin_src emacs-lisp
 (setq visible-bell t)
 #+end_src
 
-*** enable winner mode
+** enable winner mode
 C-c <left> to get to the previous window configuration
 #+begin_src emacs-lisp
 (winner-mode 1)
 #+end_src
 
-*** show unfinished keystrokes early
+** show unfinished keystrokes early
 #+begin_src emacs-lisp
 (setq echo-keystrokes 0.1)
 #+end_src
 
-*** blinking cursor on
+** blinking cursor on
 1 (on) / 0 (off)
 #+begin_src emacs-lisp
 (blink-cursor-mode 1)
 #+end_src
 
-*** highligh current line off
+** highligh current line off
 1 (on) / 0 (off)
 #+begin_src emacs-lisp
 (global-hl-line-mode 0)
 #+end_src
 
-*** enable CUA mode
+** enable CUA mode
 Common User Access
 #+begin_src emacs-lisp
 ;; windows-like behaviour to cut, copy & paste with ctrl + x, c & v
@@ -242,22 +241,22 @@ Common User Access
 (cua-mode)
 #+end_src
 
-*** syntax highlighting everywhere
+** syntax highlighting everywhere
 #+begin_src emacs-lisp
 (global-font-lock-mode t)
 #+end_src
 
-*** sane select (mark) mode
+** sane select (mark) mode
 #+begin_src emacs-lisp
 (transient-mark-mode 1)
 #+end_src
 
-*** entry deletes marked text
+** entry deletes marked text
 #+begin_src emacs-lisp
 (delete-selection-mode t)
 #+end_src
 
-*** match parentheses
+** match parentheses
 #+begin_src emacs-lisp
 (show-paren-mode t)
 ;;(setq show-paren-style 'expression)
@@ -265,13 +264,18 @@ Common User Access
 ;;(setq show-paren-when-point-inside-paren nil)
 #+end_src
 
-*** quit emacs with y or n
+** font highlighting matlab .m files
+#+begin_src emacs-lisp
+(add-to-list 'auto-mode-alist '("\\.m\\'" . octave-mode))
+#+end_src
+
+** quit emacs with y or n
 instead of yes or no accept y or n
 #+begin_src emacs-lisp
 (fset 'yes-or-no-p 'y-or-n-p)
 #+end_src
 
-*** make sure all backup files only live in one place
+** make sure all backup files only live in one place
 #+begin_src emacs-lisp
 (defvar my-backup-folder (concat "~/.emacs.d/backups" "/"))
 
@@ -284,7 +288,7 @@ instead of yes or no accept y or n
       )
 #+end_src
 
-*** set auto-save directory
+** set auto-save directory
 #+begin_src emacs-lisp
 ;;(setq auto-save-default nil) ; just turn off
 
@@ -292,7 +296,7 @@ instead of yes or no accept y or n
 (setq auto-save-file-name-transforms `((".*" "~/.emacs.d/auto-save/" t)))
 #+end_src
 
-*** visual line mode and toggle to truncate my lines
+** visual line mode and toggle to truncate my lines
 #+begin_src emacs-lisp
 (global-visual-line-mode 1)
 ;; enable line wrap
@@ -305,190 +309,14 @@ instead of yes or no accept y or n
 ;;(setq-default truncate-lines nil)
 #+end_src
 
-*** explicitly show the end of a buffer
+** explicitly show the end of a buffer
 #+begin_src emacs-lisp
 (set-default 'indicate-empty-lines t)
 #+end_src
 
-*** trash can support
+** trash can support
 #+begin_src emacs-lisp
 (setq delete-by-moving-to-trash t)
-#+end_src
-
-** recentf                                                              :custom:
-a timer setting for recentf-mode without notifications to echo-area
-https://gist.github.com/masutaka/1325654 (idle timer)
-https://lists.gnu.org/archive/html/help-gnu-emacs/2010-12/msg02019.html
-#+begin_src emacs-lisp
-
-(recentf-mode 1)
-(setq recentf-max-saved-items 2000)
-(setq recentf-exclude '(".recentf"))
-
-(defvar mx-recentf-list-prev nil)
-
-(defun mx-recentf-save-list ()
-  (interactive)
-  "If recentf-list and previous recentf-list is equal,
-     do nothing. Else recent-save-list and try to hide 'Wrote' message"
-  (unless (equal recentf-list mx-recentf-list-prev)
-    (setq old-message (current-message))
-    (recentf-save-list)
-    (message old-message)
-    (setq mx-recentf-list-prev recentf-list)))
-
-(run-with-idle-timer 60 t 'mx-recentf-save-list)
-
-#+end_src
-
-
-** dired                                                                :custom:
-#+begin_src emacs-lisp
-;; windows style
-(setq ls-lisp-verbosity nil)
-
-;; order directories first
-(setq ls-lisp-dirs-first t)
-
-;; windows behaviour (error message in emacs-25.1)
-;;(setq ls-lisp-emulation 'MS Windows)
-
-;; no domain with login name
-(setq ls-lisp-ignore-case t)
-
-;; sort by extension
-(setq dired-listing-switches "-alX")
-
-;; backspace behaves like in Total Comander
-(add-hook 'dired-mode-hook
-          (lambda ()
-            (local-set-key [backspace] 'dired-up-directory)))
-#+end_src
-
-
-** mode-line                                                            :custom:
-#+begin_src emacs-lisp
-;; ;; show line-number in the mode line
-;; (line-number-mode 1)
-;;
-;; ;; show column-number in the mode line
-;; (column-number-mode 1)
-;;
-;; ;; show time (and date) in the mode line
-;; ;; (setq display-time-day-and-date t)
-;; (setq display-time-24hr-format t)
-;; (display-time)
-
-;; http://emacs-fu.blogspot.de/2011/08/customizing-mode-line.html
-;; use setq-default to set it for /all/ modes
-(setq-default mode-line-format
-              (list
-               ;; the buffer name; the file name as a tool tip
-               '(:eval (propertize "%b "
-                                   'help-echo (buffer-file-name)))
-
-               ;; line and column
-               "(%02l,%02c) "
-
-               ;; ;; relative position, size of file
-               "[%p/%I] "
-
-               ;; the current major mode for the buffer.
-               "["
-               '(:eval (propertize "%m" 'help-echo buffer-file-coding-system))
-               "] "
-
-               "[" ;; insert vs overwrite mode, input-method in a tooltip
-               '(:eval (propertize (if overwrite-mode "Ovr" "Ins")
-                                   'help-echo (concat "Buffer is in "
-                                                      (if overwrite-mode "overwrite" "insert") " mode")))
-
-               ;; was this buffer modified since the last save?
-               '(:eval (when (buffer-modified-p)
-                         (concat ","  (propertize "Mod"
-                                                  'help-echo "Buffer has been modified"))))
-
-               ;; is this buffer read-only?
-               '(:eval (when buffer-read-only
-                         (concat ","  (propertize "RO"
-                                                  'help-echo "Buffer is read-only"))))
-               ;; "] "
-               "]"
-               ;; ;; add the time, with the date and the emacs uptime in the tooltip
-               ;; '(:eval (propertize (format-time-string "%H:%M")
-               ;;           'help-echo
-               ;;           (concat (format-time-string "%c; ")
-               ;;                   (emacs-uptime "Uptime:%hh%mm"))))
-               " "
-               ;; i don't want to see minor-modes; but if you want, uncomment this:
-               ;; minor-mode-alist  ;; list of minor modes
-
-               ;; i want to see the 'pomodoro' status using (%M = global-mode-string)
-               "%M"
-               "%-" ;; fill with '-'
-               ))
-#+end_src
-
-** electric-pair                                                        :custom:
-close automatically brackets
-http://prodissues.com/2016/10/electric-pair-mode-in-emacs.html
-https://www.emacswiki.org/emacs/ElectricPair (for specific modes only)
-#+begin_src emacs-lisp
-(electric-pair-mode 1)
-(setq electric-pair-pairs '(
-                            (?\" . ?\")
-                            (?\` . ?\`)
-                            (?\( . ?\))
-                            (?\{ . ?\})
-                            (?\[ . ?\])
-                            ))
-#+end_src
-
-** matlab (octave-mode)                                                 :custom:
-highlighting matlab .m using build-in octave-mode
-#+begin_src emacs-lisp
-(add-to-list 'auto-mode-alist '("\\.m\\'" . octave-mode))
-#+end_src
-
-** python                                                               :custom:
-#+begin_src emacs-lisp
-(defun mx-python-start ()
-  (interactive)
-  (if (not (member "*Python*" (mapcar (function buffer-name) (buffer-list))))
-      (progn (call-interactively 'run-python))))
-;; Start python if not started. Send region if selected, line if not selected (whole def if it is def)
-;; http://www.reddit.com/r/emacs/comments/1h4hyw/selecting_regions_pythonel/
-(defun mx-python-eval ()
-  (interactive)
-  (mx-python-start)
-  (if (and transient-mark-mode mark-active)     ; Check if selection is present
-      (python-shell-send-region (point) (mark)) ; If selected, send region
-    ;; If not selected, do all the following
-    (beginning-of-line)                         ; Move to the beginning of line
-    (if (looking-at "def")                      ; Check if the first word is def (function def)
-        (progn                                  ; If it is def
-          (python-shell-send-defun ())          ; Send whole def
-          (python-nav-end-of-defun)             ; Move to the end of def
-          (python-nav-forward-statement)        ; Move to the next statement
-          )
-      ;; If it is not def, do all the following
-      (python-shell-send-region (point-at-bol) (point-at-eol))  ; Send the current line
-      (python-nav-forward-statement)                            ; Move to the next statement
-      )
-    ;; Activate shell window, and switch back
-    (progn
-      (setq w-script (selected-window))         ; Remeber the script window
-      (python-shell-switch-to-shell)            ; Switch to the shell
-      (select-window w-script)                  ; Switch back to the script window
-      )
-    ))
-;; Define hooks
-(add-hook 'python-mode-hook             ; For Python script
-          '(lambda()
-             (local-set-key (kbd "<S-return>") 'mx-python-eval)
-             (local-set-key (kbd "<C-return>") 'mx-python-eval)))
-
-(setq python-shell-completion-native-enable nil)
 #+end_src
 
 * functions                                                             :custom:
@@ -612,6 +440,21 @@ move cursor to brackets
 (global-set-key [f12] 'menu-bar-mode)
 #+end_src
 
+** editing
+#+begin_src emacs-lisp
+(global-set-key (kbd "M-w")  'mx-save-symbol-at-point)
+
+;; comment marked lines (matlab-like)
+(global-set-key (kbd "C-t") 'uncomment-region)
+(global-set-key (kbd "C-r") 'comment-region)
+
+;; join following lines into 1 line (M-j)
+(global-set-key (kbd "M-j")
+                (lambda ()
+                  (interactive)
+                  (join-line -1)))
+#+end_src
+
 ** movement
 #+begin_src emacs-lisp
 (global-set-key (kbd "C-<next>")
@@ -662,73 +505,6 @@ move cursor to brackets
 (global-unset-key (kbd "C-x o")) ; was other-window
 #+end_src
 
-
-** editing
-#+begin_src emacs-lisp
-(global-set-key (kbd "M-w")  'mx-save-symbol-at-point)
-
-;; comment marked lines (matlab-like)
-(global-set-key (kbd "C-t") 'uncomment-region)
-(global-set-key (kbd "C-r") 'comment-region)
-
-;; join following lines into 1 line (M-j)
-(global-set-key (kbd "M-j")
-                (lambda ()
-                  (interactive)
-                  (join-line -1)))
-#+end_src
-
-* abbreviations                                                         :custom:
-#+begin_src emacs-lisp
-(define-abbrev-table 'global-abbrev-table '(
-
- ("9t" "tar_target(@@),")
- ("9tt" "tar_target(@@, format = \"fst_tbl\"),")
-
- ("9m" "targets::tar_make()")
- ("9mm" "targets::tar_make(reporter = \"summary\")")
-
- ("9v" "targets::tar_visnetwork()")
- ("9vv" "targets::tar_visnetwork(targets_only = TRUE)")
-
- ("9l" "targets::tar_load(@@)")
- ("9r" "targets::tar_read(@@)")
-
- ("9p" "paint::paint(@@)")
-
- ("8png" "png(filename = \"@@.png\", units = \"cm\", res = 300, width = 16, height = 10)\n\ndev.off()")
-
- ("8r" "`r @@`")
- ("8rr" "```{r}\n@@\n```")
- ("8ra" "&rarr;")
-
- ("8R" "#+begin_src R\n@@\n#+end_src")
- ))
-
-;; stop asking whether to save newly added abbrev when quitting emacs
-(setq save-abbrevs nil)
-
-;; turn on abbrev mode globally
-(setq-default abbrev-mode t)
-
-;; https://stackoverflow.com/questions/15375759/how-to-control-cursor-placement-in-emacs-abbrev-expansion
-(defadvice expand-abbrev (after my-expand-abbrev activate)
-   ;; if there was an expansion
-   (if ad-return-value
-       ;; start idle timer to ensure insertion of abbrev activator
-       ;; character (e.g. space) is finished
-       (run-with-idle-timer 0 nil
-                            (lambda ()
-                              ;; if there is the string "@@" in the
-                              ;; expansion then move cursor there and
-                              ;; delete the string
-                              (let ((cursor "@@"))
-                                (if (search-backward cursor last-abbrev-location t)
-                                    (delete-char (length cursor))))))))
- #+end_src
-
- #+RESULTS:
- : expand-abbrev
 
 * org-mode                                                              :custom:
 ** general settings
@@ -857,11 +633,11 @@ move cursor to brackets
 
 ** keybindings
 #+begin_src emacs-lisp
-(defun home ()
+(defun mx-org-file-home ()
   (interactive)
   (find-file "~/.emacs.d/org/home.org"))
 
-(defun ieeh ()
+(defun mx-org-file-ieeh ()
   (interactive)
   (find-file "~/.emacs.d/org/ieeh.org"))
 
@@ -872,12 +648,12 @@ move cursor to brackets
              (local-set-key (kbd "S-C-<left>")  'shrink-window-horizontally)
              (local-set-key (kbd "S-C-<right>") 'enlarge-window-horizontally)))
 
-(global-set-key [f9] 'home)
-(global-set-key [f10] 'ieeh)
+(global-set-key [f9] 'mx-org-file-home)
+(global-set-key [f10] 'mx-org-file-ieeh)
 
 (global-set-key (kbd "C-c a") 'org-agenda)
 (global-set-key (kbd "C-c c") 'org-capture)
-(global-set-key (kbd "C-c l") 'org-store-link)
+;;(global-set-key (kbd "C-c l") 'org-store-link)
 #+end_src
 
 ** custom agenda views
@@ -937,10 +713,10 @@ move cursor to brackets
    (latex . t)
    (dot . t)))
 
-(defun my-org-edit-src-save-key ()
+(defun mx-org-edit-src-save-key ()
   (local-set-key (kbd "C-s") 'org-edit-src-save))
 
-(add-hook 'org-src-mode-hook 'my-org-edit-src-save-key)
+(add-hook 'org-src-mode-hook 'mx-org-edit-src-save-key)
 
 ;; display the source code edit buffer in the current window, keeping
 ;; all other windows
@@ -980,6 +756,229 @@ move cursor to brackets
 (defadvice kill-whole-line (after fix-cookies activate)
   (myorg-update-parent-cookie))
 #+end_src
+* abbreviations                                                         :custom:
+#+begin_src emacs-lisp
+(define-abbrev-table 'global-abbrev-table '(
+
+ ("9t" "tar_target(@@),")
+ ("9tt" "tar_target(@@, format = \"fst_tbl\"),")
+
+ ("9m" "targets::tar_make()")
+ ("9mm" "targets::tar_make(reporter = \"summary\")")
+
+ ("9v" "targets::tar_visnetwork()")
+ ("9vv" "targets::tar_visnetwork(targets_only = TRUE)")
+
+ ("9l" "targets::tar_load(@@)")
+ ("9r" "targets::tar_read(@@)")
+
+ ("9p" "paint::paint(@@)")
+
+ ("8png" "png(filename = \"@@.png\", units = \"cm\", res = 300, width = 16, height = 10)\n\ndev.off()")
+
+ ("8r" "`r @@`")
+ ("8rr" "```{r}\n@@\n```")
+ ("8ra" "&rarr;")
+
+ ("8R" "#+begin_src R\n@@\n#+end_src")
+ ))
+
+;; stop asking whether to save newly added abbrev when quitting emacs
+(setq save-abbrevs nil)
+
+;; turn on abbrev mode globally
+(setq-default abbrev-mode t)
+
+;; https://stackoverflow.com/questions/15375759/how-to-control-cursor-placement-in-emacs-abbrev-expansion
+(defadvice expand-abbrev (after my-expand-abbrev activate)
+   ;; if there was an expansion
+   (if ad-return-value
+       ;; start idle timer to ensure insertion of abbrev activator
+       ;; character (e.g. space) is finished
+       (run-with-idle-timer 0 nil
+                            (lambda ()
+                              ;; if there is the string "@@" in the
+                              ;; expansion then move cursor there and
+                              ;; delete the string
+                              (let ((cursor "@@"))
+                                (if (search-backward cursor last-abbrev-location t)
+                                    (delete-char (length cursor))))))))
+ #+end_src
+
+ #+RESULTS:
+ : expand-abbrev
+
+* mode-line                                                             :custom:
+#+begin_src emacs-lisp
+;; ;; show line-number in the mode line
+;; (line-number-mode 1)
+;;
+;; ;; show column-number in the mode line
+;; (column-number-mode 1)
+;;
+;; ;; show time (and date) in the mode line
+;; ;; (setq display-time-day-and-date t)
+;; (setq display-time-24hr-format t)
+;; (display-time)
+
+;; http://emacs-fu.blogspot.de/2011/08/customizing-mode-line.html
+;; use setq-default to set it for /all/ modes
+(setq-default mode-line-format
+              (list
+               ;; the buffer name; the file name as a tool tip
+               '(:eval (propertize "%b "
+                                   'help-echo (buffer-file-name)))
+
+               ;; line and column
+               "(%02l,%02c) "
+
+               ;; ;; relative position, size of file
+               "[%p/%I] "
+
+               ;; the current major mode for the buffer.
+               "["
+               '(:eval (propertize "%m" 'help-echo buffer-file-coding-system))
+               "] "
+
+               "[" ;; insert vs overwrite mode, input-method in a tooltip
+               '(:eval (propertize (if overwrite-mode "Ovr" "Ins")
+                                   'help-echo (concat "Buffer is in "
+                                                      (if overwrite-mode "overwrite" "insert") " mode")))
+
+               ;; was this buffer modified since the last save?
+               '(:eval (when (buffer-modified-p)
+                         (concat ","  (propertize "Mod"
+                                                  'help-echo "Buffer has been modified"))))
+
+               ;; is this buffer read-only?
+               '(:eval (when buffer-read-only
+                         (concat ","  (propertize "RO"
+                                                  'help-echo "Buffer is read-only"))))
+               ;; "] "
+               "]"
+               ;; ;; add the time, with the date and the emacs uptime in the tooltip
+               ;; '(:eval (propertize (format-time-string "%H:%M")
+               ;;           'help-echo
+               ;;           (concat (format-time-string "%c; ")
+               ;;                   (emacs-uptime "Uptime:%hh%mm"))))
+               " "
+               ;; i don't want to see minor-modes; but if you want, uncomment this:
+               ;; minor-mode-alist  ;; list of minor modes
+
+               ;; i want to see the 'pomodoro' status using (%M = global-mode-string)
+               "%M"
+               "%-" ;; fill with '-'
+               ))
+#+end_src
+
+* recentf                                                               :custom:
+a timer setting for recentf-mode without notifications to echo-area
+https://gist.github.com/masutaka/1325654 (idle timer)
+https://lists.gnu.org/archive/html/help-gnu-emacs/2010-12/msg02019.html
+#+begin_src emacs-lisp
+
+(recentf-mode 1)
+(setq recentf-max-saved-items 2000)
+(setq recentf-exclude '(".recentf"))
+
+(defvar mx-recentf-list-prev nil)
+
+(defun mx-recentf-save-list ()
+  (interactive)
+  "If recentf-list and previous recentf-list is equal,
+     do nothing. Else recent-save-list and try to hide 'Wrote' message"
+  (unless (equal recentf-list mx-recentf-list-prev)
+    (setq old-message (current-message))
+    (recentf-save-list)
+    (message old-message)
+    (setq mx-recentf-list-prev recentf-list)))
+
+(run-with-idle-timer 60 t 'mx-recentf-save-list)
+
+#+end_src
+
+
+* dired                                                                 :custom:
+#+begin_src emacs-lisp
+;; windows style
+(setq ls-lisp-verbosity nil)
+
+;; order directories first
+(setq ls-lisp-dirs-first t)
+
+;; windows behaviour (error message in emacs-25.1)
+;;(setq ls-lisp-emulation 'MS Windows)
+
+;; no domain with login name
+(setq ls-lisp-ignore-case t)
+
+;; sort by extension
+(setq dired-listing-switches "-alX")
+
+;; backspace behaves like in Total Comander
+(add-hook 'dired-mode-hook
+          (lambda ()
+            (local-set-key [backspace] 'dired-up-directory)))
+#+end_src
+
+
+* python                                                                :custom:
+#+begin_src emacs-lisp
+(defun mx-python-start ()
+  (interactive)
+  (if (not (member "*Python*" (mapcar (function buffer-name) (buffer-list))))
+      (progn (call-interactively 'run-python))))
+;; Start python if not started. Send region if selected, line if not selected (whole def if it is def)
+;; http://www.reddit.com/r/emacs/comments/1h4hyw/selecting_regions_pythonel/
+(defun mx-python-eval ()
+  (interactive)
+  (mx-python-start)
+  (if (and transient-mark-mode mark-active)     ; Check if selection is present
+      (python-shell-send-region (point) (mark)) ; If selected, send region
+    ;; If not selected, do all the following
+    (beginning-of-line)                         ; Move to the beginning of line
+    (if (looking-at "def")                      ; Check if the first word is def (function def)
+        (progn                                  ; If it is def
+          (python-shell-send-defun ())          ; Send whole def
+          (python-nav-end-of-defun)             ; Move to the end of def
+          (python-nav-forward-statement)        ; Move to the next statement
+          )
+      ;; If it is not def, do all the following
+      (python-shell-send-region (point-at-bol) (point-at-eol))  ; Send the current line
+      (python-nav-forward-statement)                            ; Move to the next statement
+      )
+    ;; Activate shell window, and switch back
+    (progn
+      (setq w-script (selected-window))         ; Remeber the script window
+      (python-shell-switch-to-shell)            ; Switch to the shell
+      (select-window w-script)                  ; Switch back to the script window
+      )
+    ))
+;; Define hooks
+(add-hook 'python-mode-hook             ; For Python script
+          '(lambda()
+             (local-set-key (kbd "<S-return>") 'mx-python-eval)
+             (local-set-key (kbd "<C-return>") 'mx-python-eval)))
+
+(setq python-shell-completion-native-enable nil)
+#+end_src
+
+* electric-pair                                                         :custom:
+close automatically brackets
+http://prodissues.com/2016/10/electric-pair-mode-in-emacs.html
+https://www.emacswiki.org/emacs/ElectricPair (for specific modes only)
+#+begin_src emacs-lisp
+(electric-pair-mode 1)
+(setq electric-pair-pairs '(
+                            (?\" . ?\")
+                            (?\` . ?\`)
+                            (?\( . ?\))
+                            (?\{ . ?\})
+                            (?\[ . ?\])
+                            ))
+#+end_src
+
+
 * xah-find                                                            :sitelisp:
 - http://ergoemacs.org/emacs/elisp-xah-find-text.html
 - reposository: https://github.com/maxmagmilch/xah-find
@@ -1180,7 +1179,7 @@ Set up ~package~ and ~use-package~.
         '(("todo" "[{") ("discuss" "[{"))))
 #+end_src
 
-* ace-jump-mode (similar to avy)                                    :usepackage:
+* ace-jump-mode                                                     :usepackage:
 #+begin_src emacs-lisp
 (use-package ace-jump-mode
   :ensure t
@@ -1267,7 +1266,7 @@ Set up ~package~ and ~use-package~.
   (setq org-pomodoro-keep-killed-pomodoro-time t))
 #+end_src
 
-* emacs speaks statistics                                           :usepackage:
+* TODO emacs speaks statistics                                      :usepackage:
 - c:\Program Files\R\R-4.1.0\library\base\R\Rprofile
 - add: .libPaths("D:/Daten/R/Library")
 ** FIX custom functions
@@ -1397,6 +1396,16 @@ Set up ~package~ and ~use-package~.
          (display-buffer-reuse-window display-buffer-pop-up-frame)
          (reusable-frames . 0)
          (dedicated . nil)))))
+#+end_src
+
+* transient                                                         :usepackage:
+#+begin_src emacs-lisp
+(use-package ledger-mode
+  :ensure t
+  :defer t
+  :init
+  (autoload 'ledger-mode "ledger-mode" "A major mode for Ledger" t)
+  (add-to-list 'auto-mode-alist '("\\.ledger$" . ledger-mode)))
 #+end_src
 
 * yaml-mode                                                         :usepackage:
