@@ -758,6 +758,7 @@ move cursor to brackets
 (defadvice kill-whole-line (after fix-cookies activate)
   (myorg-update-parent-cookie))
 #+end_src
+
 * abbreviations                                                         :custom:
 #+begin_src emacs-lisp
 (define-abbrev-table 'global-abbrev-table '(
@@ -1475,33 +1476,4 @@ makes M-n and M-p look for and M-h highlight the symbol at point
   ;; no highlighting
   (symbol-overlay-default-face ((t (:inherit default)))))
 #+end_src
-
-* DISABLED projectile                                               :usepackage:
-- setting for 'ivy' completion
-- just use project.el (emacs 26.1+)
-#+begin_src emacs-lisp
-;; (use-package projectile
-;;   :ensure t
-;;   :disabled t
-;;   :init
-;;   (projectile-global-mode)
-;;   (setq projectile-indexing-method 'native)
-;;   (setq projectile-completion-system 'ivy)
-;;   (setq projectile-enable-caching t)
-;;   :config
-;;   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
-#+end_src
-
-* DISABLED highlight-indentation (for python)                       :usepackage:
-#+begin_src emacs-lisp
-;;(use-package highlight-indentation
-;;  :ensure t
-;;  :disabled t
-;;  :init
-;;  (setq highlight-indentation-blank-lines t)
-;;  ;; python
-;;  (add-hook 'python-mode-hook 'highlight-indentation-mode)
-;;  :config
-;;  (set-face-background 'highlight-indentation-face "#f1f1f1")
-;;  (set-face-background 'highlight-indentation-current-column-face "#d1d1d1"))
-#+end_src
+.
