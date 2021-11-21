@@ -572,6 +572,7 @@ move cursor to brackets
 
 
 ;; agenda settings
+(setq org-agenda-window-setup 'only-window); agenda takes whole window
 (setq org-agenda-restore-windows-after-quit t)
 (setq org-agenda-show-all-dates t)
 (setq org-agenda-skip-deadline-if-done t)
