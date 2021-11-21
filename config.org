@@ -1002,15 +1002,6 @@ minor mode sets background color to strings that match color names, e.g. #0000ff
 (add-hook 'emacs-lisp-mode-hook 'rainbow-mode)
 #+end_src
 
-* keyfreq                                                                 :lisp:
-https://github.com/dacap/keyfreq
-use ~keyfreq-show~ to see how many times you used a command
-#+begin_src emacs-lisp
-(load "~/.emacs.d/lisp/keyfreq.el")
-(keyfreq-mode 1)
-(keyfreq-autosave-mode 1)
-#+end_src
-
 * use-package                                                       :usepackage:
 Set up ~package~ and ~use-package~.
 #+begin_src emacs-lisp
