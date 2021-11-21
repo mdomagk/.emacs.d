@@ -1,4 +1,4 @@
-﻿#+TAGS: custom(c) sitelisp(s) usepackage(u)
+﻿#+TAGS: custom(c) lisp(l) usepackage(u)
 #+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
 #+TITLE: config.org
 #+Changed: 21.11.2021
@@ -982,17 +982,17 @@ https://www.emacswiki.org/emacs/ElectricPair (for specific modes only)
 #+end_src
 
 
-* xah-find                                                            :sitelisp:
+* xah-find                                                                :lisp:
 - http://ergoemacs.org/emacs/elisp-xah-find-text.html
 - reposository: https://github.com/maxmagmilch/xah-find
 #+begin_src emacs-lisp
-(load "~/.emacs.d/site-lisp/xah-find.el")
+(load "~/.emacs.d/lisp/xah-find.el")
 #+end_src
 
-* rainbow-mode                                                        :sitelisp:
+* rainbow-mode                                                            :lisp:
 minor mode sets background color to strings that match color names, e.g. #0000ff is displayed in white with a blue background
 #+begin_src emacs-lisp
-(load "~/.emacs.d/site-lisp/rainbow-mode.el")
+(load "~/.emacs.d/lisp/rainbow-mode.el")
 ;; python
 (add-hook 'python-mode-hook 'rainbow-mode)
 ;; emacs speaks statistics R
@@ -1001,6 +1001,14 @@ minor mode sets background color to strings that match color names, e.g. #0000ff
 (add-hook 'emacs-lisp-mode-hook 'rainbow-mode)
 #+end_src
 
+* keyfreq                                                                 :lisp:
+https://github.com/dacap/keyfreq
+use ~keyfreq-show~ to see how many times you used a command
+#+begin_src emacs-lisp
+(load "~/.emacs.d/lisp/keyfreq.el")
+(keyfreq-mode 1)
+(keyfreq-autosave-mode 1)
+#+end_src
 
 * use-package                                                       :usepackage:
 Set up ~package~ and ~use-package~.
