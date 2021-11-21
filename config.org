@@ -1409,16 +1409,6 @@ Set up ~package~ and ~use-package~.
          (dedicated . nil)))))
 #+end_src
 
-* transient                                                         :usepackage:
-#+begin_src emacs-lisp
-(use-package ledger-mode
-  :ensure t
-  :defer t
-  :init
-  (autoload 'ledger-mode "ledger-mode" "A major mode for Ledger" t)
-  (add-to-list 'auto-mode-alist '("\\.ledger$" . ledger-mode)))
-#+end_src
-
 * yaml-mode                                                         :usepackage:
 #+begin_src emacs-lisp
 (use-package yaml-mode
@@ -1438,7 +1428,7 @@ comes with magit
 https://www.reddit.com/r/emacs/comments/mx6xs2/transient_vs_hydra/
 https://www.reddit.com/r/emacs/comments/pn4on3/using_transients_as_custom_menus/
 #+begin_src emacs-lisp
-(global-set-key (kbd "<escape>") 'mx-main-transient)
+(global-set-key (kbd "<apps>") 'mx-main-transient)
 (define-transient-command mx-main-transient ()
   "Main"
   ["Org-mode"
@@ -1448,9 +1438,19 @@ https://www.reddit.com/r/emacs/comments/pn4on3/using_transients_as_custom_menus/
    ("oh" "home.org" mx-org-file-home)
    ("oi" "ieeh.org" mx-org-file-ieeh)]
 
-  ["Org-mode Babel"
-   ("oeb" "Execute src-block" org-babel-execute-src-block)
-   ("oeB" "Execute buffer" org-babel-execute-buffer)]
+  ["File"
+   ("ff" "Find file" project-find-file)
+   ("fd" "Dired" counsel-find-file)
+   ("fr" "Recent" counsel-buffer-or-recentf)]
+
+  ["Buffer"
+   ("bk" "Kill buffer" mx-kill-buffer)
+   ("bs" "Save Buffer" save-buffer)]
+
+  ["Describe"
+   ("db" "Bind" counsel-descbinds)
+   ("df" "Function" counsel-describe-function)
+   ("dv" "Variable" counsel-describe-variable)]
 )
 #+end_src
 * polymode (Rmarkdown)                                              :usepackage:
