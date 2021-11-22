@@ -1299,7 +1299,7 @@ Set up ~package~ and ~use-package~.
   "call targets::tar_read on object at point to load it into environment."
   (interactive)
   (let ((target (symbol-at-point)))
-    (ess-eval-linewise (format "targets::tar_load(%s)\n" target))))
+    (ess-eval-linewise (format "targets::tar_read(%s)\n" target))))
 
 (defun R_tar_make ()
   "call targets::tar_make."
