@@ -1,7 +1,7 @@
 ﻿#+TAGS: custom(c) lisp(l) usepackage(u)
 #+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
 #+TITLE: config.org
-#+Changed: 21.11.2021
+#+Changed: 22.11.2021
 
 * Literate Emacs configuration
 ** [0/5] Open tasks
@@ -1415,12 +1415,12 @@ Set up ~package~ and ~use-package~.
   :ensure t)
 #+end_src
 
-* TODO transient                                                    :usepackage:
+* DISABLED transient (transient keybinds)                           :usepackage:
 comes with magit
 https://www.reddit.com/r/emacs/comments/mx6xs2/transient_vs_hydra/
 https://www.reddit.com/r/emacs/comments/pn4on3/using_transients_as_custom_menus/
 #+begin_src emacs-lisp
-(global-set-key (kbd "<apps>") 'mx-main-transient)
+;;(global-set-key (kbd "<apps>") 'mx-main-transient)
 (define-transient-command mx-main-transient ()
   "Main"
   ["Org-mode"
@@ -1445,6 +1445,15 @@ https://www.reddit.com/r/emacs/comments/pn4on3/using_transients_as_custom_menus/
    ("dv" "Variable" counsel-describe-variable)]
 )
 #+end_src
+
+* hydra (transient keybinds)
+tie related commands into a family of short bindings with a common prefix a hydra
+https://github.com/abo-abo/hydra
+#+begin_src emacs-lisp
+(use-package hydra
+  :ensure t)
+#+end_src
+
 * polymode (Rmarkdown)                                              :usepackage:
 - R:
   - install.packages("rmarkdown", repos = "https://ftp.fau.de/cran/")
