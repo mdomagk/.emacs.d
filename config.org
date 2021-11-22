@@ -1474,6 +1474,9 @@ Examples:
    ("oh" "home.org" mx-org-file-home)
    ("oi" "ieeh.org" mx-org-file-ieeh)]
 
+   ["Git"
+    ("g" "Git status" magit-status)]
+
    ["{targets} run"
     ("tm" "Make" R_tar_make)
     ("tM" "Make summary" R_tar_make_summary)
@@ -1569,6 +1572,6 @@ makes M-n and M-p look for and M-h highlight the symbol at point
          (yaml-mode . symbol-overlay-mode))
   :custom-face
   ;; no highlighting
-  (symbol-overlay-default-face ((t (:inherit default)))))
+  (symbol-overlay-default-face '((t (:background nil)))))
 #+end_src
 .
