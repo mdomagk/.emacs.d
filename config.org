@@ -1,13 +1,12 @@
-﻿#+TAGS: custom(c) usepackage(u) keybind(k)
+﻿#+TAGS: custom(c) lisp(l) usepackage(u)
 #+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
 #+TITLE: config.org
-#+Changed: 19.11.2021
+#+Changed: 21.11.2021
 
-* Literate Emacs config
-** [0/5] Tasks
+* Literate Emacs configuration
+** [0/5] Open tasks
 - [ ] Add transient for targets
   - see: https://www.reddit.com/r/emacs/comments/f3o0v8/anyone_have_good_examples_for_transient/fhkcprc/
-
   - similar to magit options after C-x g
   - tar commands
     - make (full, summary)
@@ -23,6 +22,7 @@
 - [ ] Clean unused packages
 - [ ] Fix fnmate Bug
 
+
 ** Installation
 Add ~site-start.el~ in ~c:\Program Files\GNU Emacs\emacs_27.2\share\emacs\27.2\site-lisp\~ and add:
 #+begin_src lisp
@@ -30,37 +30,6 @@ Add ~site-start.el~ in ~c:\Program Files\GNU Emacs\emacs_27.2\share\emacs\27.2\s
 #+end_src
 to set path to ~.emacs.d/~ folder.
 
-* use-package                                                           :custom:
-Set up ~package~ and ~use-package~.
-#+begin_src emacs-lisp
-(require 'package)
-(setq package-check-signature nil)
-(add-to-list 'package-archives
-             '("melpa" . "https://melpa.org/packages/") t)
-(package-initialize)
-
-;; Bootstrap 'use-package'
-(eval-after-load 'gnutls
-  '(add-to-list 'gnutls-trustfiles "/etc/ssl/cert.pem"))
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
-(eval-when-compile
-  (require 'use-package))
-(require 'bind-key)
-(setq use-package-always-ensure t)
-#+end_src
-
-* custom.el                                                             :custom:
-Set a ~custom-file~ so Emacs leaves my init file alone.
-#+begin_src emacs-lisp
-(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
-#+end_src
-
-* debugging                                                             :custom:
-#+begin_src emacs-lisp
-(setq debug-on-error nil) ;; t nil
-#+end_src
 
 * environment                                                           :custom:
 M-x getenv <RET> PATH <RET>
@@ -79,10 +48,7 @@ M-x getenv <RET> PATH <RET>
            "C:/Program Files (x86)/gnupg14"
            "C:/Python39")))
     (setenv "PATH" (mapconcat 'identity mypaths ";"))
-    (setq exec-path (append mypaths (list "." exec-directory)))
-    (setq user-mail-adress "max.domagk@tu-dresden.de")
-  )
-)
+    (setq exec-path (append mypaths (list "." exec-directory)))))
 #+end_src
 
 ** HOME (Win10) LAPTOP-ULMJC9IQ
@@ -98,27 +64,125 @@ M-x getenv <RET> PATH <RET>
            "C:/Program Files/Graphviz/bin"
            "C:/Program Files (x86)/GNU GnuPG")))
     (setenv "PATH" (mapconcat 'identity mypaths ";"))
-    (setq exec-path (append mypaths (list "." exec-directory)))
-    (setq user-mail-adress "mdomagk@posteo.de")
-  )
-)
+    (setq exec-path (append mypaths (list "." exec-directory)))))
 #+end_src
 
-* personal settings                                                     :custom:
+* general settings                                                      :custom:
+** default font
+additional options KEEP-SIZE and FRAMES
+#+begin_src emacs-lisp
+(set-frame-font "Consolas-9" nil t)
+#+end_src
+
+** user name and e-mail
 #+begin_src emacs-lisp
 (setq user-full-name "Max Domagk")
+(setq user-mail-adress "mdomagk@posteo.de")
+#+end_src
 
-;; additionl options KEEP-SIZE and FRAMES
-(set-frame-font "Consolas-9" nil t)
 
+** TODO disable lockfiles for now
+nextcloud syncs .#* files and needs a fix for .sync-exclude.lst
+#+begin_src emacs-lisp
+(setq create-lockfiles nil)
+#+end_src
+
+** set custom.el so emacs leaves my init file alone
+#+begin_src emacs-lisp
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+#+end_src
+
+** debugging disabled
+#+begin_src emacs-lisp
+(setq debug-on-error nil) ;; t nil
+#+end_src
+
+** indendation with space
+#+begin_src emacs-lisp
+;; use whitespaces instead of TAB
+(setq-default indent-tabs-mode nil)
+
+;; 1 TAB equals N spaces
+(setq tab-width 2)
+
+;; use TAB function for identation
+(setq indent-line-function 'insert-tab)
+#+end_src
+
+
+** encoding
+http://www.masteringemacs.org/articles/2012/08/09/working-coding-systems-unicode-emacs/
+#+begin_src emacs-lisp
+(prefer-coding-system 'utf-8)
+(set-default-coding-systems 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+
+(add-to-list 'file-coding-system-alist '("\\.tex" . utf-8))
+(add-to-list 'file-coding-system-alist '("\\.txt" . utf-8))
+(add-to-list 'file-coding-system-alist '("\\.org" . utf-8))
+(add-to-list 'file-coding-system-alist '("\\.el" . utf-8))
+
+;; cliplboard
+(set-selection-coding-system 'utf-8)
+(set-clipboard-coding-system 'utf-16-le)
+(set-selection-coding-system 'utf-16-le)
+#+end_src
+
+** define aliases for faster M-x
+#+begin_src emacs-lisp
+(defalias 'qrr 'query-replace-regexp)
+(defalias 'lml 'list-matching-lines)
+(defalias 'dml 'delete-matching-lines)
+(defalias 'dnml 'delete-non-matching-lines)
+(defalias 'sl 'sort-lines)
+#+end_src
+
+** window title
+adjust window title to "emacs: path/actual-buffer"
+#+begin_src emacs-lisp
+(setq frame-title-format
+      '("" invocation-name ": "
+        (:eval (if (buffer-file-name)
+                   (abbreviate-file-name (buffer-file-name))
+                 "%b"))))
+#+end_src
+
+
+** delete trailing whitespace
+#+begin_src emacs-lisp
+(add-hook 'before-save-hook (lambda () (delete-trailing-whitespace)))
+#+end_src
+
+** update date on save
+update date in header on save
+#+begin_src emacs-lisp
+(setq
+ time-stamp-active t
+ ;; check first 10 buffer lines for Time-stamp:
+ time-stamp-line-limit 10
+ ;; date format
+ time-stamp-format "%02d.%02m.%Y"
+ ;; identifier
+ time-stamp-start "Changed: "
+ time-stamp-end "$")
+
+(add-hook 'write-file-hooks 'time-stamp)
+#+end_src
+
+** set default frame width
+#+begin_src emacs-lisp
 (add-to-list 'default-frame-alist '(width . 84))
 #+end_src
 
-* TODO global settings                                                  :custom:
-** TODO no lockfiles (nextcloud .#* not working)
-- fix .sync-exclude.lst from Nextcloud
+** disable startup message in scratch buffer
 #+begin_src emacs-lisp
-(setq create-lockfiles nil)
+(setq-default initial-scratch-message nil)
+#+end_src
+
+** disable default splash screen
+#+begin_src emacs-lisp
+(setq inhibit-startup-message t)
 #+end_src
 
 ** remove auto-window-scroll (high CPU usage)
@@ -139,22 +203,14 @@ https://emacs.stackexchange.com/questions/28736/emacs-pointcursor-movement-lag/2
 (setq-default major-mode 'text-mode)
 #+end_src
 
-** disable default splash screen
-#+begin_src emacs-lisp
-(setq inhibit-startup-message t)
-#+end_src
-
-** disable startup message in scratch buffer
-#+begin_src emacs-lisp
-(setq-default initial-scratch-message nil)
-#+end_src
-
-** no alarm sound, only visible (t), not visible (nil)
+** make alarm sound only
+visible (t), not visible (nil)
 #+begin_src emacs-lisp
 (setq visible-bell t)
 #+end_src
 
-** enable winner mode C-c <left> to get to the previous window configuration
+** enable winner mode
+C-c <left> to get to the previous window configuration
 #+begin_src emacs-lisp
 (winner-mode 1)
 #+end_src
@@ -164,17 +220,20 @@ https://emacs.stackexchange.com/questions/28736/emacs-pointcursor-movement-lag/2
 (setq echo-keystrokes 0.1)
 #+end_src
 
-** blinking cursor: 1 (on) / 0 (off)
+** blinking cursor on
+1 (on) / 0 (off)
 #+begin_src emacs-lisp
 (blink-cursor-mode 1)
 #+end_src
 
-** highligh current line:  1 (on) / 0 (off)
+** highligh current line off
+1 (on) / 0 (off)
 #+begin_src emacs-lisp
 (global-hl-line-mode 0)
 #+end_src
 
-** enable Common User Access mode
+** enable CUA mode
+Common User Access
 #+begin_src emacs-lisp
 ;; windows-like behaviour to cut, copy & paste with ctrl + x, c & v
 ;; (setq cua-highlight-region-shift-only t) ;; no transient mark mode
@@ -182,7 +241,7 @@ https://emacs.stackexchange.com/questions/28736/emacs-pointcursor-movement-lag/2
 (cua-mode)
 #+end_src
 
-** syntax highlighting
+** syntax highlighting everywhere
 #+begin_src emacs-lisp
 (global-font-lock-mode t)
 #+end_src
@@ -205,7 +264,13 @@ https://emacs.stackexchange.com/questions/28736/emacs-pointcursor-movement-lag/2
 ;;(setq show-paren-when-point-inside-paren nil)
 #+end_src
 
-** instead of yes or no accept y or n
+** font highlighting matlab .m files
+#+begin_src emacs-lisp
+(add-to-list 'auto-mode-alist '("\\.m\\'" . octave-mode))
+#+end_src
+
+** quit emacs with y or n
+instead of yes or no accept y or n
 #+begin_src emacs-lisp
 (fset 'yes-or-no-p 'y-or-n-p)
 #+end_src
@@ -223,7 +288,7 @@ https://emacs.stackexchange.com/questions/28736/emacs-pointcursor-movement-lag/2
       )
 #+end_src
 
-** disable auto-save / set auto-save directory
+** set auto-save directory
 #+begin_src emacs-lisp
 ;;(setq auto-save-default nil) ; just turn off
 
@@ -249,43 +314,28 @@ https://emacs.stackexchange.com/questions/28736/emacs-pointcursor-movement-lag/2
 (set-default 'indicate-empty-lines t)
 #+end_src
 
-** trailing whitespace is unnecessary
-#+begin_src emacs-lisp
-(add-hook 'before-save-hook (lambda () (delete-trailing-whitespace)))
-#+end_src
-
 ** trash can support
 #+begin_src emacs-lisp
 (setq delete-by-moving-to-trash t)
 #+end_src
 
 * functions                                                             :custom:
-** It's simple. Bury the scratch buffer
+** mx-kill-buffer
+It's simple. Bury the scratch buffer
 #+begin_src emacs-lisp
-(setq my-never-kill-buffers '("*scratch*" "*Messages*"))
+(setq mx-never-kill-buffers '("*scratch*" "*Messages*"))
 
-(defun my-kill-buffer (buffer)
+(defun mx-kill-buffer (buffer)
   "Protect some special buffers from getting killed."
   (interactive (list (current-buffer)))
-  (if (member (buffer-name buffer) my-never-kill-buffers)
+  (if (member (buffer-name buffer) mx-never-kill-buffers)
       (call-interactively 'bury-buffer buffer)
     (kill-buffer buffer)))
 #+end_src
 
-** kill-this-buffer-and-window
+** mx-ask-before-closing
 #+begin_src emacs-lisp
-(defun kill-this-buffer-and-window ()
-  "Kill the current buffer and delete the selected window."
-  (interactive)
-  (let (buffer current-buffer)
-    (if (kill-buffer (current-buffer))
-        (if (> (count-windows) 50) ; reduzieren der fenster (unnoetig)
-            (delete-window (selected-window))))))
-#+end_src
-
-** ask-before-closing
-#+begin_src emacs-lisp
-(defun ask-before-closing ()
+(defun mx-ask-before-closing ()
   "Ask whether or not to close, and then close if y was pressed"
   (interactive)
   (if (yes-or-no-p (format "<<< close EMACS ???  >>>  "))
@@ -294,9 +344,9 @@ https://emacs.stackexchange.com/questions/28736/emacs-pointcursor-movement-lag/2
         (save-buffers-kill-emacs))))
 #+end_src
 
-** rotate-windows
+** mx-rotate-windows
 #+begin_src emacs-lisp
-(defun rotate-windows ()
+(defun mx-rotate-windows ()
   "Rotate your windows"
   (interactive)
   (cond ((not (> (count-windows)1))
@@ -322,16 +372,20 @@ https://emacs.stackexchange.com/questions/28736/emacs-pointcursor-movement-lag/2
              (setq i (1+ i)))))))
 #+end_src
 
-** define aliases for faster M-x
+** mx-save-symbol-at-point
+copy word/symbol at point
 #+begin_src emacs-lisp
-(defalias 'qrr 'query-replace-regexp)
-(defalias 'lml 'list-matching-lines)
-(defalias 'dml 'delete-matching-lines)
-(defalias 'dnml 'delete-non-matching-lines)
-(defalias 'sl 'sort-lines)
+(defun mx-save-symbol-at-point ()
+  "Make symbol at point the latest kill in the kill ring."
+  (interactive)
+  (let ((symbol (thing-at-point 'symbol)))
+    (when symbol (kill-new symbol))))
+
+(global-set-key (kbd "M-w")  'mx-save-symbol-at-point)
 #+end_src
 
-** Move cursor to brackets
+** xah-brackets
+move cursor to brackets
 #+begin_src emacs-lisp
 (defvar xah-brackets nil "string of left/right brackets pairs.")
 (setq xah-brackets "()[]{}<>（）［］｛｝⦅⦆〚〛“”‘’‹›«»「」〈〉《》【】〔〕『』〖〗〘〙｢｣❛❜❝❞⁽⁾₍₎")
@@ -375,94 +429,35 @@ https://emacs.stackexchange.com/questions/28736/emacs-pointcursor-movement-lag/2
 #+end_src
 
 * keybindings                                                           :custom:
-How to Define [[http://xahlee.org/emacs/keyboard_shortcuts.html][Keyboard Shortcuts]] in Emacs
-** Copy word/symbol at point
+** emacs
 #+begin_src emacs-lisp
-(defun my-save-symbol-at-point ()
-  "Make symbol at point the latest kill in the kill ring."
-  (interactive)
-  (let ((symbol (thing-at-point 'symbol)))
-    (when symbol (kill-new symbol))))
-
-(global-set-key (kbd "M-w")  'my-save-symbol-at-point)
-#+end_src
-
-** Project-find-file
-#+begin_src emacs-lisp
-(global-set-key (kbd "C-x C-b")  'project-find-file)
-#+end_src
-
-** ESC cancels all
-#+begin_src emacs-lisp
-(setq auto-window-vscroll nil)
+;; ESC cancels everything
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+(global-set-key (kbd "C-x C-c") 'mx-ask-before-closing)
+(global-set-key (kbd "C-x C-b")  'project-find-file)
+(global-set-key [f5] 'call-last-kbd-macro)
+(global-set-key [f11] 'tool-bar-mode)
+(global-set-key [f12] 'menu-bar-mode)
 #+end_src
 
-
-** kill current buffer
-It's simple. Bury the scratch buffer
+** editing
 #+begin_src emacs-lisp
-(global-set-key (kbd "C-w") 'my-kill-buffer)
+(global-set-key (kbd "M-w")  'mx-save-symbol-at-point)
+
+;; comment marked lines (matlab-like)
+(global-set-key (kbd "C-t") 'uncomment-region)
+(global-set-key (kbd "C-r") 'comment-region)
+
+(global-set-key (kbd "M-ö") 'comment-or-uncomment-region)
+
+;; join following lines into 1 line (M-j)
+(global-set-key (kbd "M-j")
+                (lambda ()
+                  (interactive)
+                  (join-line -1)))
 #+end_src
 
-** TODO hideshow code blocks (hs-minor-mode)
-#+begin_src emacs-lisp
-;;(global-set-key (kbd "C-c <right>") 'hs-show-block)
-;;(global-set-key (kbd "C-c <left>") 'hs-hide-block)
-;;(global-set-key (kbd "C-c <up>") 'hs-show-all)
-;;(global-set-key (kbd "C-c <down>") 'hs-hide-all)
-#+end_src
-
-** ask before closing emacs (custom/defuns.el)
-#+begin_src emacs-lisp
-(global-set-key (kbd "C-x C-c") 'ask-before-closing)
-;; [M-f4] (global-unset-key (kbd "C-x C-c"))
-#+end_src
-
-** buffer switching
-#+begin_src emacs-lisp
-(global-set-key (kbd "C-b") 'switch-to-buffer)
-(global-set-key (kbd "C-S-<tab>") 'next-buffer)
-(global-set-key (kbd "C-<tab>") 'previous-buffer)
-(add-hook 'org-mode-hook
-          '(lambda ()
-             (define-key org-mode-map (kbd "C-<tab>") 'previous-buffer)))
-#+end_src
-
-** map keys for window manipulation
-#+begin_src emacs-lisp
-(global-set-key (kbd "M-o") 'other-window)
-(global-set-key (kbd "M-p") 'rotate-windows)
-(global-set-key (kbd "M-1") 'delete-other-windows)
-(global-set-key (kbd "M-2") 'split-window-horizontally)
-(global-set-key (kbd "M-3") 'split-window-vertically)
-(global-set-key (kbd "M-0") 'delete-window)
-#+end_src
-
-** unbind default keys for window manipulation
-#+begin_src emacs-lisp
-(global-unset-key (kbd "C-x 0")) ; was delete-window
-(global-unset-key (kbd "C-x 3")) ; was split-window-horizontally
-(global-unset-key (kbd "C-x 2")) ; was split-window-vertically
-(global-unset-key (kbd "C-x 1")) ; was delete-other-window
-(global-unset-key (kbd "C-x o")) ; was other-window
-(global-unset-key (kbd "C-c r")) ; was ??? (org-mode capture)
-#+end_src
-
-** resize windows
-#+begin_src emacs-lisp
-(global-set-key (kbd "S-C-<down>")  'enlarge-window)
-(global-set-key (kbd "S-C-<up>")    'shrink-window)
-(global-set-key (kbd "S-C-<left>")  'shrink-window-horizontally)
-(global-set-key (kbd "S-C-<right>") 'enlarge-window-horizontally)
-#+end_src
-
-** save buffer with C-s
-#+begin_src emacs-lisp
-(global-set-key (kbd "C-s") 'save-buffer)
-#+end_src
-
-** move more quickly
+** movement
 #+begin_src emacs-lisp
 (global-set-key (kbd "C-<next>")
                 (lambda ()
@@ -473,330 +468,45 @@ It's simple. Bury the scratch buffer
                 (lambda ()
                   (interactive)
                   (ignore-errors (previous-line 5))))
-#+end_src
 
-** comment marked lines (matlab-like)
-#+begin_src emacs-lisp
-(global-set-key (kbd "C-t") 'uncomment-region)
-(global-set-key (kbd "C-r") 'comment-region)
-#+end_src
-
-** toggle toolbar emacs-window
-#+begin_src emacs-lisp
-(global-set-key [f11] 'tool-bar-mode)
-(global-set-key [f12] 'menu-bar-mode)
-#+end_src
-
-** join following lines into 1 line (M-j)
-#+begin_src emacs-lisp
-(global-set-key (kbd "M-j")
-                (lambda ()
-                  (interactive)
-                  (join-line -1)))
-#+end_src
-
-** move between brackets
-#+begin_src emacs-lisp
+;; move between brackets
 (global-set-key (kbd "M-8") 'xah-backward-left-bracket)
 (global-set-key (kbd "M-9") 'xah-forward-right-bracket)
 #+end_src
 
-** call-last-kbd-macro
+** buffer
 #+begin_src emacs-lisp
-(global-set-key [f5] 'call-last-kbd-macro)
+(global-set-key (kbd "C-s") 'save-buffer)
+(global-set-key (kbd "C-w") 'mx-kill-buffer)
+(global-set-key (kbd "C-b") 'switch-to-buffer)
+;;(global-set-key (kbd "C-S-<tab>") 'next-buffer)
+;;(global-set-key (kbd "C-<tab>") 'previous-buffer)
+;;(add-hook 'org-mode-hook
+;;          '(lambda ()
+;;             (define-key org-mode-map (kbd "C-<tab>") 'previous-buffer)))
 #+end_src
 
-* recentf                                                               :custom:
-- a timer setting for recentf-mode without notifications to echo-area
-- https://gist.github.com/masutaka/1325654 (idle timer)
-- https://lists.gnu.org/archive/html/help-gnu-emacs/2010-12/msg02019.html
+** window
 #+begin_src emacs-lisp
+(global-set-key (kbd "S-C-<down>")  'enlarge-window)
+(global-set-key (kbd "S-C-<up>")    'shrink-window)
+(global-set-key (kbd "S-C-<left>")  'shrink-window-horizontally)
+(global-set-key (kbd "S-C-<right>") 'enlarge-window-horizontally)
 
-(recentf-mode 1)
-(setq recentf-max-saved-items 2000)
-(setq recentf-exclude '(".recentf"))
+(global-set-key (kbd "M-o") 'other-window)
+(global-set-key (kbd "M-p") 'mx-rotate-windows)
+(global-set-key (kbd "M-1") 'delete-other-windows)
+(global-set-key (kbd "M-2") 'split-window-horizontally)
+(global-set-key (kbd "M-3") 'split-window-vertically)
+(global-set-key (kbd "M-0") 'delete-window)
 
-(defvar my-recentf-list-prev nil)
-
-(defun my-recentf-save-list ()
-  (interactive)
-  "If recentf-list and previous recentf-list is equal,
-     do nothing. Else recent-save-list and try to hide 'Wrote' message"
-  (unless (equal recentf-list my-recentf-list-prev)
-    (setq old-message (current-message))
-    (recentf-save-list)
-    (message old-message)
-    (setq my-recentf-list-prev recentf-list)))
-
-(run-with-idle-timer 60 t 'my-recentf-save-list)
-
+(global-unset-key (kbd "C-x 0")) ; was delete-window
+(global-unset-key (kbd "C-x 3")) ; was split-window-horizontally
+(global-unset-key (kbd "C-x 2")) ; was split-window-vertically
+(global-unset-key (kbd "C-x 1")) ; was delete-other-window
+(global-unset-key (kbd "C-x o")) ; was other-window
 #+end_src
 
-* encoding                                                              :custom:
-- http://www.masteringemacs.org/articles/2012/08/09/working-coding-systems-unicode-emacs/
-#+begin_src emacs-lisp
-(prefer-coding-system 'utf-8)
-(set-default-coding-systems 'utf-8)
-(set-terminal-coding-system 'utf-8)
-(set-keyboard-coding-system 'utf-8)
-
-(add-to-list 'file-coding-system-alist '("\\.tex" . utf-8))
-(add-to-list 'file-coding-system-alist '("\\.txt" . utf-8))
-(add-to-list 'file-coding-system-alist '("\\.org" . utf-8))
-(add-to-list 'file-coding-system-alist '("\\.el" . utf-8))
-
-;; cliplboard
-(set-selection-coding-system 'utf-8)
-(set-clipboard-coding-system 'utf-16-le)
-(set-selection-coding-system 'utf-16-le)
-#+end_src
-
-* indendation                                                           :custom:
-#+begin_src emacs-lisp
-;; use whitespaces instead of TAB
-(setq-default indent-tabs-mode nil)
-
-;; 1 TAB equals N spaces
-(setq tab-width 2)
-
-;; use TAB function for identation
-(setq indent-line-function 'insert-tab)
-#+end_src
-
-* window title                                                          :custom:
-- adjust window title to "emacs: path/actual-buffer"
-#+begin_src emacs-lisp
-(setq frame-title-format
-      '("" invocation-name ": "
-        (:eval (if (buffer-file-name)
-                   (abbreviate-file-name (buffer-file-name))
-                 "%b"))))
-#+end_src
-
-* timestamp                                                             :custom:
-- update timestamps on save
-#+begin_src emacs-lisp
-(setq
- time-stamp-active t
- ;; check first 10 buffer lines for Time-stamp:
- time-stamp-line-limit 10
- ;; date format
- time-stamp-format "%02d.%02m.%Y"
- ;; identifier
- time-stamp-start "Changed: "
- time-stamp-end "$")
-
-(add-hook 'write-file-hooks 'time-stamp)
-#+end_src
-
-* abbreviation                                                          :custom:
-#+begin_src emacs-lisp
-(define-abbrev-table 'global-abbrev-table '(
-
- ("9t" "tar_target(@@),")
- ("9tt" "tar_target(@@, format = \"fst_tbl\"),")
-
- ("9m" "targets::tar_make()")
- ("9mm" "targets::tar_make(reporter = \"summary\")")
-
- ("9v" "targets::tar_visnetwork()")
- ("9vv" "targets::tar_visnetwork(targets_only = TRUE)")
-
- ("9l" "targets::tar_load(@@)")
- ("9r" "targets::tar_read(@@)")
-
- ("9p" "paint::paint(@@)")
-
- ("8png" "png(filename = \"@@.png\", units = \"cm\", res = 300, width = 16, height = 10)\n\ndev.off()")
-
- ("8r" "`r @@`")
- ("8rr" "```{r}\n@@\n```")
- ("8ra" "&rarr;")
-
- ("8R" "#+begin_src R\n@@\n#+end_src")
- ))
-
-;; stop asking whether to save newly added abbrev when quitting emacs
-(setq save-abbrevs nil)
-
-;; turn on abbrev mode globally
-(setq-default abbrev-mode t)
-
-;; https://stackoverflow.com/questions/15375759/how-to-control-cursor-placement-in-emacs-abbrev-expansion
-(defadvice expand-abbrev (after my-expand-abbrev activate)
-   ;; if there was an expansion
-   (if ad-return-value
-       ;; start idle timer to ensure insertion of abbrev activator
-       ;; character (e.g. space) is finished
-       (run-with-idle-timer 0 nil
-                            (lambda ()
-                              ;; if there is the string "@@" in the
-                              ;; expansion then move cursor there and
-                              ;; delete the string
-                              (let ((cursor "@@"))
-                                (if (search-backward cursor last-abbrev-location t)
-                                    (delete-char (length cursor))))))))
- #+end_src
-
- #+RESULTS:
- : expand-abbrev
-
-* electric-pair                                                         :custom:
-- close automatically brackets
-- http://prodissues.com/2016/10/electric-pair-mode-in-emacs.html
-- https://www.emacswiki.org/emacs/ElectricPair (for specific modes only)
-#+begin_src emacs-lisp
-(electric-pair-mode 1)
-(setq electric-pair-pairs '(
-                            (?\" . ?\")
-                            (?\` . ?\`)
-                            (?\( . ?\))
-                            (?\{ . ?\})
-                            (?\[ . ?\])
-                            ))
-#+end_src
-
-* dired                                                                 :custom:
-#+begin_src emacs-lisp
-;; windows style
-(setq ls-lisp-verbosity nil)
-
-;; order directories first
-(setq ls-lisp-dirs-first t)
-
-;; windows behaviour (error message in emacs-25.1)
-;;(setq ls-lisp-emulation 'MS Windows)
-
-;; no domain with login name
-(setq ls-lisp-ignore-case t)
-
-;; sort by extension
-(setq dired-listing-switches "-alX")
-
-;; backspace behaves like in Total Comander
-(add-hook 'dired-mode-hook
-          (lambda ()
-            (local-set-key [backspace] 'dired-up-directory)))
-#+end_src
-
-* gnupg                                                                 :custom:
-#+begin_src emacs-lisp
-(setq epg-gpg-program "gpg2")
-
-(setq epa-file-name-regexp "\\.\\(gpg\\|asc\\)$")
-(epa-file-name-regexp-update)
-(setq epa-file-cache-passphrase-for-symmetric-encryption t)
-#+end_src
-
-* mode-line                                                             :custom:
-#+begin_src emacs-lisp
-;; ;; show line-number in the mode line
-;; (line-number-mode 1)
-;;
-;; ;; show column-number in the mode line
-;; (column-number-mode 1)
-;;
-;; ;; show time (and date) in the mode line
-;; ;; (setq display-time-day-and-date t)
-;; (setq display-time-24hr-format t)
-;; (display-time)
-
-;; http://emacs-fu.blogspot.de/2011/08/customizing-mode-line.html
-;; use setq-default to set it for /all/ modes
-(setq-default mode-line-format
-              (list
-               ;; the buffer name; the file name as a tool tip
-               '(:eval (propertize "%b "
-                                   'help-echo (buffer-file-name)))
-
-               ;; line and column
-               "(%02l,%02c) "
-
-               ;; ;; relative position, size of file
-               "[%p/%I] "
-
-               ;; the current major mode for the buffer.
-               "["
-               '(:eval (propertize "%m" 'help-echo buffer-file-coding-system))
-               "] "
-
-               "[" ;; insert vs overwrite mode, input-method in a tooltip
-               '(:eval (propertize (if overwrite-mode "Ovr" "Ins")
-                                   'help-echo (concat "Buffer is in "
-                                                      (if overwrite-mode "overwrite" "insert") " mode")))
-
-               ;; was this buffer modified since the last save?
-               '(:eval (when (buffer-modified-p)
-                         (concat ","  (propertize "Mod"
-                                                  'help-echo "Buffer has been modified"))))
-
-               ;; is this buffer read-only?
-               '(:eval (when buffer-read-only
-                         (concat ","  (propertize "RO"
-                                                  'help-echo "Buffer is read-only"))))
-               ;; "] "
-               "]"
-               ;; ;; add the time, with the date and the emacs uptime in the tooltip
-               ;; '(:eval (propertize (format-time-string "%H:%M")
-               ;;           'help-echo
-               ;;           (concat (format-time-string "%c; ")
-               ;;                   (emacs-uptime "Uptime:%hh%mm"))))
-               " "
-               ;; i don't want to see minor-modes; but if you want, uncomment this:
-               ;; minor-mode-alist  ;; list of minor modes
-
-               ;; i want to see the 'pomodoro' status using (%M = global-mode-string)
-               "%M"
-               "%-" ;; fill with '-'
-               ))
-#+end_src
-
-* python                                                                :custom:
-#+begin_src emacs-lisp
-(defun my-python-start ()
-  (interactive)
-  (if (not (member "*Python*" (mapcar (function buffer-name) (buffer-list))))
-      (progn (call-interactively 'run-python))))
-;; Start python if not started. Send region if selected, line if not selected (whole def if it is def)
-;; http://www.reddit.com/r/emacs/comments/1h4hyw/selecting_regions_pythonel/
-(defun my-python-eval ()
-  (interactive)
-  (my-python-start)
-  (if (and transient-mark-mode mark-active)     ; Check if selection is present
-      (python-shell-send-region (point) (mark)) ; If selected, send region
-    ;; If not selected, do all the following
-    (beginning-of-line)                         ; Move to the beginning of line
-    (if (looking-at "def")                      ; Check if the first word is def (function def)
-        (progn                                  ; If it is def
-          (python-shell-send-defun ())          ; Send whole def
-          (python-nav-end-of-defun)             ; Move to the end of def
-          (python-nav-forward-statement)        ; Move to the next statement
-          )
-      ;; If it is not def, do all the following
-      (python-shell-send-region (point-at-bol) (point-at-eol))  ; Send the current line
-      (python-nav-forward-statement)                            ; Move to the next statement
-      )
-    ;; Activate shell window, and switch back
-    (progn
-      (setq w-script (selected-window))         ; Remeber the script window
-      (python-shell-switch-to-shell)            ; Switch to the shell
-      (select-window w-script)                  ; Switch back to the script window
-      )
-    ))
-;; Define hooks
-(add-hook 'python-mode-hook             ; For Python script
-          '(lambda()
-             (local-set-key (kbd "<S-return>") 'my-python-eval)
-             (local-set-key (kbd "<C-return>") 'my-python-eval)))
-
-(setq python-shell-completion-native-enable nil)
-#+end_src
-
-* matlab (octave-mode)                                                  :custom:
-- highlighting using build-in octave-mode
-#+begin_src emacs-lisp
-(add-to-list 'auto-mode-alist '("\\.m\\'" . octave-mode))
-#+end_src
 
 * org-mode                                                              :custom:
 ** general settings
@@ -862,6 +572,7 @@ It's simple. Bury the scratch buffer
 
 
 ;; agenda settings
+(setq org-agenda-window-setup 'only-window); agenda takes whole window
 (setq org-agenda-restore-windows-after-quit t)
 (setq org-agenda-show-all-dates t)
 (setq org-agenda-skip-deadline-if-done t)
@@ -925,11 +636,11 @@ It's simple. Bury the scratch buffer
 
 ** keybindings
 #+begin_src emacs-lisp
-(defun home ()
+(defun mx-org-file-home ()
   (interactive)
   (find-file "~/.emacs.d/org/home.org"))
 
-(defun ieeh ()
+(defun mx-org-file-ieeh ()
   (interactive)
   (find-file "~/.emacs.d/org/ieeh.org"))
 
@@ -940,12 +651,12 @@ It's simple. Bury the scratch buffer
              (local-set-key (kbd "S-C-<left>")  'shrink-window-horizontally)
              (local-set-key (kbd "S-C-<right>") 'enlarge-window-horizontally)))
 
-(global-set-key [f9] 'home)
-(global-set-key [f10] 'ieeh)
+(global-set-key [f9] 'mx-org-file-home)
+(global-set-key [f10] 'mx-org-file-ieeh)
 
 (global-set-key (kbd "C-c a") 'org-agenda)
 (global-set-key (kbd "C-c c") 'org-capture)
-(global-set-key (kbd "C-c l") 'org-store-link)
+;;(global-set-key (kbd "C-c l") 'org-store-link)
 #+end_src
 
 ** custom agenda views
@@ -1005,10 +716,10 @@ It's simple. Bury the scratch buffer
    (latex . t)
    (dot . t)))
 
-(defun my-org-edit-src-save-key ()
+(defun mx-org-edit-src-save-key ()
   (local-set-key (kbd "C-s") 'org-edit-src-save))
 
-(add-hook 'org-src-mode-hook 'my-org-edit-src-save-key)
+(add-hook 'org-src-mode-hook 'mx-org-edit-src-save-key)
 
 ;; display the source code edit buffer in the current window, keeping
 ;; all other windows
@@ -1048,17 +759,241 @@ It's simple. Bury the scratch buffer
 (defadvice kill-whole-line (after fix-cookies activate)
   (myorg-update-parent-cookie))
 #+end_src
-* xah-find                                                              :custom:
+
+* abbreviations                                                         :custom:
+#+begin_src emacs-lisp
+(define-abbrev-table 'global-abbrev-table '(
+
+ ("9t" "tar_target(@@),")
+ ("9tt" "tar_target(@@, format = \"fst_tbl\"),")
+
+ ("9m" "targets::tar_make()")
+ ("9mm" "targets::tar_make(reporter = \"summary\")")
+
+ ("9v" "targets::tar_visnetwork()")
+ ("9vv" "targets::tar_visnetwork(targets_only = TRUE)")
+
+ ("9l" "targets::tar_load(@@)")
+ ("9r" "targets::tar_read(@@)")
+
+ ("9p" "paint::paint(@@)")
+
+ ("8png" "png(filename = \"@@.png\", units = \"cm\", res = 300, width = 16, height = 10)\n\ndev.off()")
+
+ ("8r" "`r @@`")
+ ("8rr" "```{r}\n@@\n```")
+ ("8ra" "&rarr;")
+
+ ("8R" "#+begin_src R\n@@\n#+end_src")
+ ))
+
+;; stop asking whether to save newly added abbrev when quitting emacs
+(setq save-abbrevs nil)
+
+;; turn on abbrev mode globally
+(setq-default abbrev-mode t)
+
+;; https://stackoverflow.com/questions/15375759/how-to-control-cursor-placement-in-emacs-abbrev-expansion
+(defadvice expand-abbrev (after my-expand-abbrev activate)
+   ;; if there was an expansion
+   (if ad-return-value
+       ;; start idle timer to ensure insertion of abbrev activator
+       ;; character (e.g. space) is finished
+       (run-with-idle-timer 0 nil
+                            (lambda ()
+                              ;; if there is the string "@@" in the
+                              ;; expansion then move cursor there and
+                              ;; delete the string
+                              (let ((cursor "@@"))
+                                (if (search-backward cursor last-abbrev-location t)
+                                    (delete-char (length cursor))))))))
+ #+end_src
+
+ #+RESULTS:
+ : expand-abbrev
+
+* mode-line                                                             :custom:
+#+begin_src emacs-lisp
+;; ;; show line-number in the mode line
+;; (line-number-mode 1)
+;;
+;; ;; show column-number in the mode line
+;; (column-number-mode 1)
+;;
+;; ;; show time (and date) in the mode line
+;; ;; (setq display-time-day-and-date t)
+;; (setq display-time-24hr-format t)
+;; (display-time)
+
+;; http://emacs-fu.blogspot.de/2011/08/customizing-mode-line.html
+;; use setq-default to set it for /all/ modes
+(setq-default mode-line-format
+              (list
+               ;; the buffer name; the file name as a tool tip
+               '(:eval (propertize "%b "
+                                   'help-echo (buffer-file-name)))
+
+               ;; line and column
+               "(%02l,%02c) "
+
+               ;; ;; relative position, size of file
+               "[%p/%I] "
+
+               ;; the current major mode for the buffer.
+               "["
+               '(:eval (propertize "%m" 'help-echo buffer-file-coding-system))
+               "] "
+
+               "[" ;; insert vs overwrite mode, input-method in a tooltip
+               '(:eval (propertize (if overwrite-mode "Ovr" "Ins")
+                                   'help-echo (concat "Buffer is in "
+                                                      (if overwrite-mode "overwrite" "insert") " mode")))
+
+               ;; was this buffer modified since the last save?
+               '(:eval (when (buffer-modified-p)
+                         (concat ","  (propertize "Mod"
+                                                  'help-echo "Buffer has been modified"))))
+
+               ;; is this buffer read-only?
+               '(:eval (when buffer-read-only
+                         (concat ","  (propertize "RO"
+                                                  'help-echo "Buffer is read-only"))))
+               ;; "] "
+               "]"
+               ;; ;; add the time, with the date and the emacs uptime in the tooltip
+               ;; '(:eval (propertize (format-time-string "%H:%M")
+               ;;           'help-echo
+               ;;           (concat (format-time-string "%c; ")
+               ;;                   (emacs-uptime "Uptime:%hh%mm"))))
+               " "
+               ;; i don't want to see minor-modes; but if you want, uncomment this:
+               ;; minor-mode-alist  ;; list of minor modes
+
+               ;; i want to see the 'pomodoro' status using (%M = global-mode-string)
+               "%M"
+               "%-" ;; fill with '-'
+               ))
+#+end_src
+
+* recentf                                                               :custom:
+a timer setting for recentf-mode without notifications to echo-area
+https://gist.github.com/masutaka/1325654 (idle timer)
+https://lists.gnu.org/archive/html/help-gnu-emacs/2010-12/msg02019.html
+#+begin_src emacs-lisp
+
+(recentf-mode 1)
+(setq recentf-max-saved-items 2000)
+(setq recentf-exclude '(".recentf"))
+
+(defvar mx-recentf-list-prev nil)
+
+(defun mx-recentf-save-list ()
+  (interactive)
+  "If recentf-list and previous recentf-list is equal,
+     do nothing. Else recent-save-list and try to hide 'Wrote' message"
+  (unless (equal recentf-list mx-recentf-list-prev)
+    (setq old-message (current-message))
+    (recentf-save-list)
+    (message old-message)
+    (setq mx-recentf-list-prev recentf-list)))
+
+(run-with-idle-timer 60 t 'mx-recentf-save-list)
+
+#+end_src
+
+
+* dired                                                                 :custom:
+#+begin_src emacs-lisp
+;; windows style
+(setq ls-lisp-verbosity nil)
+
+;; order directories first
+(setq ls-lisp-dirs-first t)
+
+;; windows behaviour (error message in emacs-25.1)
+;;(setq ls-lisp-emulation 'MS Windows)
+
+;; no domain with login name
+(setq ls-lisp-ignore-case t)
+
+;; sort by extension
+(setq dired-listing-switches "-alX")
+
+;; backspace behaves like in Total Comander
+(add-hook 'dired-mode-hook
+          (lambda ()
+            (local-set-key [backspace] 'dired-up-directory)))
+#+end_src
+
+
+* python                                                                :custom:
+#+begin_src emacs-lisp
+(defun mx-python-start ()
+  (interactive)
+  (if (not (member "*Python*" (mapcar (function buffer-name) (buffer-list))))
+      (progn (call-interactively 'run-python))))
+;; Start python if not started. Send region if selected, line if not selected (whole def if it is def)
+;; http://www.reddit.com/r/emacs/comments/1h4hyw/selecting_regions_pythonel/
+(defun mx-python-eval ()
+  (interactive)
+  (mx-python-start)
+  (if (and transient-mark-mode mark-active)     ; Check if selection is present
+      (python-shell-send-region (point) (mark)) ; If selected, send region
+    ;; If not selected, do all the following
+    (beginning-of-line)                         ; Move to the beginning of line
+    (if (looking-at "def")                      ; Check if the first word is def (function def)
+        (progn                                  ; If it is def
+          (python-shell-send-defun ())          ; Send whole def
+          (python-nav-end-of-defun)             ; Move to the end of def
+          (python-nav-forward-statement)        ; Move to the next statement
+          )
+      ;; If it is not def, do all the following
+      (python-shell-send-region (point-at-bol) (point-at-eol))  ; Send the current line
+      (python-nav-forward-statement)                            ; Move to the next statement
+      )
+    ;; Activate shell window, and switch back
+    (progn
+      (setq w-script (selected-window))         ; Remeber the script window
+      (python-shell-switch-to-shell)            ; Switch to the shell
+      (select-window w-script)                  ; Switch back to the script window
+      )
+    ))
+;; Define hooks
+(add-hook 'python-mode-hook             ; For Python script
+          '(lambda()
+             (local-set-key (kbd "<S-return>") 'mx-python-eval)
+             (local-set-key (kbd "<C-return>") 'mx-python-eval)))
+
+(setq python-shell-completion-native-enable nil)
+#+end_src
+
+* electric-pair                                                         :custom:
+close automatically brackets
+http://prodissues.com/2016/10/electric-pair-mode-in-emacs.html
+https://www.emacswiki.org/emacs/ElectricPair (for specific modes only)
+#+begin_src emacs-lisp
+(electric-pair-mode 1)
+(setq electric-pair-pairs '(
+                            (?\" . ?\")
+                            (?\` . ?\`)
+                            (?\( . ?\))
+                            (?\{ . ?\})
+                            (?\[ . ?\])
+                            ))
+#+end_src
+
+
+* xah-find                                                                :lisp:
 - http://ergoemacs.org/emacs/elisp-xah-find-text.html
 - reposository: https://github.com/maxmagmilch/xah-find
 #+begin_src emacs-lisp
-(load "~/.emacs.d/site-lisp/xah-find.el")
+(load "~/.emacs.d/lisp/xah-find.el")
 #+end_src
 
-* rainbow-mode                                                          :custom:
+* rainbow-mode                                                            :lisp:
 minor mode sets background color to strings that match color names, e.g. #0000ff is displayed in white with a blue background
 #+begin_src emacs-lisp
-(load "~/.emacs.d/site-lisp/rainbow-mode.el")
+(load "~/.emacs.d/lisp/rainbow-mode.el")
 ;; python
 (add-hook 'python-mode-hook 'rainbow-mode)
 ;; emacs speaks statistics R
@@ -1066,6 +1001,28 @@ minor mode sets background color to strings that match color names, e.g. #0000ff
 ;; lisp
 (add-hook 'emacs-lisp-mode-hook 'rainbow-mode)
 #+end_src
+
+* use-package                                                       :usepackage:
+Set up ~package~ and ~use-package~.
+#+begin_src emacs-lisp
+(require 'package)
+(setq package-check-signature nil)
+(add-to-list 'package-archives
+             '("melpa" . "https://melpa.org/packages/") t)
+(package-initialize)
+
+;; Bootstrap 'use-package'
+(eval-after-load 'gnutls
+  '(add-to-list 'gnutls-trustfiles "/etc/ssl/cert.pem"))
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+(eval-when-compile
+  (require 'use-package))
+(require 'bind-key)
+(setq use-package-always-ensure t)
+#+end_src
+
 
 
 * ivy                                                               :usepackage:
@@ -1225,7 +1182,7 @@ minor mode sets background color to strings that match color names, e.g. #0000ff
         '(("todo" "[{") ("discuss" "[{"))))
 #+end_src
 
-* ace-jump-mode (similar to avy)                                    :usepackage:
+* ace-jump-mode                                                     :usepackage:
 #+begin_src emacs-lisp
 (use-package ace-jump-mode
   :ensure t
@@ -1312,7 +1269,7 @@ minor mode sets background color to strings that match color names, e.g. #0000ff
   (setq org-pomodoro-keep-killed-pomodoro-time t))
 #+end_src
 
-* emacs speaks statistics                                           :usepackage:
+* TODO emacs speaks statistics                                      :usepackage:
 - c:\Program Files\R\R-4.1.0\library\base\R\Rprofile
 - add: .libPaths("D:/Daten/R/Library")
 ** FIX custom functions
@@ -1458,6 +1415,36 @@ minor mode sets background color to strings that match color names, e.g. #0000ff
   :ensure t)
 #+end_src
 
+* TODO transient                                                    :usepackage:
+comes with magit
+https://www.reddit.com/r/emacs/comments/mx6xs2/transient_vs_hydra/
+https://www.reddit.com/r/emacs/comments/pn4on3/using_transients_as_custom_menus/
+#+begin_src emacs-lisp
+(global-set-key (kbd "<apps>") 'mx-main-transient)
+(define-transient-command mx-main-transient ()
+  "Main"
+  ["Org-mode"
+   ("oa" "Agenda" org-agenda)
+   ("ol" "Agenda List" org-agenda-list)
+   ("ot" "Agenda Tasks" org-todo-list)
+   ("oh" "home.org" mx-org-file-home)
+   ("oi" "ieeh.org" mx-org-file-ieeh)]
+
+  ["File"
+   ("ff" "Find file" project-find-file)
+   ("fd" "Dired" counsel-find-file)
+   ("fr" "Recent" counsel-buffer-or-recentf)]
+
+  ["Buffer"
+   ("bk" "Kill buffer" mx-kill-buffer)
+   ("bs" "Save Buffer" save-buffer)]
+
+  ["Describe"
+   ("db" "Bind" counsel-descbinds)
+   ("df" "Function" counsel-describe-function)
+   ("dv" "Variable" counsel-describe-variable)]
+)
+#+end_src
 * polymode (Rmarkdown)                                              :usepackage:
 - R:
   - install.packages("rmarkdown", repos = "https://ftp.fau.de/cran/")
@@ -1507,35 +1494,6 @@ makes M-n and M-p look for and M-h highlight the symbol at point
          (yaml-mode . symbol-overlay-mode))
   :custom-face
   ;; no highlighting
-  (symbol-overlay-default-face '((t (:inherit default)))))
+  (symbol-overlay-default-face ((t (:inherit default)))))
 #+end_src
-
-* DISABLED projectile                                               :usepackage:
-- setting for 'ivy' completion
-- just use project.el (emacs 26.1+)
-#+begin_src emacs-lisp
-;; (use-package projectile
-;;   :ensure t
-;;   :disabled t
-;;   :init
-;;   (projectile-global-mode)
-;;   (setq projectile-indexing-method 'native)
-;;   (setq projectile-completion-system 'ivy)
-;;   (setq projectile-enable-caching t)
-;;   :config
-;;   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
-#+end_src
-
-* DISABLED highlight-indentation (for python)                       :usepackage:
-#+begin_src emacs-lisp
-;;(use-package highlight-indentation
-;;  :ensure t
-;;  :disabled t
-;;  :init
-;;  (setq highlight-indentation-blank-lines t)
-;;  ;; python
-;;  (add-hook 'python-mode-hook 'highlight-indentation-mode)
-;;  :config
-;;  (set-face-background 'highlight-indentation-face "#f1f1f1")
-;;  (set-face-background 'highlight-indentation-current-column-face "#d1d1d1"))
-#+end_src
+.
