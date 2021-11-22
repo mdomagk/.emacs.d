@@ -1450,77 +1450,49 @@ Examples:
 - https://www.reddit.com/r/emacs/comments/pn4on3/using_transients_as_custom_menus/
 - https://www.reddit.com/r/emacs/comments/m518xh/transient_api_example_alternative_bindings_part_1/
 - https://www.reddit.com/r/emacs/comments/pon0ee/transient_api_example_part_2_transientdostay/
+- transient kubernetes
+  - https://www.youtube.com/watch?v=w3krYEeqnyk
+  - https://gist.github.com/abrochard/dd610fc4673593b7cbce7a0176d897de
 #+begin_src emacs-lisp
 (global-set-key (kbd "<apps>") 'mx-main-transient)
 (define-transient-command mx-main-transient ()
   "Main"
 
-  [["File"
-    ("ff" "Find file" project-find-file)
-    ("fd" "Dired" counsel-find-file)
-    ("fr" "Recent" counsel-buffer-or-recentf)]
+  [["Files"
+    ("ff" "find" project-find-file)
+    ("fd" "dired" counsel-find-file)
+    ("fr" "recent" counsel-buffer-or-recentf)]
 
    ["Buffer"
-    ("bk" "Kill buffer" mx-kill-buffer)
-    ("bs" "Save Buffer" save-buffer)]
+    ("bk" "kill" mx-kill-buffer)
+    ("bs" "save" save-buffer)]
 
    ["Describe"
-    ("db" "Bind" counsel-descbinds)
-    ("df" "Function" counsel-describe-function)
-    ("dv" "Variable" counsel-describe-variable)]]
+    ("dk" "keybind" counsel-descbinds)
+    ("df" "function" counsel-describe-function)
+    ("dv" "variable" counsel-describe-variable)]]
 
-  [["Org-mode"
-   ("oa" "Agenda" org-agenda)
+  [["Org"
+   ("oa" "agenda" org-agenda)
    ("oh" "home.org" mx-org-file-home)
    ("oi" "ieeh.org" mx-org-file-ieeh)]
 
    ["Git"
-    ("g" "Git status" magit-status)]
+    ("g" "magit" magit-status)]
 
-   ["{targets} run"
-    ("tm" "Make" R_tar_make)
-    ("tM" "Make summary" R_tar_make_summary)
-    ("tv" "Visnetwork targets_only" R_tar_visnetwork_targets_only)
-    ("tV" "Visnetwork" R_tar_visnetwork)]
+   ["{targets}"
+    ("tm" "make" R_tar_make)
+    ("tM" "make summary" R_tar_make_summary)
+    ("tv" "visnetwork" R_tar_visnetwork_targets_only)]
 
-   ["{targets} objects"
-    ("tr" "Read at point" R_tar_read_target_at_point)
-    ("tl" "Load at point" R_tar_load_target_at_point)
-    ("tf" "Function at point" fnmate)]]
+   [" "
+    ("tr" "read at point" R_tar_read_target_at_point)
+    ("tl" "load at point" R_tar_load_target_at_point)
+    ("tf" "fnmate at point" fnmate)]]
 
   [" "
-   ("<apps>" "Quit" transient-quit-one)]
+   ("<apps>" "quit" transient-quit-one)]
 )
-#+end_src
-
-* DISABLED hydra (transient keybinds)                               :usepackage:
-tie related commands into a family of short bindings with a common prefix a hydra
-Package:
-- https://github.com/abo-abo/hydra
-Exapmles:
-- https://ericjmritz.wordpress.com/2015/10/14/some-personal-hydras-for-gnu-emacs/
-
-#+begin_src emacs-lisp
-(use-package hydra
-  :ensure t
-  :disabled t)
-
-(defhydra hydra-zoom ()
-  "zoom"
-  ("+" text-scale-increase "in")
-  ("-" text-scale-decrease "out")
-  ("0" (text-scale-adjust 0) "reset")
-  ("q" nil "quit" :color blue))
-
-(defhydra hydra-org (:color red :columns 3)
-  "Org Mode Movements"
-  ("n" outline-next-visible-heading "next heading")
-  ("p" outline-previous-visible-heading "prev heading")
-  ("N" org-forward-heading-same-level "next heading at same level")
-  ("P" org-backward-heading-same-level "prev heading at same level")
-  ("u" outline-up-heading "up heading")
-  ("g" org-goto "goto" :exit t))
-
 #+end_src
 
 * polymode (Rmarkdown)                                              :usepackage:
