@@ -1463,7 +1463,8 @@ Examples:
     ("ff" "find" project-find-file)
     ("fd" "dired" counsel-find-file)
     ("fr" "recentf" counsel-recentf) ;; counsel-buffer-or-recentf
-    ("fb" "bookmark" counsel-bookmark)]
+    ("fb" "bookmark" counsel-bookmark)
+    ("fg" "git" counsel-git)]
 
    ["Buffer"
     ("bk" "kill" mx-kill-buffer)
