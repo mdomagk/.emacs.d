@@ -1,7 +1,7 @@
 ﻿#+TAGS: custom(c) lisp(l) usepackage(u)
 #+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
 #+TITLE: config.org
-#+Changed: 22.11.2021
+#+Changed: 23.11.2021
 
 * Literate Emacs configuration
 ** [0/5] Open tasks
@@ -478,7 +478,7 @@ move cursor to brackets
 #+begin_src emacs-lisp
 (global-set-key (kbd "C-s") 'save-buffer)
 (global-set-key (kbd "C-w") 'mx-kill-buffer)
-(global-set-key (kbd "C-b") 'switch-to-buffer)
+;;(global-set-key (kbd "C-b") 'switch-to-buffer)
 ;;(global-set-key (kbd "C-S-<tab>") 'next-buffer)
 ;;(global-set-key (kbd "C-<tab>") 'previous-buffer)
 ;;(add-hook 'org-mode-hook
@@ -1038,9 +1038,9 @@ Set up ~package~ and ~use-package~.
   ;; (ivy-minibuffer-match-face-2 ((t :background "#dddddd" :weight bold)))
   :config
   (ivy-mode 1)
-  (setq ivy-display-style nil) ; 'fancy nil
+  ;;(setq ivy-display-style nil) ; 'fancy nil
   ;; use recentf and bookmark files
-  (setq ivy-use-virtual-buffers t)
+  ;;(setq ivy-use-virtual-buffers t)
   ;; no "^" for counsel-M-x etc.
   (setq ivy-initial-inputs-alist nil)
   ;; No extra directories "./" and "../" in find-file
@@ -1085,8 +1085,9 @@ Set up ~package~ and ~use-package~.
   ("<f2>" . ivy-resume)
   ("M-y" . counsel-yank-pop)
   ("M-x" . counsel-M-x)
+  ("C-b" . counsel-switch-buffer)
   ("C-x C-f" . counsel-find-file)
-  ("C-x C-r" . counsel-buffer-or-recentf)
+  ("C-x C-r" . counsel-recentf) ;; counsel-buffer-or-recentf
   ("<f1> v" . counsel-describe-variable)
   ("<f1> f" . counsel-describe-function)
   ("<f1> k" . counsel-descbinds))
@@ -1461,7 +1462,8 @@ Examples:
   [["Files"
     ("ff" "find" project-find-file)
     ("fd" "dired" counsel-find-file)
-    ("fr" "recent" counsel-buffer-or-recentf)]
+    ("fr" "recentf" counsel-recentf) ;; counsel-buffer-or-recentf
+    ("fb" "bookmark" counsel-bookmark)]
 
    ["Buffer"
     ("bk" "kill" mx-kill-buffer)
