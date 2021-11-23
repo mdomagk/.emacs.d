@@ -387,7 +387,7 @@ copy word/symbol at point
 ** mx-next/previous-buffer
 ignore buffers while switching
 #+begin_src emacs-lisp
-(setq mx-skippable-buffers '("*Messages*" "*ESS*" "*Flymake log*" "*Help*" "birthdays.org"))
+(setq mx-skippable-buffers '("*Messages*" "*ESS*" "*Flymake log*" "*Help*" "ieeh.org" "home.org" "birthdays.org"))
 
 (defun mx-next-buffer ()
   "next-buffer that skips certain buffers"
