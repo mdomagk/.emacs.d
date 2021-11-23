@@ -862,8 +862,10 @@ move cursor to brackets
                ;; the current major mode for the buffer.
                "[%m] "
 
-               "[" ;; insert vs overwrite mode, input-method
-               '(:eval (if (overwrite-mode) "Ovr" "Ins"))
+               "[" ;; insert vs overwrite mode, input-method in a tooltip
+               '(:eval (propertize (if overwrite-mode "Ovr" "Ins")
+                                   'help-echo (concat "Buffer is in "
+                                                      (if overwrite-mode "overwrite" "insert") " mode")))
                ;; was this buffer modified since the last save?
                '(:eval (when (buffer-modified-p) (concat ",Mod")))
                ;; is this buffer read-only?
