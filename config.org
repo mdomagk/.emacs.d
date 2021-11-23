@@ -387,7 +387,7 @@ copy word/symbol at point
 ** mx-next/previous-buffer
 ignore buffers while switching
 #+begin_src emacs-lisp
-(setq mx-skippable-buffers '("*Messages*" "*ESS*" "Flymake log*" "*Help*" "birthsdays.org"))
+(setq mx-skippable-buffers '("*Messages*" "*ESS*" "*Flymake log*" "*Help*" "birthsdays.org"))
 
 (defun mx-next-buffer ()
   "next-buffer that skips certain buffers"
@@ -1431,6 +1431,8 @@ https://oremacs.com/swiper/
   (setq ess-auto-width 'window)
   ;; no visible history on eval
   (setq ess-eval-visibly nil)
+  ;; disable flymake on-the-fly syntax checking
+  (setq ess-use-flymake nil)
   ;; start R in current working directory and no history
   (setq ess-ask-for-ess-directory nil)
   (setq ess-local-process-name "R")
