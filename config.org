@@ -1026,7 +1026,7 @@ Set up ~package~ and ~use-package~.
 
 
 * ivy                                                               :usepackage:
-- http://oremacs.com/swiper/#introduction
+- http://oremacs.com/swiper/
 - https://sam217pa.github.io/2016/09/13/from-helm-to-ivy/
 #+begin_src emacs-lisp
 (use-package ivy
@@ -1052,8 +1052,16 @@ Set up ~package~ and ~use-package~.
   ;;         (org-mode . ivy-org)))
   ;; minibuffer
   (bind-key "C-SPC" 'ivy-restrict-to-matches ivy-minibuffer-map)
+  ;; minibuffer - lines
+  (bind-key "C-<tab>" 'ivy-next-line ivy-minibuffer-map)
+  (bind-key "C-S-<tab>" 'ivy-previous-line ivy-minibuffer-map)
+  ;; minibuffer - scrolling - up
   (bind-key "<next>" 'ivy-scroll-up-command ivy-minibuffer-map)
+  (bind-key "<right>" 'ivy-scroll-up-command ivy-minibuffer-map)
+    ;; minibuffer - scrolling - down
   (bind-key "<prior>" 'ivy-scroll-down-command ivy-minibuffer-map)
+  (bind-key "<left>" 'ivy-scroll-down-command ivy-minibuffer-map)
+
   (bind-key "C-m" 'ivy-alt-done ivy-minibuffer-map)
   (setq ivy-count-format "(%d/%d) ")
   ;; allow input not in order while searching
@@ -1061,6 +1069,7 @@ Set up ~package~ and ~use-package~.
 #+end_src
 
 * counsel (for ivy)                                                 :usepackage:
+https://oremacs.com/swiper/
 #+begin_src emacs-lisp
 
 ;; dont truncate lines in minibuffer
@@ -1086,6 +1095,7 @@ Set up ~package~ and ~use-package~.
   ("M-y" . counsel-yank-pop)
   ("M-x" . counsel-M-x)
   ("C-b" . counsel-switch-buffer)
+  ("C-<tab>" . counsel-switch-buffer)
   ("C-x C-f" . counsel-find-file)
   ("C-x C-r" . counsel-recentf) ;; counsel-buffer-or-recentf
   ("<f1> v" . counsel-describe-variable)
@@ -1094,6 +1104,7 @@ Set up ~package~ and ~use-package~.
 #+end_src
 
 * swiper (for ivy)                                                  :usepackage:
+https://oremacs.com/swiper/
 #+begin_src emacs-lisp
 (use-package swiper
   :ensure t)
@@ -1468,7 +1479,8 @@ Examples:
 
    ["Buffer"
     ("bk" "kill" mx-kill-buffer)
-    ("bs" "save" save-buffer)]
+    ("bs" "save" save-buffer)
+    ("bl" "list" list-buffers)]
 
    ["Describe"
     ("dk" "keybind" counsel-descbinds)
