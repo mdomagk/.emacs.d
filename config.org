@@ -229,7 +229,7 @@ C-c <left> to get to the previous window configuration
 ** highligh current line off
 1 (on) / 0 (off)
 #+begin_src emacs-lisp
-(global-hl-line-mode 0)
+(global-hl-line-mode 1)
 #+end_src
 
 ** enable CUA mode
@@ -387,7 +387,7 @@ copy word/symbol at point
 ** mx-next/previous-buffer
 ignore buffers while switching
 #+begin_src emacs-lisp
-(setq mx-skippable-buffers '("*Messages*" "*ESS*" "*Flymake log*" "*Help*" "ieeh.org" "home.org" "birthdays.org"))
+(setq mx-skippable-buffers '("*Messages*" "*ESS*" "*Flymake log*" "*Help*" "ieeh.org" "home.org" "birthdays.org" "*Calendar*"))
 
 (defun mx-next-buffer ()
   "next-buffer that skips certain buffers"
@@ -849,45 +849,26 @@ move cursor to brackets
 ;; use setq-default to set it for /all/ modes
 (setq-default mode-line-format
               (list
-               ;; the buffer name; the file name as a tool tip
-               '(:eval (propertize "%b "
-                                   'help-echo (buffer-file-name)))
+               ;; buffer name with face
+               ;;(propertize " %b " 'face 'mode-line-buffer-id)
+               "%b "
 
                ;; line and column
                "(%02l,%02c) "
 
-               ;; ;; relative position, size of file
+               ;; relative position, size of file
                "[%p/%I] "
 
                ;; the current major mode for the buffer.
-               "["
-               '(:eval (propertize "%m" 'help-echo buffer-file-coding-system))
-               "] "
+               "[%m] "
 
-               "[" ;; insert vs overwrite mode, input-method in a tooltip
-               '(:eval (propertize (if overwrite-mode "Ovr" "Ins")
-                                   'help-echo (concat "Buffer is in "
-                                                      (if overwrite-mode "overwrite" "insert") " mode")))
-
+               "[" ;; insert vs overwrite mode, input-method
+               '(:eval (if (overwrite-mode) "Ovr" "Ins"))
                ;; was this buffer modified since the last save?
-               '(:eval (when (buffer-modified-p)
-                         (concat ","  (propertize "Mod"
-                                                  'help-echo "Buffer has been modified"))))
-
+               '(:eval (when (buffer-modified-p) (concat ",Mod")))
                ;; is this buffer read-only?
-               '(:eval (when buffer-read-only
-                         (concat ","  (propertize "RO"
-                                                  'help-echo "Buffer is read-only"))))
-               ;; "] "
-               "]"
-               ;; ;; add the time, with the date and the emacs uptime in the tooltip
-               ;; '(:eval (propertize (format-time-string "%H:%M")
-               ;;           'help-echo
-               ;;           (concat (format-time-string "%c; ")
-               ;;                   (emacs-uptime "Uptime:%hh%mm"))))
-               " "
-               ;; i don't want to see minor-modes; but if you want, uncomment this:
-               ;; minor-mode-alist  ;; list of minor modes
+               '(:eval (when (buffer-read-only) (concat ",RO")))
+               "] "
 
                ;; i want to see the 'pomodoro' status using (%M = global-mode-string)
                "%M"
@@ -1083,9 +1064,9 @@ Set up ~package~ and ~use-package~.
   (bind-key "<prior>" 'ivy-scroll-down-command ivy-minibuffer-map)
   (bind-key "<left>" 'ivy-scroll-down-command ivy-minibuffer-map)
   (bind-key "C-m" 'ivy-alt-done ivy-minibuffer-map)
-  (setq ivy-count-format "(%d/%d) ")
+  (setq ivy-count-format "(%d/%d) "))
   ;; allow input not in order while searching
-  (setq ivy-re-builders-alist '((t . ivy--regex-ignore-order))))
+  ;;(setq ivy-re-builders-alist '((t . ivy--regex-ignore-order))))
 #+end_src
 
 * counsel (for ivy)                                                 :usepackage:
