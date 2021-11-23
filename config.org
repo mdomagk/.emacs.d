@@ -1546,6 +1546,6 @@ makes M-n and M-p look for and M-h highlight the symbol at point
          (yaml-mode . symbol-overlay-mode))
   :custom-face
   ;; no highlighting
-  (symbol-overlay-default-face '((t (:background nil)))))
+  (symbol-overlay-default-face ((t (:background nil)))))
 #+end_src
 .
