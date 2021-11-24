@@ -94,7 +94,7 @@ nextcloud syncs .#* files and needs a fix for .sync-exclude.lst
 
 ** debugging disabled
 #+begin_src emacs-lisp
-(setq debug-on-error nil) ;; t nil
+(setq debug-on-error t) ;; t nil
 #+end_src
 
 ** indendation with space
@@ -303,8 +303,8 @@ instead of yes or no accept y or n
 (setq default-truncate-lines t)
 ;; make side by side buffers function the same as the main window
 (setq truncate-partial-width-windows nil)
-;; Add F12 to toggle line wrap
-(global-set-key (kbd "<f8>") 'toggle-truncate-lines)
+;; Add F3 to toggle line wrap
+(global-set-key (kbd "<f3>") 'toggle-truncate-lines)
 
 ;;(setq-default truncate-lines nil)
 #+end_src
@@ -1001,16 +1001,13 @@ https://www.emacswiki.org/emacs/ElectricPair (for specific modes only)
 (load "~/.emacs.d/lisp/xah-find.el")
 #+end_src
 
-* rainbow-mode                                                            :lisp:
+* FIX rainbow-mode                                                        :lisp:
 minor mode sets background color to strings that match color names, e.g. #0000ff is displayed in white with a blue background
 #+begin_src emacs-lisp
-(load "~/.emacs.d/lisp/rainbow-mode.el")
-;; python
-(add-hook 'python-mode-hook 'rainbow-mode)
-;; emacs speaks statistics R
-(add-hook 'ess-mode-hook 'rainbow-mode)
-;; lisp
-(add-hook 'emacs-lisp-mode-hook 'rainbow-mode)
+;; (load "~/.emacs.d/lisp/rainbow-mode.el")
+;; ;; FIXME error on startup?
+;; ;;(add-hook 'ess-mode-hook 'rainbow-mode)
+;; (add-hook 'emacs-lisp-mode-hook 'rainbow-mode)
 #+end_src
 
 * use-package                                                       :usepackage:
@@ -1210,16 +1207,13 @@ https://oremacs.com/swiper/
 #+begin_src emacs-lisp
 (use-package ace-jump-mode
   :ensure t
-  :bind ("M-SPC" . ace-jump-mode)
-  :init
-  (add-hook 'org-mode-hook
-            '(lambda ()
-               (define-key org-mode-map (kbd "M-SPC") 'ace-jump-mode)
-               ))
-  (add-hook 'inferior-ess-mode-hook
-            '(lambda ()
-               (local-set-key (kbd "M-SPC") 'ace-jump-mode)
-               )))
+  :bind
+  ("M-SPC" . ace-jump-mode)
+  (:map org-mode
+       ("M-SPC" . ace-jump-mode))
+  (:map inferior-ess-mode-hook
+       ("M-SPC" . ace-jump-mode))
+  )
 #+end_src
 
 * ace-window                                                        :usepackage:
@@ -1244,17 +1238,13 @@ https://oremacs.com/swiper/
 #+begin_src emacs-lisp
 (use-package rainbow-delimiters
   :ensure t
-  :init
-  ;; emacs-lisp
-  (add-hook 'emacs-lisp-mode-hook 'rainbow-delimiters-mode)
-  ;; python
-  (add-hook 'python-mode-hook 'rainbow-delimiters-mode)
-  ;; latex
-  (add-hook 'tex-mode-hook 'rainbow-delimiters-mode)
-  (add-hook 'LaTeX-mode-hook 'rainbow-delimiters-mode)
-  ;; emacs speaks statistics R
-  (add-hook 'ess-mode-hook 'rainbow-delimiters-mode))
-;;(add-hook 'inferior-ess-mode-hook 'rainbow-delimiters-mode))
+  :hook
+  (tex-mode-hook . rainbow-delimiters-mode)
+  (LaTeX-mode-hook . rainbow-delimiters-mode)
+  (ess-mode-hook . rainbow-delimiters-mode)
+  (inferior-ess-mode-hook . rainbow-delimiters-mode)
+  (python-mode-hook . rainbow-delimiters-mode)
+  (emacs-lisp-mode-hook . rainbow-delimiters-mode))
 #+end_src
 
 * goto-change                                                       :usepackage:
@@ -1403,23 +1393,18 @@ https://oremacs.com/swiper/
   :commands R
   :init
   (require 'ess-site)
-  ;; Console
-  (add-hook 'inferior-ess-mode-hook '(lambda ()
-                                       ;;(local-set-key (kbd "C-c TAB") 'ess-complete-object-name)
-                                       (local-set-key (kbd ";") 'ess-insert-assign)
-                                       (local-set-key (kbd "M--") 'ess-insert-assign)
-                                       (local-set-key (kbd "<backtab>") 'R_insert_pipe_operator)))
-  ;; Code
-  (add-hook 'ess-mode-hook '(lambda ()
-                              ;;(local-set-key (kbd "C-c TAB") 'ess-complete-object-name)
-                              (local-set-key (kbd ";") 'ess-insert-assign)
-                              (local-set-key (kbd "M--") 'ess-insert-assign)
-                              (local-set-key (kbd "<backtab>") 'R_insert_pipe_operator)
-                              (local-set-key [(shift return)] 'R_eval_current_line_and_step)
-                              (local-set-key (kbd "C-c C-l") 'R_tar_load_target_at_point)
-                              ;;(local-set-key (kbd "") 'fnmate)
-                              ;;(local-set-key (kbd "") 'fnmate-below)
-                              ))
+  :bind
+  (:map inferior-ess-mode-hook
+        (";" .   ess-insert-assign)
+        ("M--" . ess-insert-assign)
+        ("<backtab>" . R_insert_pipe_operator))
+  (:map ess-mode-hook
+        (";" .   ess-insert-assign)
+        ("M--" . ess-insert-assign)
+        ("<f8>" . ess-eval-paragraph-and-step)
+        ("<backtab>" . R_insert_pipe_operator)
+        ("<shift>-<return>" . R_eval_current_line_and_step)
+        ("C-c C-l" . R_tar_load_target_at_point))
   :config
   (setq ess-auto-width 'window)
   ;; no visible history on eval
