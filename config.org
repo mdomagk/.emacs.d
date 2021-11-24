@@ -851,7 +851,7 @@ move cursor to brackets
               (list
 
                ;; buffer name with face
-               "   "
+               "--- "
                (propertize "%b " 'face 'mode-line-buffer-id)
                ;;"%b "
 
@@ -876,7 +876,7 @@ move cursor to brackets
 
                ;; i want to see the 'pomodoro' status using (%M = global-mode-string)
                "%M"
-               ;;"%-" ;; fill with '-'
+               "%-" ;; fill with '-'
                ))
 #+end_src
 
@@ -1580,14 +1580,21 @@ minimal mode-line configuration
   :ensure t
   :init (mood-line-mode)
   :custom-face
-  (mood-line-major-mode ((t (:inherit mode-line))))
-  (mood-line-status-neutral ((t (:inherit mode-line))))
-  (mood-line-status-info ((t (:inherit mode-line))))
-  (mood-line-status-error ((t (:inherit mode-line-highlight))))
-  (mood-line-modified ((t (:inherit mode-line-highlight))))
-  ;;(mood-line-status-success ((t (:inherit mode-line))))
-  ;;(mood-line-status-warning ((t (:inherit mode-line-highlight))))
-  (mood-line-unimportant ((t (:inherit mode-line)))))
+  (mood-line-major-mode ((t (:background nil))))
+  (mood-line-unimportant ((t (:foreground nil))))
+  (mood-line-modified ((t (:inherit warning)))))
+
+;; ;; mood-line faces
+;; mood-line-buffer-name
+;; mood-line-major-mode
+;; mood-line-status-neutral
+;; mood-line-status-info
+;; mood-line-status-success
+;; mood-line-status-warning
+;; mood-line-status-error
+;; mood-line-unimportant
+;; mood-line-modified
+
 #+end_src
 
 * symbol-overlay                                                    :usepackage:
