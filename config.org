@@ -1464,7 +1464,13 @@ https://oremacs.com/swiper/
 * magit                                                             :usepackage:
 #+begin_src emacs-lisp
 (use-package magit
-  :ensure t)
+  :ensure t
+  :config
+  ;; update mode-line git status more often
+  (setq auto-revert-check-vc-info t)
+  ;; check every 5 seconds
+  (setq auto-revert-interval 5)
+  )
 #+end_src
 
 * TODO transient (transient keybinds)                               :usepackage:
