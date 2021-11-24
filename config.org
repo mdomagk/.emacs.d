@@ -573,7 +573,7 @@ move cursor to brackets
         ;;("CANCELED"  . shadow)
         ))
 
-(setq org-agenda-filter-preset '("-someday"))
+;;(setq org-agenda-filter-preset '("-someday"))
 
 ;; Truncate clocked-in tasks in mode-line def. 0
 (setq org-clock-string-limit 8)
@@ -716,10 +716,10 @@ move cursor to brackets
           (tags-todo "Web" ((org-agenda-overriding-header "Web-Links")))
           (tags-todo "Computer" ((org-agenda-overriding-header "Computer")))))
 
-        ("f" "Someday Tasks"
-         ((tags-todo "someday"
-                     ((org-agenda-filter-preset '("+someday"))
-                      (org-agenda-overriding-header "Someday Tasks")))))
+        ;;("f" "Someday Tasks"
+        ;; ((tags-todo "someday"
+        ;;             ((org-agenda-filter-preset '("+someday"))
+        ;;              (org-agenda-overriding-header "Someday Tasks")))))
         ))
 
 #+end_src
