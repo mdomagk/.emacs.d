@@ -505,8 +505,8 @@ move cursor to brackets
 (global-set-key (kbd "C-s") 'save-buffer)
 (global-set-key (kbd "C-w") 'mx-kill-buffer)
 (global-set-key (kbd "C-b") 'switch-to-buffer)
-(global-set-key (kbd "C-<tab>") 'mx-next-buffer)
-(global-set-key (kbd "C-S-<tab>") 'mx-previous-buffer)
+(global-set-key (kbd "C-S-<tab>") 'mx-next-buffer)
+(global-set-key (kbd "C-<tab>") 'mx-previous-buffer)
 ;;(add-hook 'org-mode-hook
 ;;          '(lambda ()
 ;;             (define-key org-mode-map (kbd "C-<tab>") 'previous-buffer)))
