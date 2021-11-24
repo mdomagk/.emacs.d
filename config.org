@@ -1,7 +1,7 @@
 ﻿#+TAGS: custom(c) lisp(l) usepackage(u)
 #+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
 #+TITLE: config.org
-#+Changed: 23.11.2021
+#+Changed: 24.11.2021
 
 * Literate Emacs configuration
 ** [0/5] Open tasks
@@ -290,10 +290,10 @@ instead of yes or no accept y or n
 
 ** set auto-save directory
 #+begin_src emacs-lisp
-;;(setq auto-save-default nil) ; just turn off
+(setq auto-save-default nil) ; just turn off
 
-;; move to one directory
-(setq auto-save-file-name-transforms `((".*" "~/.emacs.d/auto-save/" t)))
+;; ;; move to one directory
+;;(setq auto-save-file-name-transforms `((".*" "~/.emacs.d/auto-save/" t)))
 #+end_src
 
 ** visual line mode and toggle to truncate my lines
@@ -498,7 +498,7 @@ move cursor to brackets
 #+begin_src emacs-lisp
 (global-set-key (kbd "C-s") 'save-buffer)
 (global-set-key (kbd "C-w") 'mx-kill-buffer)
-;;(global-set-key (kbd "C-b") 'switch-to-buffer)
+(global-set-key (kbd "C-b") 'switch-to-buffer)
 (global-set-key (kbd "C-<tab>") 'mx-next-buffer)
 (global-set-key (kbd "C-S-<tab>") 'mx-previous-buffer)
 ;;(add-hook 'org-mode-hook
@@ -1043,15 +1043,15 @@ Set up ~package~ and ~use-package~.
   (ivy-mode 1)
   ;;(setq ivy-display-style nil) ; 'fancy nil
   ;; use recentf and bookmark files
-  ;;(setq ivy-use-virtual-buffers t)
+  (setq ivy-use-virtual-buffers t)
   ;; no "^" for counsel-M-x etc.
   (setq ivy-initial-inputs-alist nil)
   ;; No extra directories "./" and "../" in find-file
   (setq ivy-extra-directories '("./"))
-  ;; Always ignore buffers set in `ivy-ignore-buffers'
-  (setq ivy-use-ignore-default 'always)
-  ;; Ignore some buffers in `ivy-switch-buffer'
-  (setq ivy-ignore-buffers mx-skippable-buffers)
+  ;; ;; Always ignore buffers set in `ivy-ignore-buffers'
+  ;; (setq ivy-use-ignore-default 'always)
+  ;; ;; Ignore some buffers in `ivy-switch-buffer'
+  ;; (setq ivy-ignore-buffers mx-skippable-buffers)
   ;; custom faces for ivy-switch-buffer
   ;; M-x list-faces-display
   ;; (setq ivy-switch-buffer-faces-alist
@@ -1097,7 +1097,7 @@ https://oremacs.com/swiper/
   ("<f2>" . ivy-resume)
   ("M-y" . counsel-yank-pop)
   ("M-x" . counsel-M-x)
-  ("C-b" . counsel-switch-buffer)
+  ;;("C-b" . counsel-buffer-or-recentf)
   ("C-x C-f" . counsel-find-file)
   ("C-x C-r" . counsel-recentf) ;; counsel-buffer-or-recentf
   ("<f1> v" . counsel-describe-variable)
@@ -1546,6 +1546,27 @@ Examples:
   (interactive "sHeader: ")
   (insert (concat "```{r " header "}\n\n```"))
   (forward-line -1))
+#+end_src
+
+* DISABLED popper                                                   :usepackage:
+#+begin_src emacs-lisp
+(use-package popper
+  :ensure t
+  :disabled t
+  ;:bind (("C-`"   . popper-toggle-latest)
+  ;       ("M-`"   . popper-cycle)
+  ;       ("C-M-`" . popper-toggle-type))
+  :init
+  (setq popper-reference-buffers
+        '("\\*Messages\\*"
+          "\\*ESS\\*"
+          "\\*Flymake log\\*"
+          "Output\\*$"
+          "\\*Async Shell Command\\*"
+          help-mode
+          compilation-mode))
+  (popper-mode +1)
+  (popper-echo-mode +1))                ; For echo area hints
 #+end_src
 
 * symbol-overlay                                                    :usepackage:
