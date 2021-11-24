@@ -37,7 +37,7 @@ M-x getenv <RET> PATH <RET>
 #+begin_src emacs-lisp
 (when (string-equal system-name "EVMI60")
   (let ((mypaths
-         '("C:/Program Files/R/R-4.1.1/bin/x64"
+         '("C:/Program Files/R/R-4.1.2/bin/x64"
            "D:/Privat/Ledger"
            "D:/Users/domagk/AppData/Local/Pandoc"
            "C:/tools/texlive/2017/bin/win32"
