@@ -849,9 +849,11 @@ move cursor to brackets
 ;; use setq-default to set it for /all/ modes
 (setq-default mode-line-format
               (list
+
                ;; buffer name with face
-               ;;(propertize " %b " 'face 'mode-line-buffer-id)
-               "%b "
+               "--- "
+               (propertize "%b " 'face 'mode-line-buffer-id)
+               ;;"%b "
 
                ;; line and column
                "(%02l,%02c) "
@@ -1176,6 +1178,8 @@ https://oremacs.com/swiper/
   (setq org-todo-keyword-faces
         '(("PROJ"  . (:weight bold :box (:line-width 1 :color "#C8ABD8") :foreground "#C8ABD8" :background "#E0E0F9"))
           ("WAITING"  . (:weight bold :box (:line-width 1 :color "#BFBF65") :foreground "#BFBF65" :background "#FFFFCC"))))
+  :custom-face
+  (mode-line-buffer-id  ((t (:weight normal))))
   :config
   (load-theme 'leuven t))
 #+end_src
@@ -1567,6 +1571,23 @@ Examples:
           compilation-mode))
   (popper-mode +1)
   (popper-echo-mode +1))                ; For echo area hints
+#+end_src
+
+* mood-line                                                         :usepackage:
+minimal mode-line configuration
+#+begin_src emacs-lisp
+(use-package mood-line
+  :ensure t
+  :init (mood-line-mode)
+  :custom-face
+  (mood-line-major-mode ((t (:inherit mode-line))))
+  (mood-line-status-neutral ((t (:inherit mode-line))))
+  (mood-line-status-info ((t (:inherit mode-line))))
+  (mood-line-status-error ((t (:inherit mode-line-highlight))))
+  (mood-line-modified ((t (:inherit mode-line-highlight))))
+  ;;(mood-line-status-success ((t (:inherit mode-line))))
+  ;;(mood-line-status-warning ((t (:inherit mode-line-highlight))))
+  (mood-line-unimportant ((t (:inherit mode-line)))))
 #+end_src
 
 * symbol-overlay                                                    :usepackage:
