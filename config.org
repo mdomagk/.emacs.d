@@ -94,7 +94,7 @@ nextcloud syncs .#* files and needs a fix for .sync-exclude.lst
 
 ** debugging disabled
 #+begin_src emacs-lisp
-(setq debug-on-error t) ;; t nil
+(setq debug-on-error nil) ;; t nil
 #+end_src
 
 ** indendation with space
@@ -1394,6 +1394,8 @@ https://oremacs.com/swiper/
   :commands R
   :init
   (require 'ess-site)
+  (add-hook 'ess-mode-hook '(lambda ()
+                              (local-set-key [(shift return)] 'R_eval_current_line_and_step)))
   :bind
   (:map inferior-ess-mode-map
         (";" .   ess-insert-assign)
@@ -1404,7 +1406,6 @@ https://oremacs.com/swiper/
         ("M--" . ess-insert-assign)
         ("<f8>" . ess-eval-paragraph-and-step)
         ("<backtab>" . R_insert_pipe_operator)
-        ("<shift>-<return>" . R_eval_current_line_and_step)
         ("C-c C-l" . R_tar_load_target_at_point))
   :config
   (setq ess-auto-width 'window)
