@@ -1004,10 +1004,11 @@ https://www.emacswiki.org/emacs/ElectricPair (for specific modes only)
 * FIX rainbow-mode                                                        :lisp:
 minor mode sets background color to strings that match color names, e.g. #0000ff is displayed in white with a blue background
 #+begin_src emacs-lisp
-;; (load "~/.emacs.d/lisp/rainbow-mode.el")
-;; ;; FIXME error on startup?
-;; ;;(add-hook 'ess-mode-hook 'rainbow-mode)
-;; (add-hook 'emacs-lisp-mode-hook 'rainbow-mode)
+(load "~/.emacs.d/lisp/rainbow-mode.el")
+
+(add-hook 'ess-mode-hook 'rainbow-mode)
+
+(add-hook 'emacs-lisp-mode-hook 'rainbow-mode)
 #+end_src
 
 * use-package                                                       :usepackage:
@@ -1209,9 +1210,9 @@ https://oremacs.com/swiper/
   :ensure t
   :bind
   ("M-SPC" . ace-jump-mode)
-  (:map org-mode
+  (:map org-mode-map
        ("M-SPC" . ace-jump-mode))
-  (:map inferior-ess-mode-hook
+  (:map inferior-ess-mode-map
        ("M-SPC" . ace-jump-mode))
   )
 #+end_src
@@ -1394,11 +1395,11 @@ https://oremacs.com/swiper/
   :init
   (require 'ess-site)
   :bind
-  (:map inferior-ess-mode-hook
+  (:map inferior-ess-mode-map
         (";" .   ess-insert-assign)
         ("M--" . ess-insert-assign)
         ("<backtab>" . R_insert_pipe_operator))
-  (:map ess-mode-hook
+  (:map ess-mode-map
         (";" .   ess-insert-assign)
         ("M--" . ess-insert-assign)
         ("<f8>" . ess-eval-paragraph-and-step)
