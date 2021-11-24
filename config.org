@@ -851,7 +851,7 @@ move cursor to brackets
               (list
 
                ;; buffer name with face
-               "--- "
+               "   "
                (propertize "%b " 'face 'mode-line-buffer-id)
                ;;"%b "
 
@@ -876,7 +876,7 @@ move cursor to brackets
 
                ;; i want to see the 'pomodoro' status using (%M = global-mode-string)
                "%M"
-               "%-" ;; fill with '-'
+               ;;"%-" ;; fill with '-'
                ))
 #+end_src
 
