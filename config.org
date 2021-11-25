@@ -1514,7 +1514,7 @@ Examples:
 
    ["{targets} objects"
     ("tr" "read at point" R_tar_read_target_at_point)
-    ("tl" "load at point" R_tar_load_target_at_point)
+    ("tt" "load at point" R_tar_load_target_at_point)
     ("tf" "fnmate at point" fnmate)]]
 
   [" "
