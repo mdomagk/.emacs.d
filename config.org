@@ -229,7 +229,7 @@ C-c <left> to get to the previous window configuration
 ** highligh current line off
 1 (on) / 0 (off)
 #+begin_src emacs-lisp
-(global-hl-line-mode 1)
+(global-hl-line-mode 0)
 #+end_src
 
 ** enable CUA mode
@@ -1040,11 +1040,10 @@ Set up ~package~ and ~use-package~.
 #+begin_src emacs-lisp
 (use-package ivy
   :ensure t
-  :diminish (ivy-mode . "")
-  ;; :custom-face
-  ;; (ivy-virtual ((t :foreground #7F7F7F)))
-  ;; (ivy-current-match ((t :inherit 'hl-line)))
-  ;; (ivy-minibuffer-match-face-2 ((t :background "#dddddd" :weight bold)))
+  :custom-face
+    (ivy-current-match ((t :background "#B6D6FD")))
+    ;; (ivy-virtual ((t :foreground #7F7F7F)))
+    ;; (ivy-minibuffer-match-face-2 ((t :background "#dddddd" :weight bold)))
   :config
   (ivy-mode 1)
   ;;(setq ivy-display-style nil) ; 'fancy nil
@@ -1072,9 +1071,9 @@ Set up ~package~ and ~use-package~.
   (bind-key "<prior>" 'ivy-scroll-down-command ivy-minibuffer-map)
   (bind-key "<left>" 'ivy-scroll-down-command ivy-minibuffer-map)
   (bind-key "C-m" 'ivy-alt-done ivy-minibuffer-map)
-  (setq ivy-count-format "(%d/%d) "))
+  (setq ivy-count-format "(%d/%d) ")
   ;; allow input not in order while searching
-  ;;(setq ivy-re-builders-alist '((t . ivy--regex-ignore-order))))
+  (setq ivy-re-builders-alist '((t . ivy--regex-ignore-order))))
 #+end_src
 
 * counsel (for ivy)                                                 :usepackage:
