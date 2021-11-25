@@ -1,7 +1,7 @@
 ﻿#+TAGS: custom(c) lisp(l) usepackage(u)
 #+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
 #+TITLE: config.org
-#+Changed: 24.11.2021
+#+Changed: 25.11.2021
 
 * Literate Emacs configuration
 ** [0/5] Open tasks
@@ -1285,8 +1285,9 @@ https://oremacs.com/swiper/
 #+end_src
 
 * TODO emacs speaks statistics                                      :usepackage:
-- c:\Program Files\R\R-4.1.0\library\base\R\Rprofile
-- add: .libPaths("D:/Daten/R/Library")
+http://ess.r-project.org/Manual/ess.html
+c:\Program Files\R\R-4.1.0\library\base\R\Rprofile
+add: .libPaths("D:/Daten/R/Library")
 ** FIX custom functions
 #+begin_src emacs-lisp
 (defun R_insert_pipe_operator ()
@@ -1431,13 +1432,13 @@ https://oremacs.com/swiper/
   (setq tab-always-indent 'complete)
   (setq ess-style 'RStudio)
   (setq ess-indent-with-fancy-comments nil)
-  ;; Dedicated windows(frames)
-  ;; https://ess.r-project.org/Manual/ess.html#Controlling-buffer-display
-  (setq display-buffer-alist
-      '(("^\\*R"
-         (display-buffer-reuse-window display-buffer-pop-up-frame)
-         (reusable-frames . 0)
-         (dedicated . nil)))))
+  ;; Dedicated windows(frames)?
+  ;;;; https://ess.r-project.org/Manual/ess.html#Controlling-buffer-display
+  ;;(setq display-buffer-alist
+  ;;    '(("^\\*R"
+  ;;       (display-buffer-reuse-window display-buffer-pop-up-frame)
+  ;;       (reusable-frames . 0))))
+  )
 #+end_src
 
 * yaml-mode                                                         :usepackage:
