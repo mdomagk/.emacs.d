@@ -1040,8 +1040,8 @@ Set up ~package~ and ~use-package~.
 #+begin_src emacs-lisp
 (use-package ivy
   :ensure t
-  :custom-face
-    (ivy-current-match ((t :background "#B6D6FD")))
+  ;;:custom-face
+    ;;(ivy-current-match ((t :background "#B6D6FD")))
     ;; (ivy-virtual ((t :foreground #7F7F7F)))
     ;; (ivy-minibuffer-match-face-2 ((t :background "#dddddd" :weight bold)))
   :config
