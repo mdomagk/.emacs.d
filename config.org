@@ -1234,7 +1234,7 @@ https://oremacs.com/swiper/
 #+end_src
 
 * rainbow-delimiters                                                :usepackage:
-   - https://github.com/Fanael/rainbow-delimiters
+https://github.com/Fanael/rainbow-delimiters
 #+begin_src emacs-lisp
 (use-package rainbow-delimiters
   :ensure t
