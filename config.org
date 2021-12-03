@@ -59,7 +59,7 @@ M-x getenv <RET> PATH <RET>
            "D:/Max/sqlite3"
            "C:/texlive/2020/bin/win32"
            "C:/Users/Max/AppData/Local/Pandoc"
-           "C:/Program Files/R/R-4.1.1/bin/x64"
+           "C:/Program Files/R/R-4.1.2/bin/x64"
            "C:/Program Files/git/bin"
            "C:/Program Files/Graphviz/bin"
            "C:/Program Files (x86)/GNU GnuPG")))
