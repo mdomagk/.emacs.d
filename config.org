@@ -1,7 +1,7 @@
 ﻿#+TAGS: custom(c) lisp(l) usepackage(u)
 #+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
 #+TITLE: config.org
-#+Changed: 25.11.2021
+#+Changed: 03.12.2021
 
 * Literate Emacs configuration
 ** [0/5] Open tasks
@@ -809,6 +809,8 @@ move cursor to brackets
  ("8r" "`r @@`")
  ("8rr" "```{r}\n@@\n```")
  ("8ra" "&rarr;")
+
+ ("8n" "&nbsp;")
 
  ("8R" "#+begin_src R\n@@\n#+end_src")
  ))
