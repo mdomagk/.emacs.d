@@ -1,7 +1,7 @@
 ﻿#+TAGS: custom(c) lisp(l) usepackage(u)
 #+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
 #+TITLE: config.org
-#+Changed: 08.12.2021
+#+Changed: 11.12.2021
 
 * Literate Emacs configuration
 ** [0/5] Open tasks
@@ -48,7 +48,9 @@ M-x getenv <RET> PATH <RET>
            "C:/Program Files (x86)/gnupg14"
            "C:/Python39")))
     (setenv "PATH" (mapconcat 'identity mypaths ";"))
-    (setq exec-path (append mypaths (list "." exec-directory)))))
+    (setq exec-path (append mypaths (list "." exec-directory))))
+  (setq mx-use-theme "leuven")
+)
 #+end_src
 
 ** HOME (Win10) LAPTOP-ULMJC9IQ
@@ -64,7 +66,9 @@ M-x getenv <RET> PATH <RET>
            "C:/Program Files/Graphviz/bin"
            "C:/Program Files (x86)/GNU GnuPG")))
     (setenv "PATH" (mapconcat 'identity mypaths ";"))
-    (setq exec-path (append mypaths (list "." exec-directory)))))
+    (setq exec-path (append mypaths (list "." exec-directory))))
+  (setq mx-use-theme "dracula")
+)
 #+end_src
 
 * general settings                                                      :custom:
@@ -1015,6 +1019,20 @@ minor mode sets background color to strings that match color names, e.g. #0000ff
 (add-hook 'emacs-lisp-mode-hook 'rainbow-mode)
 #+end_src
 
+* dracula-theme                                                           :lisp:
+#+begin_src emacs-lisp
+(load "~/.emacs.d/lisp/dracula-theme.el")
+
+;; Don't change the font size for some headings and titles (default t)
+(setq dracula-enlarge-headings nil)
+
+(when (string-equal mx-use-theme "dracula")
+  (setq org-todo-keyword-faces
+        '(("PROJ"  . (:inherit org-todo))
+          ("WAITING"  . (:inherit org-todo))))
+  (load-theme 'dracula t))
+#+end_src
+
 * use-package                                                       :usepackage:
 Set up ~package~ and ~use-package~.
 #+begin_src emacs-lisp
@@ -1172,6 +1190,7 @@ https://oremacs.com/swiper/
 * leuven-theme                                                      :usepackage:
 #+begin_src emacs-lisp
 (use-package leuven-theme
+  :if (string-equal mx-use-theme "leuven")
   :ensure t
   ;;:disabled t
   :custom-face
