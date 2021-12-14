@@ -1,7 +1,7 @@
 ﻿#+TAGS: custom(c) lisp(l) usepackage(u)
 #+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
 #+TITLE: config.org
-#+Changed: 11.12.2021
+#+Changed: 15.12.2021
 
 * Literate Emacs configuration
 ** [0/5] Open tasks
@@ -67,7 +67,7 @@ M-x getenv <RET> PATH <RET>
            "C:/Program Files (x86)/GNU GnuPG")))
     (setenv "PATH" (mapconcat 'identity mypaths ";"))
     (setq exec-path (append mypaths (list "." exec-directory))))
-  (setq mx-use-theme "dracula")
+  (setq mx-use-theme "leuven")
 )
 #+end_src
 
@@ -1344,6 +1344,11 @@ add: .libPaths("D:/Daten/R/Library")
   (interactive)
     (ess-eval-linewise "targets::tar_make()\n"))
 
+(defun R_bookdown_render_book ()
+  "call bookdown::render_book."
+  (interactive)
+    (ess-eval-linewise "bookdown::render_book(\"index.Rmd\")\n"))
+
 (defun R_tar_make_summary ()
   "call targets::tar_make(reporter = \"summary\")."
   (interactive)
@@ -1500,7 +1505,12 @@ Examples:
 (define-transient-command mx-main-transient ()
   "Main"
 
-  [["Files"
+  [["Org"
+   ("oa" "agenda" org-agenda)
+   ("oh" "home.org" mx-org-file-home)
+   ("oi" "ieeh.org" mx-org-file-ieeh)]
+
+   ["Files"
     ("ff" "find" project-find-file)
     ("fd" "dired" counsel-find-file)
     ("fr" "recentf" counsel-buffer-or-recentf)
@@ -1510,8 +1520,7 @@ Examples:
    ["Buffer"
     ("bk" "kill" mx-kill-buffer)
     ("bs" "save" save-buffer)
-    ("bl" "list" list-buffers)
-    ]
+    ("bl" "list" list-buffers)]
 
    ["Window"
     ("wk" "kill" delete-frame)
@@ -1522,12 +1531,7 @@ Examples:
     ("df" "function" counsel-describe-function)
     ("dv" "variable" counsel-describe-variable)]]
 
-  [["Org"
-   ("oa" "agenda" org-agenda)
-   ("oh" "home.org" mx-org-file-home)
-   ("oi" "ieeh.org" mx-org-file-ieeh)]
-
-   ["Git"
+  [["Git"
     ("g" "magit" magit-status)]
 
    ["{targets} run"
@@ -1536,9 +1540,12 @@ Examples:
     ("tv" "visnetwork" R_tar_visnetwork_targets_only)]
 
    ["{targets} objects"
-    ("tr" "read at point" R_tar_read_target_at_point)
     ("tt" "load at point" R_tar_load_target_at_point)
-    ("tf" "fnmate at point" fnmate)]]
+    ("tr" "read at point" R_tar_read_target_at_point)
+    ("tf" "fnmate at point" fnmate)]
+
+   ["{bookdown}"
+    ("rr" "render book" R_bookdown_render_book)]]
 
   [" "
    ("<apps>" "quit" transient-quit-one)]
