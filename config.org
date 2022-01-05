@@ -1,7 +1,7 @@
 ﻿#+TAGS: custom(c) lisp(l) usepackage(u)
 #+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
 #+TITLE: config.org
-#+Changed: 15.12.2021
+#+Changed: 16.12.2021
 
 * Literate Emacs configuration
 ** [0/5] Open tasks
@@ -1545,7 +1545,7 @@ Examples:
     ("tf" "fnmate at point" fnmate)]
 
    ["{bookdown}"
-    ("rr" "render book" R_bookdown_render_book)]]
+    ("r" "render book" R_bookdown_render_book)]]
 
   [" "
    ("<apps>" "quit" transient-quit-one)]
