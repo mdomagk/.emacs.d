@@ -633,18 +633,18 @@ move cursor to brackets
 (setq org-enforce-todo-dependencies nil)
 
 ;; this is my org-directory
-(setq org-directory "~/.emacs.d/org")
+(setq org-directory "~/.emacs.d/beorg")
 
 ;; link my GTD file to the agenda
-(setq org-agenda-files (quote ("~/.emacs.d/org/home.org"
-                               "~/.emacs.d/org/work.org"
-                               "~/.emacs.d/org/birthdays.org")))
+(setq org-agenda-files (quote ("~/.emacs.d/beorg/home.org"
+                               "~/.emacs.d/beorg/work.org"
+                               "~/.emacs.d/beorg/birthdays.org")))
 
 ;; create org-capture-template "Aufgaben"
 (setq org-capture-templates
-      '(("h" "Aufgabe HOME" entry (file+headline "~/.emacs.d/org/home.org" "Aufgaben")
+      '(("h" "Aufgabe HOME" entry (file+headline "~/.emacs.d/beorg/home.org" "Aufgaben")
          "** TODO %?\n   SCHEDULED: %t\n %i\n")
-        ("w" "Aufgabe WORK" entry (file+headline "~/.emacs.d/org/work.org" "Aufgaben")
+        ("w" "Aufgabe WORK" entry (file+headline "~/.emacs.d/beorg/work.org" "Aufgaben")
          "** TODO %?\n   SCHEDULED: %t\n %i\n")))
 
 ;; ;; refile (C-c C-w) complete headings
@@ -668,11 +668,11 @@ move cursor to brackets
 #+begin_src emacs-lisp
 (defun mx-org-file-home ()
   (interactive)
-  (find-file "~/.emacs.d/org/home.org"))
+  (find-file "~/.emacs.d/beorg/home.org"))
 
 (defun mx-org-file-work ()
   (interactive)
-  (find-file "~/.emacs.d/org/work.org"))
+  (find-file "~/.emacs.d/beorg/work.org"))
 
 (add-hook 'org-mode-hook
           '(lambda ()
