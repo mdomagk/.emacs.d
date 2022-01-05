@@ -554,51 +554,52 @@ move cursor to brackets
 (setq org-support-shift-select t)
 
 (setq org-startup-folded t)
-(setq org-cycle-separator-lines 0)
-(setq org-tags-column -80)
-(setq org-agenda-tags-column -80)
+;;(setq org-cycle-separator-lines 0)
+;;(setq org-tags-column -80)
+;;(setq org-agenda-tags-column -80)
 
 ;; german day and month names, week starts with monday
 (setq calendar-week-start-day 1
-      calendar-day-name-array
-      ["Sonntag" "Montag" "Dienstag" "Mittwoch"
-       "Donnerstag" "Freitag" "Samstag"]
-      calendar-month-name-array
-      ["Januar" "Februar" "Maerz" "April" "Mai"
-       "Juni" "Juli" "August" "September"
-       "Oktober" "November" "Dezember"])
+      ;; calendar-day-name-array
+      ;; ["Sonntag" "Montag" "Dienstag" "Mittwoch"
+      ;;  "Donnerstag" "Freitag" "Samstag"]
+      ;; calendar-month-name-array
+      ;; ["Januar" "Februar" "Maerz" "April" "Mai"
+      ;;  "Juni" "Juli" "August" "September"
+      ;;  "Oktober" "November" "Dezember"]
+      )
 
-;; TODO keyword order
-(setq org-todo-keywords
-      '((sequence "TODO(t)" "STARTED(s!)" "WAITING(w@/!)" "APPT(a)" "PROJ(p)"
-                  "|" "DONE(d!)" "DELEGATED(g@)" "CANCELED(c@)")))
+;; ;; TODO keyword order
+;; (setq org-todo-keywords
+;;       '((sequence "TODO(t)" "STARTED(s!)" "WAITING(w@/!)" "APPT(a)" "PROJ(p)"
+;;                   "|" "DONE(d!)" "DELEGATED(g@)" "CANCELED(c@)")))
 
-(setq org-todo-keyword-faces
-      '(;;("TODO"  . (:foreground "#b70101" :weight bold))
-        ;;("STARTED"  . (:foreground "#b70101" :weight bold))
-        ;;("APPT"  . (:foreground "sienna" :weight bold))
-        ("PROJ"  . (:foreground "blue" :weight bold))
-        ("WAITING"  . (:foreground "orange" :weight bold))
-        ;;("DONE"  . (:foreground "forestgreen" :weight bold))
-        ;;("CANCELED"  . shadow)
-        ))
+;; (setq org-todo-keyword-faces
+;;       '(;;("TODO"  . (:foreground "#b70101" :weight bold))
+;;         ;;("STARTED"  . (:foreground "#b70101" :weight bold))
+;;         ;;("APPT"  . (:foreground "sienna" :weight bold))
+;;         ("PROJ"  . (:foreground "blue" :weight bold))
+;;         ("WAITING"  . (:foreground "orange" :weight bold))
+;;         ;;("DONE"  . (:foreground "forestgreen" :weight bold))
+;;         ;;("CANCELED"  . shadow)
+;;         ))
 
 ;;(setq org-agenda-filter-preset '("-someday"))
 
 ;; Truncate clocked-in tasks in mode-line def. 0
-(setq org-clock-string-limit 8)
+;; (setq org-clock-string-limit 8)
 
 ;; log DONE statuses
 (setq org-log-done t)
 ;; log changed schedules
-(setq org-log-reschedule (quote time))
+;;(setq org-log-reschedule (quote time))
 ;; log changed deadlines
-(setq org-log-redeadline (quote time))
+;;(setq org-log-redeadline (quote time))
 ;; Einen eigenen Drawer benutzen
-(setq org-drawers (quote ("PROPERTIES" "CLOCKTABLE" "LOGBOOK" "CLOCK")))
+;;(setq org-drawers (quote ("PROPERTIES" "CLOCKTABLE" "LOGBOOK" "CLOCK")))
 (setq org-log-into-drawer t)
-;; Save clock data and notes in a separate drawer
-(setq org-clock-into-drawer "CLOCK")
+;;;; Save clock data and notes in a separate drawer
+;;(setq org-clock-into-drawer "CLOCK")
 
 
 ;; agenda settings
