@@ -391,7 +391,7 @@ copy word/symbol at point
 ** mx-next/previous-buffer
 ignore buffers while switching
 #+begin_src emacs-lisp
-(setq mx-skippable-buffer-list '("*Messages*" "*ESS*" "*Flymake log*" "*Help*" "work.org" "home.org" "birthdays.org" "*Calendar*"))
+(setq mx-skippable-buffer-list '("*Messages*" "*ESS*" "*Flymake log*" "*Help*" "work.org" "home.org" "calendar.org" "*Calendar*"))
 
 (setq mx-skippable-buffer-regex "^magit")
 
@@ -627,7 +627,7 @@ move cursor to brackets
 ;; link my GTD file to the agenda
 (setq org-agenda-files (quote ("~/.emacs.d/org/home.org"
                                "~/.emacs.d/org/work.org"
-                               "~/.emacs.d/org/birthdays.org")))
+                               "~/.emacs.d/org/calendar.org")))
 
 ;; create org-capture-template "Aufgaben"
 (setq org-capture-templates
@@ -689,12 +689,12 @@ move cursor to brackets
                  (org-agenda-overriding-header "Aktuelle Aufgaben:")))
           (agenda "" ((org-agenda-files
                        '("~/.emacs.d/org/work.org"
-                         "~/.emacs.d/org/birthdays.org"))))))
+                         "~/.emacs.d/org/calendar.org"))))))
 
         ("h" "Agenda at home"
          ((agenda "" ((org-agenda-files
                        '("~/.emacs.d/org/home.org"
-                         "~/.emacs.d/org/birthdays.org"))))))
+                         "~/.emacs.d/org/calendar.org"))))))
 
         ("W" "Tasks at Work"
          ((tags-todo "IEEH-Lehre" ((org-agenda-overriding-header "Institut")))
