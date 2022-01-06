@@ -391,7 +391,7 @@ copy word/symbol at point
 ** mx-next/previous-buffer
 ignore buffers while switching
 #+begin_src emacs-lisp
-(setq mx-skippable-buffer-list '("*Messages*" "*ESS*" "*Flymake log*" "*Help*" "ieeh.org" "home.org" "birthdays.org" "*Calendar*"))
+(setq mx-skippable-buffer-list '("*Messages*" "*ESS*" "*Flymake log*" "*Help*" "work.org" "home.org" "birthdays.org" "*Calendar*"))
 
 (setq mx-skippable-buffer-regex "^magit")
 
@@ -626,14 +626,14 @@ move cursor to brackets
 
 ;; link my GTD file to the agenda
 (setq org-agenda-files (quote ("~/.emacs.d/org/home.org"
-                               "~/.emacs.d/org/ieeh.org"
+                               "~/.emacs.d/org/work.org"
                                "~/.emacs.d/org/birthdays.org")))
 
 ;; create org-capture-template "Aufgaben"
 (setq org-capture-templates
       '(("h" "Aufgabe HOME" entry (file+headline "~/.emacs.d/org/home.org" "Aufgaben")
          "** TODO %?\n   SCHEDULED: %t\n %i\n")
-        ("w" "Aufgabe IEEH" entry (file+headline "~/.emacs.d/org/ieeh.org" "Aufgaben")
+        ("w" "Aufgabe IEEH" entry (file+headline "~/.emacs.d/org/work.org" "Aufgaben")
          "** TODO %?\n   SCHEDULED: %t\n %i\n")))
 
 ;; ;; refile (C-c C-w) complete headings
@@ -659,9 +659,9 @@ move cursor to brackets
   (interactive)
   (find-file "~/.emacs.d/org/home.org"))
 
-(defun mx-org-file-ieeh ()
+(defun mx-org-file-work ()
   (interactive)
-  (find-file "~/.emacs.d/org/ieeh.org"))
+  (find-file "~/.emacs.d/org/work.org"))
 
 (add-hook 'org-mode-hook
           '(lambda ()
@@ -670,8 +670,8 @@ move cursor to brackets
              (local-set-key (kbd "S-C-<left>")  'shrink-window-horizontally)
              (local-set-key (kbd "S-C-<right>") 'enlarge-window-horizontally)))
 
-(global-set-key [f9] 'mx-org-file-home)
-(global-set-key [f10] 'mx-org-file-ieeh)
+(global-set-key [f9]  'mx-org-file-home)
+(global-set-key [f10] 'mx-org-file-work)
 
 (global-set-key (kbd "C-c a") 'org-agenda)
 (global-set-key (kbd "C-c c") 'org-capture)
@@ -688,7 +688,7 @@ move cursor to brackets
                 ((org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
                  (org-agenda-overriding-header "Aktuelle Aufgaben:")))
           (agenda "" ((org-agenda-files
-                       '("~/.emacs.d/org/ieeh.org"
+                       '("~/.emacs.d/org/work.org"
                          "~/.emacs.d/org/birthdays.org"))))))
 
         ("h" "Agenda at home"
@@ -1497,7 +1497,7 @@ Examples:
   [["Org"
    ("oa" "agenda" org-agenda)
    ("oh" "home.org" mx-org-file-home)
-   ("oi" "ieeh.org" mx-org-file-ieeh)]
+   ("oi" "work.org" mx-org-file-work)]
 
    ["Files"
     ("ff" "find" project-find-file)
