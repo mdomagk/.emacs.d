@@ -634,15 +634,16 @@ move cursor to brackets
       '((nil :maxlevel . 3)
         (org-agenda-files :maxlevel . 3)))
 
-(setq org-default-notes-file (concat org-directory "/notes.org"))
+(setq org-default-notes-file (concat org-directory "/inbox.org"))
 
-;; create org-capture-template "Aufgaben"
+;; create org-capture-templates
 (setq org-capture-templates
-      '(
-("h" "Aufgabe HOME" entry (file+headline "~/.emacs.d/org/home.org" "Aufgaben")
-         "** TODO %?\n   SCHEDULED: %t\n %i\n")
-        ("w" "Aufgabe WORK" entry (file+headline "~/.emacs.d/org/work.org" "Aufgaben")
-         "** TODO %?\n   SCHEDULED: %t\n %i\n")))
+      '(("i" "inbox.org" entry (file "~/.emacs.d/org/inbox.org")
+         "* TODO %?\n%U\n")
+        ("h" "Aufgabe Home" entry (file+headline "~/.emacs.d/org/home.org" "Aufgaben")
+         "** TODO %?\n%U\n")
+        ("w" "Aufgabe Work" entry (file+headline "~/.emacs.d/org/work.org" "Aufgaben")
+         "** TODO %?\n%U\n")))
 
 ;; ;; refile (C-c C-w) complete headings
 ;; (setq org-refile-targets (quote (("gtd.org" :maxlevel . 1)
