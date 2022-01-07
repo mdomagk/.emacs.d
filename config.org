@@ -1,7 +1,7 @@
 ﻿#+TAGS: custom(c) lisp(l) usepackage(u)
 #+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
 #+TITLE: config.org
-#+Changed: 06.01.2022
+#+Changed: 07.01.2022
 
 * Literate Emacs configuration
 ** [0/5] Open tasks
@@ -466,7 +466,7 @@ move cursor to brackets
 (global-set-key (kbd "C-x C-c") 'mx-ask-before-closing)
 (global-set-key (kbd "C-x C-b")  'project-find-file)
 (global-set-key [f5] 'call-last-kbd-macro)
-(global-set-key [f11] 'tool-bar-mode)
+;;(global-set-key [f11] 'tool-bar-mode)
 (global-set-key [f12] 'menu-bar-mode)
 #+end_src
 
@@ -672,6 +672,10 @@ move cursor to brackets
   (interactive)
   (find-file "~/.emacs.d/org/work.org"))
 
+(defun mx-org-file-inbox ()
+  (interactive)
+  (find-file "~/.emacs.d/org/inbox.org"))
+
 (add-hook 'org-mode-hook
           '(lambda ()
              (local-set-key (kbd "S-C-<down>")  'enlarge-window)
@@ -681,6 +685,7 @@ move cursor to brackets
 
 (global-set-key [f9]  'mx-org-file-home)
 (global-set-key [f10] 'mx-org-file-work)
+(global-set-key [f11] 'mx-org-file-inbox)
 
 (global-set-key (kbd "C-c a") 'org-agenda)
 (global-set-key (kbd "C-c c") 'org-capture)
@@ -1201,7 +1206,9 @@ https://oremacs.com/swiper/
   (setq org-fontify-whole-heading-line t)
   (setq org-todo-keyword-faces
         '(("PROJ"  . (:weight bold :box (:line-width 1 :color "#C8ABD8") :foreground "#C8ABD8" :background "#E0E0F9"))
-          ("WAITING"  . (:weight bold :box (:line-width 1 :color "#BFBF65") :foreground "#BFBF65" :background "#FFFFCC"))))
+          ("WAITING"  . (:weight bold :box (:line-width 1 :color "#BFBF65") :foreground "#BFBF65" :background "#FFFFCC"))
+          ("NEXT"  . (:weight bold :box (:line-width 1 :color "#8ea1b2") :foreground "#8ea1b2" :background "#CCE7FF"))
+          ("SOMEDAY"  . (:weight bold :box (:line-width 1 :color "#7ba37b") :foreground "#7ba37b" :background "#EAFFEA"))))
   :custom-face
   (mode-line-buffer-id  ((t (:weight normal))))
   :config
