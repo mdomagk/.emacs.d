@@ -569,7 +569,8 @@ move cursor to brackets
        "Oktober" "November" "Dezember"])
 
 (setq org-todo-keywords
-      '((sequence "TODO(t)" "NEXT(n)" "WAITING(w!)" "SOMEDAY(s)" "|" "DONE(d)" "CANCELED(c@)")))
+      '((sequence "TODO(t)" "NEXT(n)" "WAITING(w)" "SOMEDAY(s)" "|")
+        (sequence "|" "DONE(d)" "CANCELED(c)")))
 
 ;; TODO update keywords
 (setq org-todo-keyword-faces
