@@ -569,8 +569,8 @@ move cursor to brackets
        "Oktober" "November" "Dezember"])
 
 (setq org-todo-keywords
-      '((sequence "TODO(t)" "NEXT(n)" "SOMEDAY(s)" "WAITING(w!)" "|")
-        (sequence "|" "DONE(d)" "CANCELED(c)")))
+      '((sequence "TODO(t)" "NEXT(n)" "SOMEDAY(s)" "|" "DONE(d)")
+        (sequence "WAITING(w@/!)" "|" "CANCELED(c)")))
 
 ;; TODO update keywords
 (setq org-todo-keyword-faces
@@ -645,13 +645,6 @@ move cursor to brackets
          "** TODO %?\n%U\n")
         ("w" "Aufgabe Work" entry (file+headline "~/.emacs.d/org/work.org" "Aufgaben")
          "** TODO %?\n%U\n")))
-
-;; ;; refile (C-c C-w) complete headings
-;; (setq org-refile-targets (quote (("gtd.org" :maxlevel . 1)
-;;                                  ("someday.org" :level . 2))))
-
-;; ;; while in org-agenda-mode: highlight current line
-;; (add-hook 'org-agenda-mode-hook '(lambda () (hl-line-mode 1)))
 
 ;; do not change states when archive TODOs
 (setq org-archive-mark-done nil)
