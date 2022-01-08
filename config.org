@@ -1,7 +1,7 @@
 ﻿#+TAGS: custom(c) lisp(l) usepackage(u)
 #+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
 #+TITLE: config.org
-#+Changed: 07.01.2022
+#+Changed: 08.01.2022
 
 * Literate Emacs configuration
 ** [0/5] Open tasks
@@ -569,7 +569,7 @@ move cursor to brackets
        "Oktober" "November" "Dezember"])
 
 (setq org-todo-keywords
-      '((sequence "TODO(t)" "NEXT(n)" "WAITING(w)" "SOMEDAY(s)" "|")
+      '((sequence "TODO(t)" "NEXT(n)" "SOMEDAY(s)" "WAITING(w!)" "|")
         (sequence "|" "DONE(d)" "CANCELED(c)")))
 
 ;; TODO update keywords
