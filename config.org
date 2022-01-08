@@ -683,7 +683,7 @@ move cursor to brackets
              (local-set-key (kbd "S-C-<left>")  'shrink-window-horizontally)
              (local-set-key (kbd "S-C-<right>") 'enlarge-window-horizontally)))
 
-(global-set-key [f8]  'mx-org-file-home)
+(global-set-key [f8]  'mx-org-todo)
 (global-set-key [f9]  'mx-org-file-home)
 (global-set-key [f10] 'mx-org-file-work)
 (global-set-key [f11] 'mx-org-file-inbox)
