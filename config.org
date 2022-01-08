@@ -670,6 +670,12 @@ move cursor to brackets
   (interactive)
   (find-file "~/.emacs.d/org/inbox.org"))
 
+(defun mx-org-todo ()
+  (interactive)
+  (org-narrow-to-subtree)
+  (org-show-todo-tree nil)
+  (widen))
+
 (add-hook 'org-mode-hook
           '(lambda ()
              (local-set-key (kbd "S-C-<down>")  'enlarge-window)
@@ -677,6 +683,7 @@ move cursor to brackets
              (local-set-key (kbd "S-C-<left>")  'shrink-window-horizontally)
              (local-set-key (kbd "S-C-<right>") 'enlarge-window-horizontally)))
 
+(global-set-key [f8]  'mx-org-file-home)
 (global-set-key [f9]  'mx-org-file-home)
 (global-set-key [f10] 'mx-org-file-work)
 (global-set-key [f11] 'mx-org-file-inbox)
@@ -1431,7 +1438,7 @@ add: .libPaths("D:/Daten/R/Library")
   (:map ess-mode-map
         (";" .   ess-insert-assign)
         ("M--" . ess-insert-assign)
-        ("<f8>" . ess-eval-paragraph-and-step)
+        ("<f7>" . ess-eval-paragraph-and-step)
         ("<backtab>" . R_insert_pipe_operator)
         ("C-c C-l" . R_tar_load_target_at_point))
   :config
