@@ -1,7 +1,7 @@
 ﻿#+TAGS: custom(c) lisp(l) usepackage(u)
 #+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
 #+TITLE: config.org
-#+Changed: 08.01.2022
+#+Changed: 09.01.2022
 
 * Literate Emacs configuration
 ** [0/5] Open tasks
@@ -634,6 +634,11 @@ move cursor to brackets
 (setq org-refile-targets
       '((nil :maxlevel . 3)
         (org-agenda-files :maxlevel . 3)))
+
+(setq org-refile-use-outline-path 'file)
+;; makes org-refile outline working with helm/ivy
+(setq org-outline-path-complete-in-steps nil)
+(setq org-refile-allow-creating-parent-nodes 'confirm)
 
 (setq org-default-notes-file (concat org-directory "/inbox.org"))
 
