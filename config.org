@@ -1,7 +1,7 @@
 ﻿#+TAGS: custom(c) lisp(l) usepackage(u)
 #+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
 #+TITLE: config.org
-#+Changed: 09.01.2022
+#+Changed: 10.01.2022
 
 * Literate Emacs configuration
 ** [0/5] Open tasks
@@ -321,6 +321,10 @@ instead of yes or no accept y or n
 ** trash can support
 #+begin_src emacs-lisp
 (setq delete-by-moving-to-trash t)
+#+end_src
+** sentences have one space after a period
+#+begin_src emacs-lisp
+(setq sentence-end-double-space nil)
 #+end_src
 
 * functions                                                             :custom:
@@ -681,12 +685,19 @@ move cursor to brackets
   (org-show-todo-tree nil)
   (widen))
 
+;; FIXME doesn't work
+(defun mx-org-capture-inbox ()
+     (interactive)
+     (call-interactively 'org-capture)
+     (org-capture nil "i"))
+
 (add-hook 'org-mode-hook
           '(lambda ()
              (local-set-key (kbd "S-C-<down>")  'enlarge-window)
              (local-set-key (kbd "S-C-<up>")    'shrink-window)
              (local-set-key (kbd "S-C-<left>")  'shrink-window-horizontally)
              (local-set-key (kbd "S-C-<right>") 'enlarge-window-horizontally)))
+
 
 (global-set-key [f8]  'mx-org-todo)
 (global-set-key [f9]  'mx-org-file-home)
@@ -695,6 +706,7 @@ move cursor to brackets
 
 (global-set-key (kbd "C-c a") 'org-agenda)
 (global-set-key (kbd "C-c c") 'org-capture)
+;;(global-set-key (kbd "C-c i") 'mx-org-capture-inbox)
 ;;(global-set-key (kbd "C-c l") 'org-store-link)
 #+end_src
 
