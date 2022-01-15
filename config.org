@@ -31,7 +31,7 @@ Add ~site-start.el~ in ~c:\Program Files\GNU Emacs\emacs_27.2\share\emacs\27.2\s
 to set path to ~.emacs.d/~ folder.
 
 
-* environment                                                           :custom:
+* environment                                                        :custom:
 M-x getenv <RET> PATH <RET>
 ** IEEH (Win10) EVMI60
 #+begin_src emacs-lisp
@@ -71,7 +71,7 @@ M-x getenv <RET> PATH <RET>
 )
 #+end_src
 
-* general settings                                                      :custom:
+* general settings                                                   :custom:
 ** default font
 additional options KEEP-SIZE and FRAMES
 #+begin_src emacs-lisp
@@ -176,7 +176,7 @@ update date in header on save
 
 ** set default frame width
 #+begin_src emacs-lisp
-(add-to-list 'default-frame-alist '(width . 84))
+(add-to-list 'default-frame-alist '(width . 82))
 #+end_src
 
 ** disable startup message in scratch buffer
@@ -327,7 +327,7 @@ instead of yes or no accept y or n
 (setq sentence-end-double-space nil)
 #+end_src
 
-* functions                                                             :custom:
+* functions                                                          :custom:
 ** mx-kill-buffer
 It's simple. Bury the scratch buffer
 #+begin_src emacs-lisp
@@ -462,7 +462,7 @@ move cursor to brackets
   (re-search-forward (regexp-opt xah-right-brackets) nil t))
 #+end_src
 
-* keybindings                                                           :custom:
+* keybindings                                                        :custom:
 ** emacs
 #+begin_src emacs-lisp
 ;; ESC cancels everything
@@ -542,7 +542,7 @@ move cursor to brackets
 #+end_src
 
 
-* org-mode                                                              :custom:
+* org-mode                                                           :custom:
 ** general settings
 #+begin_src emacs-lisp
 
@@ -806,7 +806,7 @@ move cursor to brackets
   (myorg-update-parent-cookie))
 #+end_src
 
-* abbreviations                                                         :custom:
+* abbreviations                                                      :custom:
 #+begin_src emacs-lisp
 (define-abbrev-table 'global-abbrev-table '(
 
@@ -862,7 +862,7 @@ move cursor to brackets
  #+RESULTS:
  : expand-abbrev
 
-* mode-line                                                             :custom:
+* mode-line                                                          :custom:
 #+begin_src emacs-lisp
 ;; ;; show line-number in the mode line
 ;; (line-number-mode 1)
@@ -910,7 +910,7 @@ move cursor to brackets
                ))
 #+end_src
 
-* recentf                                                               :custom:
+* recentf                                                            :custom:
 a timer setting for recentf-mode without notifications to echo-area
 https://gist.github.com/masutaka/1325654 (idle timer)
 https://lists.gnu.org/archive/html/help-gnu-emacs/2010-12/msg02019.html
@@ -937,7 +937,7 @@ https://lists.gnu.org/archive/html/help-gnu-emacs/2010-12/msg02019.html
 #+end_src
 
 
-* dired                                                                 :custom:
+* dired                                                              :custom:
 #+begin_src emacs-lisp
 ;; windows style
 (setq ls-lisp-verbosity nil)
@@ -961,7 +961,7 @@ https://lists.gnu.org/archive/html/help-gnu-emacs/2010-12/msg02019.html
 #+end_src
 
 
-* python                                                                :custom:
+* python                                                             :custom:
 #+begin_src emacs-lisp
 (defun mx-python-start ()
   (interactive)
@@ -1002,7 +1002,7 @@ https://lists.gnu.org/archive/html/help-gnu-emacs/2010-12/msg02019.html
 (setq python-shell-completion-native-enable nil)
 #+end_src
 
-* electric-pair                                                         :custom:
+* electric-pair                                                      :custom:
 close automatically brackets
 http://prodissues.com/2016/10/electric-pair-mode-in-emacs.html
 https://www.emacswiki.org/emacs/ElectricPair (for specific modes only)
@@ -1018,14 +1018,14 @@ https://www.emacswiki.org/emacs/ElectricPair (for specific modes only)
 #+end_src
 
 
-* xah-find                                                                :lisp:
+* xah-find                                                             :lisp:
 - http://ergoemacs.org/emacs/elisp-xah-find-text.html
 - reposository: https://github.com/maxmagmilch/xah-find
 #+begin_src emacs-lisp
 (load "~/.emacs.d/lisp/xah-find.el")
 #+end_src
 
-* FIX rainbow-mode                                                        :lisp:
+* FIX rainbow-mode                                                     :lisp:
 minor mode sets background color to strings that match color names, e.g. #0000ff is displayed in white with a blue background
 #+begin_src emacs-lisp
 (load "~/.emacs.d/lisp/rainbow-mode.el")
@@ -1035,7 +1035,7 @@ minor mode sets background color to strings that match color names, e.g. #0000ff
 (add-hook 'emacs-lisp-mode-hook 'rainbow-mode)
 #+end_src
 
-* dracula-theme                                                           :lisp:
+* dracula-theme                                                        :lisp:
 #+begin_src emacs-lisp
 (load "~/.emacs.d/lisp/dracula-theme.el")
 
@@ -1049,7 +1049,7 @@ minor mode sets background color to strings that match color names, e.g. #0000ff
   (load-theme 'dracula t))
 #+end_src
 
-* use-package                                                       :usepackage:
+* use-package                                                    :usepackage:
 Set up ~package~ and ~use-package~.
 #+begin_src emacs-lisp
 (require 'package)
@@ -1072,7 +1072,7 @@ Set up ~package~ and ~use-package~.
 
 
 
-* ivy                                                               :usepackage:
+* ivy                                                            :usepackage:
 - http://oremacs.com/swiper/
 - https://sam217pa.github.io/2016/09/13/from-helm-to-ivy/
 #+begin_src emacs-lisp
@@ -1114,7 +1114,7 @@ Set up ~package~ and ~use-package~.
   (setq ivy-re-builders-alist '((t . ivy--regex-ignore-order))))
 #+end_src
 
-* counsel (for ivy)                                                 :usepackage:
+* counsel (for ivy)                                              :usepackage:
 https://oremacs.com/swiper/
 #+begin_src emacs-lisp
 
@@ -1148,21 +1148,21 @@ https://oremacs.com/swiper/
   ("<f1> k" . counsel-descbinds))
 #+end_src
 
-* swiper (for ivy)                                                  :usepackage:
+* swiper (for ivy)                                               :usepackage:
 https://oremacs.com/swiper/
 #+begin_src emacs-lisp
 (use-package swiper
   :ensure t)
 #+end_src
 
-* smex (for ivy)                                                    :usepackage:
+* smex (for ivy)                                                 :usepackage:
 - enable history for M-x commands
 #+begin_src emacs-lisp
 (use-package smex
   :ensure t)
 #+end_src
 
-* multiple-cursors                                                  :usepackage:
+* multiple-cursors                                               :usepackage:
 #+begin_src emacs-lisp
 (use-package multiple-cursors
   :ensure t
@@ -1174,13 +1174,13 @@ https://oremacs.com/swiper/
 #+end_src
 
 
-* htmlize                                                           :usepackage:
+* htmlize                                                        :usepackage:
 #+begin_src emacs-lisp
 (use-package htmlize
   :ensure t)
 #+end_src
 
-* hl-todo                                                           :usepackage:
+* hl-todo                                                        :usepackage:
 - https://github.com/tarsius/hl-todo/tree/42f744ffb513cf2b95517144c64dbf3fc69f711a
 - Highlight TODO and similar keywords in comments and strings
 #+begin_src emacs-lisp
@@ -1203,7 +1203,7 @@ https://oremacs.com/swiper/
        (define-key hl-todo-mode-map (kbd "C-c i") 'hl-todo-insert))
 #+end_src
 
-* leuven-theme                                                      :usepackage:
+* leuven-theme                                                   :usepackage:
 #+begin_src emacs-lisp
 (use-package leuven-theme
   :if (string-equal mx-use-theme "leuven")
@@ -1228,7 +1228,7 @@ https://oremacs.com/swiper/
   (load-theme 'leuven t))
 #+end_src
 
-* auctex                                                            :usepackage:
+* auctex                                                         :usepackage:
 #+begin_src emacs-lisp
 (use-package tex
   :ensure auctex
@@ -1244,7 +1244,7 @@ https://oremacs.com/swiper/
         '(("todo" "[{") ("discuss" "[{"))))
 #+end_src
 
-* ace-jump-mode                                                     :usepackage:
+* ace-jump-mode                                                  :usepackage:
 #+begin_src emacs-lisp
 (use-package ace-jump-mode
   :ensure t
@@ -1257,7 +1257,7 @@ https://oremacs.com/swiper/
   )
 #+end_src
 
-* ace-window                                                        :usepackage:
+* ace-window                                                     :usepackage:
 #+begin_src emacs-lisp
 (use-package ace-window
   :ensure t
@@ -1267,14 +1267,14 @@ https://oremacs.com/swiper/
 #+end_src
 
 
-* move-text                                                         :usepackage:
+* move-text                                                      :usepackage:
 #+begin_src emacs-lisp
 (use-package move-text
   :ensure t
   :init (move-text-default-bindings))
 #+end_src
 
-* rainbow-delimiters                                                :usepackage:
+* rainbow-delimiters                                             :usepackage:
 https://github.com/Fanael/rainbow-delimiters
 #+begin_src emacs-lisp
 (use-package rainbow-delimiters
@@ -1288,7 +1288,7 @@ https://github.com/Fanael/rainbow-delimiters
   (emacs-lisp-mode-hook . rainbow-delimiters-mode))
 #+end_src
 
-* goto-change                                                       :usepackage:
+* goto-change                                                    :usepackage:
 #+begin_src emacs-lisp
 (use-package goto-chg
   :ensure t
@@ -1297,7 +1297,7 @@ https://github.com/Fanael/rainbow-delimiters
   ("M-." . goto-last-change-reverse))
 #+end_src
 
-* ledger-mode                                                       :usepackage:
+* ledger-mode                                                    :usepackage:
 #+begin_src emacs-lisp
 (use-package ledger-mode
   :ensure t
@@ -1307,7 +1307,7 @@ https://github.com/Fanael/rainbow-delimiters
   (add-to-list 'auto-mode-alist '("\\.ledger$" . ledger-mode)))
 #+end_src
 
-* org-pomodoro                                                      :usepackage:
+* org-pomodoro                                                   :usepackage:
 #+begin_src emacs-lisp
 (use-package org-pomodoro
   :ensure t
@@ -1324,7 +1324,7 @@ https://github.com/Fanael/rainbow-delimiters
   (setq org-pomodoro-keep-killed-pomodoro-time t))
 #+end_src
 
-* TODO emacs speaks statistics                                      :usepackage:
+* TODO emacs speaks statistics                                   :usepackage:
 http://ess.r-project.org/Manual/ess.html
 c:\Program Files\R\R-4.1.0\library\base\R\Rprofile
 add: .libPaths("D:/Daten/R/Library")
@@ -1486,7 +1486,7 @@ add: .libPaths("D:/Daten/R/Library")
   )
 #+end_src
 
-* yaml-mode                                                         :usepackage:
+* yaml-mode                                                      :usepackage:
 #+begin_src emacs-lisp
 (use-package yaml-mode
   :ensure t
@@ -1494,7 +1494,7 @@ add: .libPaths("D:/Daten/R/Library")
   (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode)))
 #+end_src
 
-* magit                                                             :usepackage:
+* magit                                                          :usepackage:
 #+begin_src emacs-lisp
 (use-package magit
   :ensure t
@@ -1506,7 +1506,7 @@ add: .libPaths("D:/Daten/R/Library")
   )
 #+end_src
 
-* TODO transient (transient keybinds)                               :usepackage:
+* TODO transient (transient keybinds)                            :usepackage:
 comes with magit
 Manuak:
 - https://github.com/magit/transient/blob/master/docs/transient.org
@@ -1570,7 +1570,7 @@ Examples:
 )
 #+end_src
 
-* polymode (Rmarkdown)                                              :usepackage:
+* polymode (Rmarkdown)                                           :usepackage:
 - R:
   - install.packages("rmarkdown", repos = "https://ftp.fau.de/cran/")
   - install.packages("bookdown", repos = "https://ftp.fau.de/cran/")
@@ -1604,7 +1604,7 @@ Examples:
   (forward-line -1))
 #+end_src
 
-* mood-line                                                         :usepackage:
+* mood-line                                                      :usepackage:
 minimal mode-line configuration
 #+begin_src emacs-lisp
 (use-package mood-line
@@ -1631,7 +1631,7 @@ minimal mode-line configuration
 
 #+end_src
 
-* symbol-overlay                                                    :usepackage:
+* symbol-overlay                                                 :usepackage:
 makes M-n and M-p look for and M-h highlight the symbol at point
 #+begin_src emacs-lisp
 (use-package symbol-overlay
