@@ -658,6 +658,12 @@ move cursor to brackets
                             ("\\.x?html?\\'" . system)
                             ("\\.pdf\\'" . system))))
 
+;; truncate long lines in agenda view
+;; https://superuser.com/a/531670
+(add-hook 'org-agenda-mode-hook
+          (lambda ()
+            (visual-line-mode -1)
+            (toggle-truncate-lines 1)))
 #+end_src
 
 ** keybindings
