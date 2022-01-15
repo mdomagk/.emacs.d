@@ -1,7 +1,7 @@
 ﻿#+TAGS: custom(c) lisp(l) usepackage(u)
 #+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
 #+TITLE: config.org
-#+Changed: 10.01.2022
+#+Changed: 15.01.2022
 
 * Literate Emacs configuration
 ** [0/5] Open tasks
@@ -559,8 +559,6 @@ move cursor to brackets
 
 (setq org-startup-folded t)
 (setq org-cycle-separator-lines 0)
-(setq org-tags-column -80)
-(setq org-agenda-tags-column -80)
 
 ;; german day and month names, week starts with monday
 (setq calendar-week-start-day 1
@@ -616,9 +614,6 @@ move cursor to brackets
 
 ;; max. 4 weeks
 (setq org-deadline-warning-days 28)
-
-;; round time-stamps to 5 minutes
-;;(setq org-time-stamp-rounding-minutes '(0 5))
 
 ;; fast selection for states
 (setq org-use-fast-todo-selection t)
