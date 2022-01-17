@@ -1,7 +1,7 @@
 ﻿#+TAGS: custom(c) lisp(l) usepackage(u)
 #+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
 #+TITLE: config.org
-#+Changed: 15.01.2022
+#+Changed: 17.01.2022
 
 * Literate Emacs configuration
 ** [0/5] Open tasks
@@ -638,6 +638,21 @@ move cursor to brackets
 ;; makes org-refile outline working with helm/ivy
 (setq org-outline-path-complete-in-steps nil)
 (setq org-refile-allow-creating-parent-nodes 'confirm)
+
+;; Save the corresponding buffers of org-agenda-files after refiling
+;; (defun mx-save-org-buffers ()
+;;   "Save `org-agenda-files' buffers without user confirmation.
+;; See also `org-save-all-org-buffers'"
+;;   (interactive)
+;;   (message "Saving org-agenda-files buffers...")
+;;   (save-some-buffers t (lambda ()
+;; 			 (when (member (buffer-file-name) org-agenda-files)
+;; 			   t)))
+;;   (message "Saving org-agenda-files buffers... done"))
+;; Add it after refile
+(advice-add 'org-refile :after
+	    (lambda (&rest _)
+	      (org-save-all-org-buffers))) ;; FIXME mx-save-org-buffers
 
 (setq org-default-notes-file (concat org-directory "/inbox.org"))
 
