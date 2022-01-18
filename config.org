@@ -1,7 +1,7 @@
 ﻿#+TAGS: custom(c) lisp(l) usepackage(u)
 #+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
 #+TITLE: config.org
-#+Changed: 17.01.2022
+#+Changed: 18.01.2022
 
 * Literate Emacs configuration
 ** [0/5] Open tasks
@@ -543,12 +543,19 @@ move cursor to brackets
 
 
 * org-mode                                                           :custom:
-** general settings
-#+begin_src emacs-lisp
 
+** general settings
+
+#+begin_src emacs-lisp
 (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
 
-;; indentation with golbal-visual-line-mode
+;; this is my org-directory
+(setq org-directory "~/.emacs.d/org")
+
+;; do not change states when archive TODOs
+(setq org-archive-mark-done nil)
+
+;; indentation
 (setq org-startup-indented t)
 (setq org-adapt-indentation nil)
 (setq org-indent-indentation-per-level 1)
@@ -556,19 +563,8 @@ move cursor to brackets
 
 ;; enabling shift select
 (setq org-support-shift-select t)
-
 (setq org-startup-folded t)
 (setq org-cycle-separator-lines 0)
-
-;; german day and month names, week starts with monday
-(setq calendar-week-start-day 1
-      calendar-day-name-array
-      ["Sonntag" "Montag" "Dienstag" "Mittwoch"
-       "Donnerstag" "Freitag" "Samstag"]
-      calendar-month-name-array
-      ["Januar" "Februar" "Maerz" "April" "Mai"
-       "Juni" "Juli" "August" "September"
-       "Oktober" "November" "Dezember"])
 
 (setq org-todo-keywords
       '((sequence "TODO(t)" "NEXT(n)" "SOMEDAY(s)" "|" "DONE(d)")
@@ -578,20 +574,41 @@ move cursor to brackets
 (setq org-todo-keyword-faces
       '(;;("TODO"  . (:foreground "#b70101" :weight bold))
         ("NEXT"  . (:foreground "blue" :weight bold))
-        ("WAITING"  . (:foreground "orange" :weight bold))
         ("SOMEDAY"  . (:foreground "forestgreen" :weight bold))
+        ("WAITING"  . (:foreground "orange" :weight bold))
         ("DONE"  . (:foreground "grey" :weight bold))
         ("CANCELED"  . (:foreground "grey" :weight bold))
         ))
 
-;;(setq org-agenda-filter-preset '("-someday"))
-
-;; Truncate clocked-in tasks in mode-line def. 0
-(setq org-clock-string-limit 8)
+;; fast selection for states
+(setq org-use-fast-todo-selection t)
 
 ;; log DONE statuses
 (setq org-log-done t)
 (setq org-log-into-drawer t)
+
+;; Make it impossible to complete a task if subtasks are not done --> t (yes) nil (no)
+(setq org-enforce-todo-dependencies nil)
+
+;; Truncate clocked-in tasks in mode-line def. 0
+(setq org-clock-string-limit 8)
+
+;; html in browser and pdf in system deafult
+(setq org-file-apps (quote ((auto-mode . emacs)
+                            ("\\.x?html?\\'" . system)
+                            ("\\.pdf\\'" . system))))
+#+end_src
+
+** org-agenda
+
+#+begin_src emacs-lisp
+;; link my GTD file to the agenda
+(setq org-agenda-files
+      (quote
+       ("~/.emacs.d/org/inbox.org"
+        "~/.emacs.d/org/home.org"
+        "~/.emacs.d/org/work.org"
+        "~/.emacs.d/org/calendar.org")))
 
 ;; agenda settings
 (setq org-agenda-window-setup 'only-window); agenda takes whole window
@@ -606,6 +623,16 @@ move cursor to brackets
 ;; only 1 day in agenda view
 (setq org-agenda-span 1)
 
+;; german day and month names, week starts with monday
+(setq calendar-week-start-day 1
+      calendar-day-name-array
+      ["Sonntag" "Montag" "Dienstag" "Mittwoch"
+       "Donnerstag" "Freitag" "Samstag"]
+      calendar-month-name-array
+      ["Januar" "Februar" "Maerz" "April" "Mai"
+       "Juni" "Juli" "August" "September"
+       "Oktober" "November" "Dezember"])
+
 ;; Set the times to display in the time grid
 (setq org-agenda-time-grid (quote
                             ((daily today require-timed)
@@ -615,30 +642,27 @@ move cursor to brackets
 ;; max. 4 weeks
 (setq org-deadline-warning-days 28)
 
-;; fast selection for states
-(setq org-use-fast-todo-selection t)
+;; truncate long lines in agenda view
+;; https://superuser.com/a/531670
+(add-hook 'org-agenda-mode-hook
+          (lambda ()
+            (visual-line-mode -1)
+            (toggle-truncate-lines 1)))
+#+end_src
 
-;; Make it impossible to complete a task if subtasks are not done --> t (yes) nil (no)
-(setq org-enforce-todo-dependencies nil)
+** org-refile
 
-;; this is my org-directory
-(setq org-directory "~/.emacs.d/org")
-
-;; link my GTD file to the agenda
-(setq org-agenda-files (quote ("~/.emacs.d/org/inbox.org"
-                               "~/.emacs.d/org/home.org"
-                               "~/.emacs.d/org/work.org"
-                               "~/.emacs.d/org/calendar.org")))
-
+#+begin_src emacs-lisp
 (setq org-refile-targets
-      '((nil :maxlevel . 3)
-        (org-agenda-files :maxlevel . 3)))
+      '((nil :maxlevel . 5)
+        (org-agenda-files :maxlevel . 5)))
 
 (setq org-refile-use-outline-path 'file)
 ;; makes org-refile outline working with helm/ivy
 (setq org-outline-path-complete-in-steps nil)
 (setq org-refile-allow-creating-parent-nodes 'confirm)
 
+;; FIXME mx-save-org-buffers
 ;; Save the corresponding buffers of org-agenda-files after refiling
 ;; (defun mx-save-org-buffers ()
 ;;   "Save `org-agenda-files' buffers without user confirmation.
@@ -649,11 +673,16 @@ move cursor to brackets
 ;; 			 (when (member (buffer-file-name) org-agenda-files)
 ;; 			   t)))
 ;;   (message "Saving org-agenda-files buffers... done"))
-;; Add it after refile
+
+;; save all org-buffers after refiling
 (advice-add 'org-refile :after
 	    (lambda (&rest _)
-	      (org-save-all-org-buffers))) ;; FIXME mx-save-org-buffers
+	      (org-save-all-org-buffers)))
+#+end_src
 
+** org-capture
+
+#+begin_src emacs-lisp
 (setq org-default-notes-file (concat org-directory "/inbox.org"))
 
 ;; create org-capture-templates
@@ -664,21 +693,46 @@ move cursor to brackets
          "** TODO %?\n%U\n")
         ("w" "Aufgabe Work" entry (file+headline "~/.emacs.d/org/work.org" "Aufgaben")
          "** TODO %?\n%U\n")))
+#+end_src
 
-;; do not change states when archive TODOs
-(setq org-archive-mark-done nil)
 
-;; html in browser and pdf in system deafult
-(setq org-file-apps (quote ((auto-mode . emacs)
-                            ("\\.x?html?\\'" . system)
-                            ("\\.pdf\\'" . system))))
+** org-babel
+#+begin_src emacs-lisp
 
-;; truncate long lines in agenda view
-;; https://superuser.com/a/531670
-(add-hook 'org-agenda-mode-hook
-          (lambda ()
-            (visual-line-mode -1)
-            (toggle-truncate-lines 1)))
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((emacs-lisp . t)
+   (R . t)
+   (ledger . t)
+   (python . t)
+   (latex . t)
+   (dot . t)))
+
+(defun mx-org-edit-src-save-key ()
+  (local-set-key (kbd "C-s") 'org-edit-src-save))
+
+(add-hook 'org-src-mode-hook 'mx-org-edit-src-save-key)
+
+;; display the source code edit buffer in the current window, keeping
+;; all other windows
+(setq org-src-window-setup 'current-window)
+;;(setq org-src-window-setup 'reorganize-frame)
+
+(setq org-edit-src-auto-save-idle-delay 20) ;; in seconds; default 0 = off
+
+;; preserve the indentation after editing a code block
+(setq org-edit-src-content-indentation 0
+      org-src-tab-acts-natively t
+      org-src-preserve-indentation t)
+
+;; I don't want to be prompted on every code block evaluation
+(setq org-confirm-babel-evaluate nil)
+
+;; Don't execute code blocks with C-c C-c use C-c C-v e instead
+(setq org-babel-no-eval-on-ctrl-c-ctrl-c nil) ;; nil t
+
+;; color my SRC code natively
+(setq org-src-fontify-natively t)
 #+end_src
 
 ** keybindings
@@ -771,46 +825,8 @@ move cursor to brackets
 
 #+end_src
 
-** org-babel for R, emacs-lisp & LaTeX
-#+begin_src emacs-lisp
-
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '((emacs-lisp . t)
-   (R . t)
-   (ledger . t)
-   (python . t)
-   (latex . t)
-   (dot . t)))
-
-(defun mx-org-edit-src-save-key ()
-  (local-set-key (kbd "C-s") 'org-edit-src-save))
-
-(add-hook 'org-src-mode-hook 'mx-org-edit-src-save-key)
-
-;; display the source code edit buffer in the current window, keeping
-;; all other windows
-(setq org-src-window-setup 'current-window)
-;;(setq org-src-window-setup 'reorganize-frame)
-
-(setq org-edit-src-auto-save-idle-delay 20) ;; in seconds; default 0 = off
-
-;; preserve the indentation after editing a code block
-(setq org-edit-src-content-indentation 0
-      org-src-tab-acts-natively t
-      org-src-preserve-indentation t)
-
-;; I don't want to be prompted on every code block evaluation
-(setq org-confirm-babel-evaluate nil)
-
-;; Don't execute code blocks with C-c C-c use C-c C-v e instead
-(setq org-babel-no-eval-on-ctrl-c-ctrl-c nil) ;; nil t
-
-;; color my SRC code natively
-(setq org-src-fontify-natively t)
-#+end_src
-
-** auto-update [x/y] in headers
+** auto-update headers
+- auto-update [x/y] in org-headers
 - http://whattheemacsd.com/setup-org.el-01.html
 #+begin_src emacs-lisp
 (defun myorg-update-parent-cookie ()
