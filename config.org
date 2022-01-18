@@ -543,7 +543,6 @@ move cursor to brackets
 
 
 * org-mode                                                           :custom:
-
 ** general settings
 
 #+begin_src emacs-lisp
@@ -785,43 +784,40 @@ move cursor to brackets
 #+begin_src emacs-lisp
 
 (setq org-agenda-custom-commands
-      '(("w" "Agenda at work"
-         ((tags "aa"
-                ((org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
-                 (org-agenda-overriding-header "Aktuelle Aufgaben:")))
-          (agenda "" ((org-agenda-files
-                       '("~/.emacs.d/org/work.org"
-                         "~/.emacs.d/org/calendar.org"))))))
+      '(
+        ("x" "Agenda at home"
+         ((agenda ""
+                  ((org-agenda-files (remove "~/.emacs.d/org/work.org" org-agenda-files))))
+          (todo "NEXT"
+                ((org-agenda-overriding-header "Tasks")
+                 (org-agenda-files (remove "~/.emacs.d/org/work.org" org-agenda-files))))
+          (todo "WAITING"
+                ((org-agenda-overriding-header "Waiting")
+                 (org-agenda-files (remove "~/.emacs.d/org/work.org" org-agenda-files))))))
 
-        ("h" "Agenda at home"
-         ((agenda "" ((org-agenda-files
-                       '("~/.emacs.d/org/home.org"
-                         "~/.emacs.d/org/calendar.org"))))))
+        ("X" "Tasks at home"
+         ((todo "NEXT|TODO|WAITING"
+                ((org-agenda-overriding-header "Tasks at Work")
+                 (org-agenda-files (remove "~/.emacs.d/org/work.org" org-agenda-files))))))
+        ;;(tags-todo "Lehre" ((org-agenda-overriding-header "Lehre & Betreuung"))))
+
+        ("w" "Agenda at work"
+         ((agenda ""
+                  ((org-agenda-files (remove "~/.emacs.d/org/home.org" org-agenda-files))))
+          (todo "NEXT"
+                ((org-agenda-overriding-header "Tasks")
+                 (org-agenda-files (remove "~/.emacs.d/org/home.org" org-agenda-files))))
+          (todo "WAITING"
+                ((org-agenda-overriding-header "Waiting")
+                 (org-agenda-files (remove "~/.emacs.d/org/home.org" org-agenda-files))))))
 
         ("W" "Tasks at Work"
-         ((tags-todo "IEEH-Lehre" ((org-agenda-overriding-header "Institut")))
-          (tags-todo "Lehre" ((org-agenda-overriding-header "Lehre & Betreuung")))
-          (tags-todo "Paper|Lit" ((org-agenda-overriding-header "Veröffentlichungen & Literatur")))
-          (tags-todo "TnBW" ((org-agenda-overriding-header "Transnet BW")))
-          (tags-todo "TnnT" ((org-agenda-overriding-header "Tennet")))
-          (tags-todo "DM-Paper-Mess-Server-Lit" ((org-agenda-overriding-header "Data mining")))
-          (tags-todo "Fortb" ((org-agenda-overriding-header "Fortbildung")))
-          (tags-todo "Mess|Server" ((org-agenda-overriding-header "Messprogramm")))))
+         ((todo "NEXT|TODO|WAITING"
+                ((org-agenda-overriding-header "Tasks at Work")
+                 (org-agenda-files (remove "~/.emacs.d/org/home.org" org-agenda-files))))))
 
-        ("H" "Tasks at Home"
-         ((tags-todo "HOME-Web-Buch-Film-Musik-Kaufen" ((org-agenda-overriding-header "Aufgaben")))
-          (tags-todo "Kalender" ((org-agenda-overriding-header "Kalender")))
-          (tags-todo "Finanzen" ((org-agenda-overriding-header "Finanzen")))
-          (tags-todo "Kaufen" ((org-agenda-overriding-header "Einkaufsliste")))
-          (tags-todo "Buch|Film|Musik" ((org-agenda-overriding-header "Unterhaltung")))
-          (tags-todo "Web" ((org-agenda-overriding-header "Web-Links")))
-          (tags-todo "Computer" ((org-agenda-overriding-header "Computer")))))
-
-        ;;("f" "Someday Tasks"
-        ;; ((tags-todo "someday"
-        ;;             ((org-agenda-filter-preset '("+someday"))
-        ;;              (org-agenda-overriding-header "Someday Tasks")))))
-        ))
+        )
+      )
 
 #+end_src
 
