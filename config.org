@@ -582,10 +582,6 @@ move cursor to brackets
 ;; fast selection for states
 (setq org-use-fast-todo-selection t)
 
-;; log DONE statuses
-(setq org-log-done t)
-(setq org-log-into-drawer t)
-
 ;; Make it impossible to complete a task if subtasks are not done --> t (yes) nil (no)
 (setq org-enforce-todo-dependencies nil)
 
