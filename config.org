@@ -1,7 +1,7 @@
 ﻿#+TAGS: custom(c) lisp(l) usepackage(u)
 #+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
 #+TITLE: config.org
-#+Changed: 18.01.2022
+#+Changed: 19.01.2022
 
 * Literate Emacs configuration
 ** [0/5] Open tasks
@@ -1587,7 +1587,8 @@ Examples:
    ["{targets} run"
     ("tm" "make" R_tar_make)
     ("tM" "make summary" R_tar_make_summary)
-    ("tv" "visnetwork" R_tar_visnetwork_targets_only)]
+    ("tv" "visnetwork" R_tar_visnetwork_targets_only)
+    ("tV" "visnetwork complete" R_tar_visnetwork)]
 
    ["{targets} objects"
     ("tt" "load at point" R_tar_load_target_at_point)
