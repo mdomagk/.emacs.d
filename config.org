@@ -582,7 +582,10 @@ move cursor to brackets
 ;; fast selection for states
 (setq org-use-fast-todo-selection t)
 
-;; keep logs in logbook
+;; log DONE status change
+(setq org-log-done t)
+
+;; keep log state notes in LOGBOOK
 (setq org-log-state-notes-into-drawer "LOGBOOK")
 
 ;; Make it impossible to complete a task if subtasks are not done --> t (yes) nil (no)
