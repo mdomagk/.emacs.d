@@ -1,7 +1,7 @@
 ﻿#+TAGS: custom(c) lisp(l) usepackage(u)
 #+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
 #+TITLE: config.org
-#+Changed: 21.01.2022
+#+Changed: 23.01.2022
 
 * Literate Emacs configuration
 ** [0/5] Open tasks
@@ -1259,7 +1259,7 @@ https://oremacs.com/swiper/
           ("SOMEDAY"  . (:weight bold :box (:line-width 1 :color "#BBBBBB") :foreground "#BBBBBB" :background "#E0E0F9"))))
   :custom-face
   (mode-line-buffer-id  ((t (:weight normal))))
-  (secondary-selection ((t (:background "#FFFFDF"))))
+  (secondary-selection ((t (:background nil))))
   :config
   (load-theme 'leuven t))
 #+end_src
