@@ -1,7 +1,7 @@
 ﻿#+TAGS: custom(c) lisp(l) usepackage(u)
 #+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
 #+TITLE: config.org
-#+Changed: 23.01.2022
+#+Changed: 28.01.2022
 
 * Literate Emacs configuration
 ** [0/5] Open tasks
@@ -1467,6 +1467,24 @@ add: .libPaths("D:/Daten/R/Library")
          (index (cdr input-context))
          (args (format "%s, %s" text index)))
     (exec-r-fn-to-buffer "fnmate::fnmate_below" args)))
+#+end_src
+
+** custom keywords
+- highlight custom keywords for {targets} package
+#+begin_src emacs-lisp
+(defvar ess-R-keywords
+  '("if" "else" "repeat" "while" "function" "for" "in" "next" "break"
+    "switch" "function" "return" "on.exit" "stop" ".Defunct" "tryCatch"
+    "withRestarts" "invokeRestart"
+    "recover" "browser"
+    "tar_target" "tar_render" "tar_file")
+  "Reserved words or special functions in the R language.")
+
+;; https://www.emacswiki.org/emacs/AddKeywords
+;; (font-lock-add-keywords 'ess-mode
+;;   '(("tar_target" . font-lock-function-name-face)
+;;     ("tar_render" . font-lock-function-name-face)
+;;     ("tar_file" . font-lock-function-name-face)))
 #+end_src
 
 ** settings
