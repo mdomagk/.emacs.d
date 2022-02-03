@@ -1,7 +1,7 @@
 ﻿#+TAGS: custom(c) lisp(l) usepackage(u)
 #+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
 #+TITLE: config.org
-#+Changed: 28.01.2022
+#+Changed: 03.02.2022
 
 * Literate Emacs configuration
 ** [0/5] Open tasks
@@ -1617,7 +1617,8 @@ Examples:
     ("tr" "read at point" R_tar_read_target_at_point)
     ("tf" "fnmate at point" fnmate)]
 
-   ["{bookdown}"
+   ["{Rmarkdown}"
+    ("e" "polymode export" polymode-export)
     ("r" "render book" R_bookdown_render_book)]]
 
   [" "
