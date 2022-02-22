@@ -1,7 +1,7 @@
 ﻿#+TAGS: custom(c) lisp(l) usepackage(u)
 #+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
 #+TITLE: config.org
-#+Changed: 03.02.2022
+#+Changed: 22.02.2022
 
 * Literate Emacs configuration
 ** [0/5] Open tasks
@@ -322,9 +322,17 @@ instead of yes or no accept y or n
 #+begin_src emacs-lisp
 (setq delete-by-moving-to-trash t)
 #+end_src
+
 ** sentences have one space after a period
 #+begin_src emacs-lisp
 (setq sentence-end-double-space nil)
+#+end_src
+
+
+
+** Automatically revert buffers for changed files
+#+begin_src emacs-lisp
+(global-auto-revert-mode 1)
 #+end_src
 
 * functions                                                          :custom:
