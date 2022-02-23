@@ -1,7 +1,7 @@
 ﻿#+TAGS: custom(c) lisp(l) usepackage(u)
 #+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
 #+TITLE: config.org
-#+Changed: 22.02.2022
+#+Changed: 23.02.2022
 
 * Literate Emacs configuration
 ** [0/5] Open tasks
@@ -37,16 +37,16 @@ M-x getenv <RET> PATH <RET>
 #+begin_src emacs-lisp
 (when (string-equal system-name "EVMI60")
   (let ((mypaths
-         '("C:/Program Files/R/R-4.1.2/bin/x64"
-           "D:/Privat/Ledger"
-           "D:/Users/domagk/AppData/Local/Pandoc"
-           "C:/tools/texlive/2017/bin/win32"
+         '("C:/Program Files (x86)/gnupg14"
+           "C:/Program Files/Graphviz/bin"
+           "C:/Program Files/R/R-4.1.2/bin/x64"
+           "C:/Program Files/git/bin"
+           "C:/Python39"
            "C:/rtools40"
            "C:/rtools40/mingw64/bin"
-           "C:/Program Files/git/bin"
-           "C:/Program Files/Graphviz/bin"
-           "C:/Program Files (x86)/gnupg14"
-           "C:/Python39")))
+           "C:/texlive/2021/bin/win32"
+           "D:/Privat/Ledger"
+           "D:/Users/domagk/AppData/Local/Pandoc")))
     (setenv "PATH" (mapconcat 'identity mypaths ";"))
     (setq exec-path (append mypaths (list "." exec-directory))))
   (setq mx-use-theme "leuven")
@@ -57,14 +57,13 @@ M-x getenv <RET> PATH <RET>
 #+begin_src emacs-lisp
 (when (string-equal system-name "LAPTOP-ULMJC9IQ")
   (let ((mypaths
-         '("D:/Max/Ledger_312"
-           "D:/Max/sqlite3"
-           "C:/texlive/2020/bin/win32"
-           "C:/Users/Max/AppData/Local/Pandoc"
+         '("C:/Program Files (x86)/GNU GnuPG"
+           "C:/Program Files/Graphviz/bin"
            "C:/Program Files/R/R-4.1.2/bin/x64"
            "C:/Program Files/git/bin"
-           "C:/Program Files/Graphviz/bin"
-           "C:/Program Files (x86)/GNU GnuPG")))
+           "C:/Users/Max/AppData/Local/Pandoc"
+           "C:/texlive/2020/bin/win32"
+           "D:/Max/Ledger_312")))
     (setenv "PATH" (mapconcat 'identity mypaths ";"))
     (setq exec-path (append mypaths (list "." exec-directory))))
   (setq mx-use-theme "leuven")
