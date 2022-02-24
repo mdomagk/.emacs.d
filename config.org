@@ -1,28 +1,9 @@
 ﻿#+TAGS: custom(c) lisp(l) usepackage(u)
 #+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
 #+TITLE: config.org
-#+Changed: 23.02.2022
+#+Changed: 24.02.2022
 
 * Literate Emacs configuration
-** [0/5] Open tasks
-- [ ] Add transient for targets
-  - see: https://www.reddit.com/r/emacs/comments/f3o0v8/anyone_have_good_examples_for_transient/fhkcprc/
-  - similar to magit options after C-x g
-  - tar commands
-    - make (full, summary)
-    - visnetwork (all, targets only)
-    - prune
-    - read
-    - load
-  - fnmate
-  - start new R process
-
-- [ ] Rerrange structure
-- [ ] Add tags ~keybind~
-- [ ] Clean unused packages
-- [ ] Fix fnmate Bug
-
-
 ** Installation
 Add ~site-start.el~ in ~c:\Program Files\GNU Emacs\emacs_27.2\share\emacs\27.2\site-lisp\~ and add:
 #+begin_src lisp
@@ -670,18 +651,6 @@ move cursor to brackets
 (setq org-outline-path-complete-in-steps nil)
 (setq org-refile-allow-creating-parent-nodes 'confirm)
 
-;; FIXME mx-save-org-buffers
-;; Save the corresponding buffers of org-agenda-files after refiling
-;; (defun mx-save-org-buffers ()
-;;   "Save `org-agenda-files' buffers without user confirmation.
-;; See also `org-save-all-org-buffers'"
-;;   (interactive)
-;;   (message "Saving org-agenda-files buffers...")
-;;   (save-some-buffers t (lambda ()
-;; 			 (when (member (buffer-file-name) org-agenda-files)
-;; 			   t)))
-;;   (message "Saving org-agenda-files buffers... done"))
-
 ;; save all org-buffers after refiling
 (advice-add 'org-refile :after
 	    (lambda (&rest _)
@@ -696,11 +665,7 @@ move cursor to brackets
 ;; create org-capture-templates
 (setq org-capture-templates
       '(("i" "inbox.org" entry (file "~/.emacs.d/org/inbox.org")
-         "* TODO %?\n%U\n")
-        ("h" "Aufgabe Home" entry (file+headline "~/.emacs.d/org/home.org" "Aufgaben")
-         "** TODO %?\n%U\n")
-        ("w" "Aufgabe Work" entry (file+headline "~/.emacs.d/org/work.org" "Aufgaben")
-         "** TODO %?\n%U\n")))
+         "* TODO %?\n%U\n")))
 #+end_src
 
 
@@ -1067,7 +1032,7 @@ https://www.emacswiki.org/emacs/ElectricPair (for specific modes only)
 (load "~/.emacs.d/lisp/xah-find.el")
 #+end_src
 
-* FIX rainbow-mode                                                     :lisp:
+* FIX rainbow-mode                                                    :lisp:
 minor mode sets background color to strings that match color names, e.g. #0000ff is displayed in white with a blue background
 #+begin_src emacs-lisp
 (load "~/.emacs.d/lisp/rainbow-mode.el")
@@ -1367,7 +1332,7 @@ https://github.com/Fanael/rainbow-delimiters
   (setq org-pomodoro-keep-killed-pomodoro-time t))
 #+end_src
 
-* TODO emacs speaks statistics                                   :usepackage:
+* TODO emacs speaks statistics                                  :usepackage:
 http://ess.r-project.org/Manual/ess.html
 c:\Program Files\R\R-4.1.0\library\base\R\Rprofile
 add: .libPaths("D:/Daten/R/Library")
