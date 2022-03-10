@@ -1,7 +1,7 @@
 ﻿#+TAGS: custom(c) lisp(l) usepackage(u)
 #+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
 #+TITLE: config.org
-#+Changed: 09.03.2022
+#+Changed: 10.03.2022
 
 * Literate Emacs configuration
 ** Installation
@@ -853,6 +853,8 @@ move cursor to brackets
  ("8Ü" "\\334")
 
  ("8sz" "\\337")
+
+ ("8ref" "\\@ref(@@)")
 
 ))
 
