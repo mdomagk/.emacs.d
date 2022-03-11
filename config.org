@@ -1,7 +1,7 @@
 ﻿#+TAGS: custom(c) lisp(l) usepackage(u)
 #+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
 #+TITLE: config.org
-#+Changed: 10.03.2022
+#+Changed: 11.03.2022
 
 * Literate Emacs configuration
 ** Installation
@@ -20,7 +20,7 @@ M-x getenv <RET> PATH <RET>
   (let ((mypaths
          '("C:/Program Files (x86)/gnupg14"
            "C:/Program Files/Graphviz/bin"
-           "C:/Program Files/R/R-4.1.2/bin/x64"
+           "C:/Program Files/R/R-4.1.3/bin/x64"
            "C:/Program Files/git/bin"
            "C:/Python39"
            "C:/rtools40"
@@ -40,7 +40,7 @@ M-x getenv <RET> PATH <RET>
   (let ((mypaths
          '("C:/Program Files (x86)/GNU GnuPG"
            "C:/Program Files/Graphviz/bin"
-           "C:/Program Files/R/R-4.1.2/bin/x64"
+           "C:/Program Files/R/R-4.1.3/bin/x64"
            "C:/Program Files/git/bin"
            "C:/Users/Max/AppData/Local/Pandoc"
            "C:/texlive/2020/bin/win32"
