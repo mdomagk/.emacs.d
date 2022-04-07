@@ -1,7 +1,7 @@
 ﻿#+TAGS: custom(c) lisp(l) usepackage(u)
 #+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
 #+TITLE: config.org
-#+Changed: 11.03.2022
+#+Changed: 07.04.2022
 
 * Literate Emacs configuration
 ** Installation
@@ -676,7 +676,7 @@ move cursor to brackets
  'org-babel-load-languages
  '((emacs-lisp . t)
    (R . t)
-   (ledger . t)
+   ;;(ledger . t)
    (python . t)
    (latex . t)
    (dot . t)))
@@ -1046,7 +1046,7 @@ https://www.emacswiki.org/emacs/ElectricPair (for specific modes only)
 (load "~/.emacs.d/lisp/xah-find.el")
 #+end_src
 
-* FIX rainbow-mode                                                    :lisp:
+* rainbow-mode                                                         :lisp:
 minor mode sets background color to strings that match color names, e.g. #0000ff is displayed in white with a blue background
 #+begin_src emacs-lisp
 (load "~/.emacs.d/lisp/rainbow-mode.el")
@@ -1301,13 +1301,13 @@ https://github.com/Fanael/rainbow-delimiters
 #+begin_src emacs-lisp
 (use-package rainbow-delimiters
   :ensure t
-  :hook
-  (tex-mode-hook . rainbow-delimiters-mode)
-  (LaTeX-mode-hook . rainbow-delimiters-mode)
-  (ess-mode-hook . rainbow-delimiters-mode)
-  (inferior-ess-mode-hook . rainbow-delimiters-mode)
-  (python-mode-hook . rainbow-delimiters-mode)
-  (emacs-lisp-mode-hook . rainbow-delimiters-mode))
+  :init
+  (add-hook 'tex-mode-hook #'rainbow-delimiters-mode)
+  (add-hook 'LaTeX-mode-hook #'rainbow-delimiters-mode)
+  (add-hook 'ess-mode-hook #'rainbow-delimiters-mode)
+  (add-hook 'inferior-ess-mode-hook #'rainbow-delimiters-mode)
+  (add-hook 'python-mode-hook #'rainbow-delimiters-mode)
+  (add-hook 'emacs-lisp-mode-hook #'rainbow-delimiters-mode))
 #+end_src
 
 * goto-change                                                    :usepackage:
@@ -1525,6 +1525,9 @@ add: .libPaths("D:/Daten/R/Library")
   ;;       (reusable-frames . 0))))
   )
 #+end_src
+
+#+RESULTS:
+: R_tar_load_target_at_point
 
 * yaml-mode                                                      :usepackage:
 #+begin_src emacs-lisp
