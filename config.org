@@ -1,7 +1,7 @@
 ﻿#+TAGS: custom(c) lisp(l) usepackage(u)
 #+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
 #+TITLE: config.org
-#+Changed: 07.04.2022
+#+Changed: 08.04.2022
 
 * Literate Emacs configuration
 ** Installation
@@ -1392,7 +1392,7 @@ add: .libPaths("D:/Daten/R/Library")
 (defun R_tar_make_summary ()
   "call targets::tar_make(reporter = \"summary\")."
   (interactive)
-    (ess-eval-linewise "targets::tar_make(reporter = \"summary\")\n"))
+    (ess-eval-linewise "Sys.time(); targets::tar_make(reporter = \"summary\")\n"))
 
 (defun R_tar_visnetwork ()
   "call targets::tar_visnetwork."
