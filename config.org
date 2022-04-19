@@ -1,7 +1,7 @@
 ﻿#+TAGS: custom(c) lisp(l) usepackage(u)
 #+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
 #+TITLE: config.org
-#+Changed: 12.04.2022
+#+Changed: 19.04.2022
 
 * Literate Emacs configuration
 ** Installation
@@ -1549,7 +1549,7 @@ add: .libPaths("D:/Daten/R/Library")
   )
 #+end_src
 
-* TODO transient (transient keybinds)                            :usepackage:
+* transient (transient keybinds)                                 :usepackage:
 comes with magit
 Manuak:
 - https://github.com/magit/transient/blob/master/docs/transient.org
@@ -1607,7 +1607,7 @@ Examples:
     ("tf" "fnmate at point" fnmate)]
 
    ["{Rmarkdown}"
-    ("e" "polymode export" polymode-export)
+    ("e" "polymode export" mx-polymode-export)
     ("r" "render book" R_bookdown_render_book)]]
 
   [" "
@@ -1637,8 +1637,10 @@ Examples:
   (require 'poly-markdown)
   :config
   (add-to-list 'auto-mode-alist '("\\.md$" . poly-markdown-mode))
-  (add-to-list 'auto-mode-alist '("\\.Rmd$" . poly-markdown+r-mode))
+  ;;(add-to-list 'auto-mode-alist '("\\.[rR]md$" . poly-markdown+r-mode))
+  (add-to-list 'auto-mode-alist '("\\.[rR]md$" . poly-gfm+r-mode))
   (setq polymode-display-output-file nil)
+  (setq polymode-display-process-buffers nil)
   (setq markdown-max-image-size (cons 600  nil)))
 
 (defun polymode-insert-r-chunk (header)
@@ -1647,6 +1649,14 @@ Examples:
   (interactive "sHeader: ")
   (insert (concat "```{r " header "}\n\n```"))
   (forward-line -1))
+
+(defun mx-polymode-export ()
+ "Delete process-buffer window after polymode-export"
+ (interactive)
+ (polymode-export)
+ (delete-other-windows))
+
+
 #+end_src
 
 * mood-line                                                      :usepackage:
