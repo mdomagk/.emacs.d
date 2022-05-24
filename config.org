@@ -1,7 +1,7 @@
 ﻿#+TAGS: custom(c) lisp(l) usepackage(u)
 #+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
 #+TITLE: config.org
-#+Changed: 04.05.2022
+#+Changed: 24.05.2022
 
 * Literate Emacs configuration
 ** Installation
@@ -1099,8 +1099,8 @@ Set up ~package~ and ~use-package~.
 #+begin_src emacs-lisp
 (use-package ivy
   :ensure t
-  ;;:custom-face
-    ;;(ivy-current-match ((t :background "#B6D6FD")))
+  :custom-face
+    (ivy-current-match ((t :background "#FFE8FF")))
     ;; (ivy-virtual ((t :foreground #7F7F7F)))
     ;; (ivy-minibuffer-match-face-2 ((t :background "#dddddd" :weight bold)))
   :config
