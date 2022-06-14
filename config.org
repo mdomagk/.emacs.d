@@ -1,7 +1,7 @@
 ﻿#+TAGS: custom(c) lisp(l) usepackage(u)
 #+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
 #+TITLE: config.org
-#+Changed: 08.06.2022
+#+Changed: 14.06.2022
 
 * Literate Emacs configuration
 ** Installation
@@ -1353,10 +1353,10 @@ add: .libPaths("D:/Daten/R/Library")
 ** FIX custom functions
 #+begin_src emacs-lisp
 (defun R_insert_pipe_operator ()
-  "R - %>% operator or 'then' pipe operator"
+  "R - |> operator or 'then' pipe operator"
   (interactive)
   (just-one-space 1)
-  (insert "%>%")
+  (insert "|>")
   (just-one-space 1))
   ;;(reindent-then-newline-and-indent))
 
@@ -1455,7 +1455,7 @@ add: .libPaths("D:/Daten/R/Library")
     (exec-r-fn-to-buffer "fnmate::fnmate_below" args)))
 #+end_src
 
-** custom keywords
+** custom keywords and highlights
 - highlight custom keywords for {targets} package
 #+begin_src emacs-lisp
 (defvar ess-R-keywords
@@ -1465,6 +1465,12 @@ add: .libPaths("D:/Daten/R/Library")
     "recover" "browser"
     "tar_target" "tar_render" "tar_file")
   "Reserved words or special functions in the R language.")
+
+;; https://stackoverflow.com/a/67654699
+;; highlight along with current assignment ops
+;; ess-R-font-lock-keywords contains (ess-R-fl-assign-ops . t) by default
+(with-eval-after-load 'ess
+  (cl-pushnew "|>" ess-R-assign-ops :test 'string=))
 
 ;; https://www.emacswiki.org/emacs/AddKeywords
 ;; (font-lock-add-keywords 'ess-mode
