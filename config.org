@@ -1101,7 +1101,7 @@ Set up ~package~ and ~use-package~.
 (use-package ivy
   :ensure t
   :custom-face
-    (ivy-current-match ((t :background "#FFE8FF" :foreground "#000000" :weight bold)))
+    (ivy-current-match ((t :background "#FFE8FF" :foreground "#670034" :weight bold)))
     ;; (ivy-virtual ((t :foreground #7F7F7F)))
     ;; (ivy-minibuffer-match-face-2 ((t :background "#dddddd" :weight bold)))
   :config
