@@ -1,13 +1,14 @@
 ﻿#+TAGS: custom(c) lisp(l) usepackage(u)
 #+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
 #+TITLE: config.org
-#+Changed: 14.06.2022
+#+Changed: 15.06.2022
 
 * Literate Emacs configuration
 ** Installation
 Add ~site-start.el~ in ~c:\Program Files\GNU Emacs\emacs_27.2\share\emacs\27.2\site-lisp\~ and add:
 #+begin_src lisp
 (setenv "HOME" "D:/Privat/Nextcloud")
+(setq package-user-dir "~/.emacs.d/elpa")
 #+end_src
 to set path to ~.emacs.d/~ folder.
 
