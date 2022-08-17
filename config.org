@@ -23,13 +23,14 @@ M-x getenv <RET> PATH <RET>
            "C:/Program Files/Graphviz/bin"
            "C:/Program Files/R/R-4.2.1/bin/x64"
            "C:/Program Files/git/bin"
-           "D:/Users/domagk/AppData/Local/Programs/Quarto/bin"
            "C:/Python39"
+           "C:/Windows/System32"
            "C:/rtools40"
            "C:/rtools40/mingw64/bin"
            "C:/texlive/2021/bin/win32"
            "D:/Privat/Ledger"
-           "D:/Users/domagk/AppData/Local/Pandoc")))
+           "D:/Users/domagk/AppData/Local/Pandoc"
+           "D:/Users/domagk/AppData/Local/Programs/Quarto/bin")))
     (setenv "PATH" (mapconcat 'identity mypaths ";"))
     (setq exec-path (append mypaths (list "." exec-directory))))
   (setq mx-use-theme "leuven")
@@ -1624,7 +1625,7 @@ Examples:
 )
 #+end_src
 
-* FIX polymode (Rmarkdown / Quarto)                              :usepackage:
+* polymode (Rmarkdown/Quarto)                                    :usepackage:
 - R:
   - install.packages("rmarkdown", repos = "https://ftp.fau.de/cran/")
   - install.packages("bookdown", repos = "https://ftp.fau.de/cran/")
@@ -1634,7 +1635,7 @@ Examples:
   - windows cmd: type "pandoc --version" to check version
 - Quarto
   - https://github.com/quarto-dev/quarto-emacs
-  - Output not rendered in emacs
+
 #+begin_src emacs-lisp
 (use-package request
   :ensure t)
