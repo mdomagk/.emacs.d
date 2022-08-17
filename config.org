@@ -1236,6 +1236,7 @@ https://oremacs.com/swiper/
   (font-latex-sectioning-0-face ((t (:height 1.5))))
   (font-latex-sectioning-1-face ((t (:height 1.4))))
   (org-document-title ((t (:height 1.4))))
+  (font-lock-comment-face ((t (:slant normal))))
   :init
   (setq leuven-scale-outline-headlines nil)
   (setq leuven-scale-org-agenda-structure 1.2)
