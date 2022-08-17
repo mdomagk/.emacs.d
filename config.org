@@ -1,7 +1,7 @@
 ﻿#+TAGS: custom(c) lisp(l) usepackage(u)
 #+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
 #+TITLE: config.org
-#+Changed: 16.08.2022
+#+Changed: 17.08.2022
 
 * Literate Emacs configuration
 ** Installation
@@ -23,6 +23,7 @@ M-x getenv <RET> PATH <RET>
            "C:/Program Files/Graphviz/bin"
            "C:/Program Files/R/R-4.2.1/bin/x64"
            "C:/Program Files/git/bin"
+           "D:/Users/domagk/AppData/Local/Programs/Quarto/bin"
            "C:/Python39"
            "C:/rtools40"
            "C:/rtools40/mingw64/bin"
@@ -1347,11 +1348,11 @@ https://github.com/Fanael/rainbow-delimiters
   (setq org-pomodoro-keep-killed-pomodoro-time t))
 #+end_src
 
-* TODO emacs speaks statistics                                  :usepackage:
+* emacs speaks statistics                                        :usepackage:
 http://ess.r-project.org/Manual/ess.html
 c:\Program Files\R\R-4.1.0\library\base\R\Rprofile
 add: .libPaths("D:/Daten/R/Library")
-** FIX custom functions
+** custom functions
 #+begin_src emacs-lisp
 (defun R_insert_pipe_operator ()
   "R - |> operator or 'then' pipe operator"
@@ -1622,7 +1623,7 @@ Examples:
 )
 #+end_src
 
-* polymode (Rmarkdown)                                           :usepackage:
+* FIX polymode (Rmarkdown / Quarto)                              :usepackage:
 - R:
   - install.packages("rmarkdown", repos = "https://ftp.fau.de/cran/")
   - install.packages("bookdown", repos = "https://ftp.fau.de/cran/")
@@ -1630,8 +1631,17 @@ Examples:
   - install pandoc (https://pandoc.org/)
   - windows cmd: type "chcp 65001" to set the encoding to UTF-8
   - windows cmd: type "pandoc --version" to check version
+- Quarto
+  - https://github.com/quarto-dev/quarto-emacs
+  - Output not rendered in emacs
 #+begin_src emacs-lisp
-;; https://github.com/polymode/polymode/issues/124
+(use-package request
+  :ensure t)
+
+(use-package quarto-mode
+  :ensure t
+  :mode (("\\.qmd" . poly-quarto-mode)))
+
 (use-package markdown-mode
   :ensure t
   :init
