@@ -43,9 +43,11 @@ M-x getenv <RET> PATH <RET>
   (let ((mypaths
          '("C:/Program Files (x86)/GNU GnuPG"
            "C:/Program Files/Graphviz/bin"
+           "C:/Program Files/Quarto/bin"
            "C:/Program Files/R/R-4.2.1/bin/x64"
            "C:/Program Files/git/bin"
            "C:/Users/Max/AppData/Local/Pandoc"
+           "C:/Windows/System32"
            "C:/texlive/2020/bin/win32"
            "D:/Max/Ledger_312")))
     (setenv "PATH" (mapconcat 'identity mypaths ";"))
