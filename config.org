@@ -1669,8 +1669,8 @@ Examples:
   (require 'poly-markdown)
   :config
   (add-to-list 'auto-mode-alist '("\\.md$" . poly-gfm-mode))
-  (add-to-list 'auto-mode-alist '("\\.[rR]md$" . poly-markdown+r-mode))
-  ;;(add-to-list 'auto-mode-alist '("\\.[rR]md$" . poly-gfm+r-mode))
+  (add-to-list 'auto-mode-alist '("\\.Rmd$" . poly-markdown+r-mode))
+  ;;(add-to-list 'auto-mode-alist '("\\.Rmd$" . poly-gfm+r-mode))
   (setq polymode-display-output-file nil)
   (setq polymode-display-process-buffers nil)
   (setq markdown-max-image-size (cons 600  nil)))
@@ -1682,51 +1682,51 @@ Examples:
  (delete-other-windows))
 #+end_src
 
-** Custom polymode Latex fences/innermodes
+** FIX Custom polymode Latex fences/innermodes
 #+begin_src emacs-lisp
 
-(define-innermode poly-markdown-latex-equation-innermode
-  :mode 'latex-mode
-  :head-matcher "^\\\\begin{equation}\n"
-  :tail-matcher "^\\\\end{equation}"
-  :head-mode 'host
-  :tail-mode 'host)
-
-(define-innermode poly-markdown-latex-eqnarray-innermode
-  :mode 'latex-mode
-  :head-matcher "^\\\\begin{eqnarray}\n"
-  :tail-matcher "^\\\\end{eqnarray}"
-  :head-mode 'host
-  :tail-mode 'host)
-
-(define-innermode poly-markdown-latex-align-innermode
-  :mode 'latex-mode
-  :head-matcher "^\\\\begin{align}\n"
-  :tail-matcher "^\\\\end{align}"
-  :head-mode 'host
-  :tail-mode 'host)
-
-(define-innermode poly-markdown-latex-double-dollar-innermode
-  :mode 'latex-mode
-  :head-matcher "^\\$\\$"
-  :tail-matcher "^\\$\\$"
-  :head-mode 'host
-  :tail-mode 'host)
-
-;; (define-innermode poly-markdown-latex-single-dollar-innermode
+;; (define-innermode poly-markdown-latex-equation-innermode
 ;;   :mode 'latex-mode
-;;   :head-matcher "\\s\\$\\S"
-;;   :tail-matcher "\\S\\$[:alnum:]"
+;;   :head-matcher "^\\\\begin{equation}\n"
+;;   :tail-matcher "^\\\\end{equation}"
 ;;   :head-mode 'host
 ;;   :tail-mode 'host)
 
-(define-polymode poly-markdown+r-mode poly-markdown-mode :lighter " PM-Rmd"
-  :innermodes '(poly-markdown-latex-equation-innermode
-                poly-markdown-latex-eqnarray-innermode
-                poly-markdown-latex-align-innermode
-                poly-markdown-latex-double-dollar-innermode
-                ;;poly-markdown-latex-single-dollar-innermode
-                :inherit poly-r-markdown-inline-code-innermode))
+;; (define-innermode poly-markdown-latex-eqnarray-innermode
+;;   :mode 'latex-mode
+;;   :head-matcher "^\\\\begin{eqnarray}\n"
+;;   :tail-matcher "^\\\\end{eqnarray}"
+;;   :head-mode 'host
+;;   :tail-mode 'host)
+
+;; (define-innermode poly-markdown-latex-align-innermode
+;;   :mode 'latex-mode
+;;   :head-matcher "^\\\\begin{align}\n"
+;;   :tail-matcher "^\\\\end{align}"
+;;   :head-mode 'host
+;;   :tail-mode 'host)
+
+;; (define-innermode poly-markdown-latex-double-dollar-innermode
+;;   :mode 'latex-mode
+;;   :head-matcher "^\\$\\$"
+;;   :tail-matcher "^\\$\\$"
+;;   :head-mode 'host
+;;   :tail-mode 'host)
+
+;; ;; (define-innermode poly-markdown-latex-single-dollar-innermode
+;; ;;   :mode 'latex-mode
+;; ;;   :head-matcher "\\s\\$\\S"
+;; ;;   :tail-matcher "\\S\\$[:alnum:]"
+;; ;;   :head-mode 'host
+;; ;;   :tail-mode 'host)
+
+;; (define-polymode poly-markdown+r-mode poly-markdown-mode :lighter " PM-Rmd"
+;;   :innermodes '(poly-markdown-latex-equation-innermode
+;;                 poly-markdown-latex-eqnarray-innermode
+;;                 poly-markdown-latex-align-innermode
+;;                 poly-markdown-latex-double-dollar-innermode
+;;                 ;;poly-markdown-latex-single-dollar-innermode
+;;                 :inherit poly-r-markdown-inline-code-innermode))
 #+end_src
 
 * mood-line                                                      :usepackage:
