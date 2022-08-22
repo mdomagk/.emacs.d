@@ -1630,17 +1630,9 @@ Examples:
 #+end_src
 
 * polymode (Rmarkdown/Quarto)                                    :usepackage:
-- R:
-  - install.packages("rmarkdown", repos = "https://ftp.fau.de/cran/")
-  - install.packages("bookdown", repos = "https://ftp.fau.de/cran/")
-- Windows:
-  - install pandoc (https://pandoc.org/)
-  - windows cmd: type "chcp 65001" to set the encoding to UTF-8
-  - windows cmd: type "pandoc --version" to check version
-- Quarto
-  - https://github.com/quarto-dev/quarto-emacs
+- Pandoc (https://pandoc.org/)
+- Quarto (https://github.com/quarto-dev/quarto-emacs)
 
-** Settings
 #+begin_src emacs-lisp
 (use-package request
   :ensure t)
@@ -1657,10 +1649,16 @@ Examples:
   (markdown-italic-face ((t (:slant normal)))))
 
 (add-hook 'markdown-mode-hook
-  (lambda ()
-    (font-lock-add-keywords nil '(("\\[\\(\\@.+?\\)\\]" . font-lock-function-name-face)))
-    )
-  )
+          (lambda ()
+            ;; [@...]
+            (font-lock-add-keywords nil '(("\\[\\(\\@.+?\\)\\]" . font-lock-function-name-face)))
+            ;; \@ref
+            (font-lock-add-keywords nil '(("\\\\\\@ref" . font-lock-keyword-face)))
+            ;; \begin latex commands
+            (font-lock-add-keywords nil '(("\\\\[[:alnum:]]+" . font-lock-keyword-face)))
+            ;; $...$ inline math
+            (font-lock-add-keywords nil '(("\\$\\(.+?\\)\\$" . font-lock-keyword-face)))
+            ))
 
 (use-package poly-markdown
   :ensure t)
@@ -1687,6 +1685,9 @@ Examples:
  (polymode-export)
  (delete-other-windows))
 #+end_src
+
+#+RESULTS:
+: mx-polymode-export
 
 ** FIX Custom polymode Latex fences/innermodes
 #+begin_src emacs-lisp
