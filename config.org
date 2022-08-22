@@ -1,7 +1,7 @@
 ﻿#+TAGS: custom(c) lisp(l) usepackage(u)
 #+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
 #+TITLE: config.org
-#+Changed: 18.08.2022
+#+Changed: 22.08.2022
 
 * Literate Emacs configuration
 ** Installation
@@ -1640,6 +1640,7 @@ Examples:
 - Quarto
   - https://github.com/quarto-dev/quarto-emacs
 
+** Settings
 #+begin_src emacs-lisp
 (use-package request
   :ensure t)
@@ -1651,7 +1652,9 @@ Examples:
 (use-package markdown-mode
   :ensure t
   :init
-  (setq markdown-enable-math t))
+  (setq markdown-enable-math nil) ;; nil t
+  :custom-face
+  (markdown-italic-face ((t (:slant normal)))))
 
 (use-package poly-markdown
   :ensure t)
@@ -1665,9 +1668,9 @@ Examples:
   (require 'poly-R)
   (require 'poly-markdown)
   :config
-  (add-to-list 'auto-mode-alist '("\\.md$" . poly-markdown-mode))
-  ;;(add-to-list 'auto-mode-alist '("\\.[rR]md$" . poly-markdown+r-mode))
-  (add-to-list 'auto-mode-alist '("\\.[rR]md$" . poly-gfm+r-mode))
+  (add-to-list 'auto-mode-alist '("\\.md$" . poly-gfm-mode))
+  (add-to-list 'auto-mode-alist '("\\.[rR]md$" . poly-markdown+r-mode))
+  ;;(add-to-list 'auto-mode-alist '("\\.[rR]md$" . poly-gfm+r-mode))
   (setq polymode-display-output-file nil)
   (setq polymode-display-process-buffers nil)
   (setq markdown-max-image-size (cons 600  nil)))
@@ -1677,7 +1680,46 @@ Examples:
  (interactive)
  (polymode-export)
  (delete-other-windows))
+#+end_src
 
+** Custom polymode Latex fences/innermodes
+#+begin_src emacs-lisp
+
+(define-innermode poly-markdown-latex-equation-innermode
+  :mode 'latex-mode
+  :head-matcher "^\\\\begin{equation}\n"
+  :tail-matcher "^\\\\end{equation}"
+  :head-mode 'host
+  :tail-mode 'host)
+
+(define-innermode poly-markdown-latex-eqnarray-innermode
+  :mode 'latex-mode
+  :head-matcher "^\\\\begin{eqnarray}\n"
+  :tail-matcher "^\\\\end{eqnarray}"
+  :head-mode 'host
+  :tail-mode 'host)
+
+(define-innermode poly-markdown-latex-align-innermode
+  :mode 'latex-mode
+  :head-matcher "^\\\\begin{align}\n"
+  :tail-matcher "^\\\\end{align}"
+  :head-mode 'host
+  :tail-mode 'host)
+
+(define-innermode poly-markdown-latex-dollar-innermode
+  :mode 'latex-mode
+  :head-matcher "^\\$\\$\n"
+  :tail-matcher "^\\$\\$\n"
+  :head-mode 'host
+  :tail-mode 'host)
+
+(define-polymode poly-markdown+r-mode poly-markdown-mode :lighter " PM-Rmd"
+  :innermodes '(poly-markdown-latex-equation-innermode
+                poly-markdown-latex-eqnarray-innermode
+                poly-markdown-latex-align-innermode
+                poly-markdown-latex-dollar-innermode
+                ;;poly-markdown-inline-math-innermode
+                :inherit poly-r-markdown-inline-code-innermode))
 #+end_src
 
 * mood-line                                                      :usepackage:
