@@ -1650,14 +1650,18 @@ Examples:
 
 (add-hook 'markdown-mode-hook
           (lambda ()
-            ;; [@...]
-            (font-lock-add-keywords nil '(("\\[\\(\\@.+?\\)\\]" . font-lock-function-name-face)))
-            ;; \@ref
-            (font-lock-add-keywords nil '(("\\\\\\@ref" . font-lock-keyword-face)))
-            ;; \begin latex commands
-            (font-lock-add-keywords nil '(("\\\\[[:alnum:]]+" . font-lock-keyword-face)))
+            ;; [@...] citation
+            (font-lock-add-keywords nil '(("\\[\\(\\@.+?\\)\\]" . font-lock-builtin-face)))
+            ;; \@ref reference
+            (font-lock-add-keywords nil '(("\\\\\\@ref" . font-lock-type-face)))
+            ;; \some latex commands
+            (font-lock-add-keywords nil '(("\\\\[[:alnum:]]+" . font-lock-type-face)))
             ;; $...$ inline math
-            (font-lock-add-keywords nil '(("\\$\\(.+?\\)\\$" . font-lock-keyword-face)))
+            (font-lock-add-keywords nil '(("\\$\\(.+?\\)\\$" . font-lock-type-face)))
+            ;; \todo custom latex command
+            (font-lock-add-keywords nil '(("\\\\todo" . font-lock-warning-face)))
+            ;; \discuss custom latex command
+            (font-lock-add-keywords nil '(("\\\\discuss" . font-lock-warning-face)))
             ))
 
 (use-package poly-markdown
