@@ -1,7 +1,7 @@
 ﻿#+TAGS: custom(c) lisp(l) usepackage(u)
 #+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
 #+TITLE: config.org
-#+Changed: 22.08.2022
+#+Changed: 23.08.2022
 
 * Literate Emacs configuration
 ** Installation
@@ -61,6 +61,12 @@ M-x getenv <RET> PATH <RET>
 additional options KEEP-SIZE and FRAMES
 #+begin_src emacs-lisp
 (set-frame-font "Consolas-9" nil t)
+
+;; solve fixed-pitch issue for windows
+;;https://yoo2080.wordpress.com/2013/05/30/ms-windows-emacs-fixed-pitch-got-no-anti-aliasing/
+(if (eq system-type 'windows-nt)
+    (set-face-attribute 'fixed-pitch nil :family
+                        (face-attribute 'default :family)))
 #+end_src
 
 ** user name and e-mail
@@ -1689,9 +1695,6 @@ Examples:
  (polymode-export)
  (delete-other-windows))
 #+end_src
-
-#+RESULTS:
-: mx-polymode-export
 
 ** FIX Custom polymode Latex fences/innermodes
 #+begin_src emacs-lisp
