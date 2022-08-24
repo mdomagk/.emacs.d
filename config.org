@@ -1660,6 +1660,8 @@ Examples:
             (font-lock-add-keywords nil '(("\\\\[[:alnum:]]+" . font-lock-type-face)))
             ;; inline math: $...$
             (font-lock-add-keywords nil '(("\\$\\(.+?\\)\\$" . font-lock-type-face)))
+            ;; diyplay math: $$
+            (font-lock-add-keywords nil '(("^\\$\\$\n" . font-lock-type-face)))
             ;; citations: [@...]
             (font-lock-add-keywords nil '(("\\[\\(\\@.+?\\)\\]" . font-lock-builtin-face)))
             ;; references: \@ref()
