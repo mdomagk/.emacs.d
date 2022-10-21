@@ -1,7 +1,7 @@
 ﻿#+TAGS: custom(c) lisp(l) usepackage(u)
 #+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
 #+TITLE: config.org
-#+Changed: 20.10.2022
+#+Changed: 21.10.2022
 
 * Literate Emacs configuration
 ** Installation
@@ -137,8 +137,7 @@ http://www.masteringemacs.org/articles/2012/08/09/working-coding-systems-unicode
 adjust window title to "emacs: path/actual-buffer"
 #+begin_src emacs-lisp
 (setq frame-title-format
-      '("" invocation-name ": "
-        (:eval (if (buffer-file-name)
+      '((:eval (if (buffer-file-name)
                    (abbreviate-file-name (buffer-file-name))
                  "%b"))))
 #+end_src
