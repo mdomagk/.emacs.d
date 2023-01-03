@@ -1702,7 +1702,7 @@ Examples:
  (delete-other-windows))
 #+end_src
 
-* mood-line                                                      :usepackage:
+* DISABLED mood-line                                             :usepackage:
 minimal mode-line configuration
 #+begin_src emacs-lisp
 (use-package mood-line
@@ -1735,6 +1735,6 @@ makes M-n and M-p look for and M-h highlight the symbol at point
          (yaml-mode . symbol-overlay-mode))
   :custom-face
   ;; no highlighting
-  (symbol-overlay-default-face ((t (:background nil)))))
+  (symbol-overlay-default-face ((t (:inherit nil)))))
 #+end_src
 .
