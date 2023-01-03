@@ -1,4 +1,5 @@
-﻿#+TAGS: custom(c) lisp(l) usepackage(u)
+﻿
+#+TAGS: custom(c) lisp(l) usepackage(u)
 #+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
 #+TITLE: config.org
 #+Changed: 03.01.2023
@@ -916,18 +917,21 @@ move cursor to brackets
               (list
 
                ;; buffer name with face
-               "--- "
-               (propertize "%b " 'face 'mode-line-buffer-id)
+               "    "
+               (propertize "%b  " 'face 'mode-line-buffer-id)
                ;;"%b "
 
                ;; line and column
-               "(%02l,%02c) "
+               "%01l:%01c "
 
-               ;; relative position, size of file
-               "[%p/%I] "
+               ;; relative position
+               "%p  "
+
+               ;; ;; relative position, size of file
+               ;; "[%p/%I] "
 
                ;; the current major mode for the buffer.
-               "[%m] "
+               "%m  "
 
                "[" ;; insert vs overwrite mode, input-method in a tooltip
                '(:eval (propertize (if overwrite-mode "Ovr" "Ins")
@@ -941,7 +945,7 @@ move cursor to brackets
 
                ;; i want to see the 'pomodoro' status using (%M = global-mode-string)
                "%M"
-               "%-" ;; fill with '-'
+               ;;"%-" ;; fill with '-'
                ))
 #+end_src
 
@@ -1702,26 +1706,17 @@ Examples:
 minimal mode-line configuration
 #+begin_src emacs-lisp
 (use-package mood-line
-  :ensure t
+  ;;:ensure t
+  :disabled t
   :init (mood-line-mode)
   :custom-face
-  (mood-line-major-mode ((t (:background nil))))
-  (mood-line-unimportant ((t (:foreground nil))))
-  (mood-line-status-neutral ((t (:foreground nil))))
-  (mood-line-status-info ((t (:foreground nil))))
-  (mood-line-status-warning ((t (:foreground nil))))
-  (mood-line-modified ((t (:inherit warning)))))
+  (mood-line-major-mode ((t (:inherit nil :foreground nil))))
+  (mood-line-status-info ((t (:inherit nil :foreground nil))))
+  (mood-line-buffer-status-modified ((t (:inherit warning)))))
 
-;; ;; mood-line faces
-;; mood-line-buffer-name
-;; mood-line-major-mode
-;; mood-line-status-neutral
-;; mood-line-status-info
-;; mood-line-status-success
-;; mood-line-status-warning
-;; mood-line-status-error
-;; mood-line-unimportant
-;; mood-line-modified
+  ;; (mood-line-unimportant ((t (:foreground nil))))
+  ;; (mood-line-status-neutral ((t (:foreground nil))))
+  ;; (mood-line-status-warning ((t (:foreground nil))))
 
 #+end_src
 
