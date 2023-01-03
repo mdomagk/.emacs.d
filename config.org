@@ -1581,7 +1581,7 @@ Examples:
   - https://gist.github.com/abrochard/dd610fc4673593b7cbce7a0176d897de
 #+begin_src emacs-lisp
 (global-set-key (kbd "<apps>") 'mx-main-transient)
-(define-transient-command mx-main-transient ()
+(transient-define-prefix mx-main-transient ()
   "Main"
 
   [["Org"
