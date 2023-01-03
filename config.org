@@ -1,7 +1,7 @@
 ﻿#+TAGS: custom(c) lisp(l) usepackage(u)
 #+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
 #+TITLE: config.org
-#+Changed: 15.12.2022
+#+Changed: 03.01.2023
 
 * Literate Emacs configuration
 ** Installation
@@ -1546,9 +1546,6 @@ add: .libPaths("D:/Daten/R/Library")
   ;;       (reusable-frames . 0))))
   )
 #+end_src
-
-#+RESULTS:
-: R_tar_load_target_at_point
 
 * yaml-mode                                                      :usepackage:
 #+begin_src emacs-lisp
