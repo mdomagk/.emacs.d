@@ -1693,24 +1693,6 @@ Examples:
  (delete-other-windows))
 #+end_src
 
-* DISABLED mood-line                                             :usepackage:
-minimal mode-line configuration
-#+begin_src emacs-lisp
-(use-package mood-line
-  ;;:ensure t
-  :disabled t
-  :init (mood-line-mode)
-  :custom-face
-  (mood-line-major-mode ((t (:inherit nil :foreground nil))))
-  (mood-line-status-info ((t (:inherit nil :foreground nil))))
-  (mood-line-buffer-status-modified ((t (:inherit warning)))))
-
-  ;; (mood-line-unimportant ((t (:foreground nil))))
-  ;; (mood-line-status-neutral ((t (:foreground nil))))
-  ;; (mood-line-status-warning ((t (:foreground nil))))
-
-#+end_src
-
 * symbol-overlay                                                 :usepackage:
 makes M-n and M-p look for and M-h highlight the symbol at point
 #+begin_src emacs-lisp
