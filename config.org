@@ -2,7 +2,7 @@
 #+TAGS: custom(c) lisp(l) usepackage(u)
 #+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
 #+TITLE: config.org
-#+Changed: 03.01.2023
+#+Changed: 06.02.2023
 
 * Literate Emacs configuration
 ** Installation
@@ -852,6 +852,8 @@ move cursor to brackets
 
  ("8n" "&nbsp;")
 
+ ("8f" "(\\(x) @@)()")
+
  ("8nn" "::: notes\n\n@@\n\n:::")
 
  ("8cc" ":::::: {.columns}\n::: {.column}\n\n@@\n\n:::\n:::{.column}\n\n\n\n:::\n::::::")
@@ -916,13 +918,15 @@ move cursor to brackets
 (setq-default mode-line-format
               (list
 
-               ;; buffer name with face
-               "    "
+               ;; modified indicator
+               '(:eval (when (buffer-modified-p)       (concat " ## ")))
+               '(:eval (when (not (buffer-modified-p)) (concat "    ")))
+
+               ;; buffer name
                (propertize "%b  " 'face 'mode-line-buffer-id)
-               ;;"%b "
 
                ;; line and column
-               "%01l:%01c "
+               "%01l:%01c  "
 
                ;; relative position
                "%p  "
@@ -933,19 +937,8 @@ move cursor to brackets
                ;; the current major mode for the buffer.
                "%m  "
 
-               "[" ;; insert vs overwrite mode, input-method in a tooltip
-               '(:eval (propertize (if overwrite-mode "Ovr" "Ins")
-                                   'help-echo (concat "Buffer is in "
-                                                      (if overwrite-mode "overwrite" "insert") " mode")))
-               ;; was this buffer modified since the last save?
-               '(:eval (when (buffer-modified-p) (concat ",Mod")))
-               ;; is this buffer read-only?
-               '(:eval (when (buffer-read-only) (concat ",RO")))
-               "] "
-
                ;; i want to see the 'pomodoro' status using (%M = global-mode-string)
                "%M"
-               ;;"%-" ;; fill with '-'
                ))
 #+end_src
 
@@ -1700,24 +1693,6 @@ Examples:
  (interactive)
  (polymode-export)
  (delete-other-windows))
-#+end_src
-
-* DISABLED mood-line                                             :usepackage:
-minimal mode-line configuration
-#+begin_src emacs-lisp
-(use-package mood-line
-  ;;:ensure t
-  :disabled t
-  :init (mood-line-mode)
-  :custom-face
-  (mood-line-major-mode ((t (:inherit nil :foreground nil))))
-  (mood-line-status-info ((t (:inherit nil :foreground nil))))
-  (mood-line-buffer-status-modified ((t (:inherit warning)))))
-
-  ;; (mood-line-unimportant ((t (:foreground nil))))
-  ;; (mood-line-status-neutral ((t (:foreground nil))))
-  ;; (mood-line-status-warning ((t (:foreground nil))))
-
 #+end_src
 
 * symbol-overlay                                                 :usepackage:
