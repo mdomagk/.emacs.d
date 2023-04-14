@@ -1146,17 +1146,6 @@ Set up ~package~ and ~use-package~.
   (setq ivy-re-builders-alist '((t . ivy--regex-ignore-order))))
 #+end_src
 
-* ivy-rich                                                       :usepackage:
-- https://github.com/Yevgnen/ivy-rich
-- provides a more informative interface for ivy
-  #+begin_src emacs-lisp
-(use-package ivy-rich
-  :ensure t
-  :config
-  (ivy-rich-mode 1)
-  (setcdr (assq t ivy-format-functions-alist) #'ivy-format-function-line))
-#+end_src
-
 * counsel (for ivy)                                              :usepackage:
 https://oremacs.com/swiper/
 #+begin_src emacs-lisp
