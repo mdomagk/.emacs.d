@@ -2,7 +2,7 @@
 #+TAGS: custom(c) lisp(l) usepackage(u)
 #+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
 #+TITLE: config.org
-#+Changed: 06.02.2023
+#+Changed: 14.04.2023
 
 * Literate Emacs configuration
 ** Installation
@@ -1146,6 +1146,17 @@ Set up ~package~ and ~use-package~.
   (setq ivy-re-builders-alist '((t . ivy--regex-ignore-order))))
 #+end_src
 
+* ivy-rich                                                       :usepackage:
+- https://github.com/Yevgnen/ivy-rich
+- provides a more informative interface for ivy
+  #+begin_src emacs-lisp
+(use-package ivy-rich
+  :ensure t
+  :config
+  (ivy-rich-mode 1)
+  (setcdr (assq t ivy-format-functions-alist) #'ivy-format-function-line))
+#+end_src
+
 * counsel (for ivy)                                              :usepackage:
 https://oremacs.com/swiper/
 #+begin_src emacs-lisp
@@ -1587,11 +1598,10 @@ Examples:
    ("oi" "work.org" mx-org-file-work)]
 
    ["Files"
-    ("ff" "find" project-find-file)
+    ("ff" "git" counsel-git)
     ("fd" "dired" counsel-find-file)
     ("fr" "recentf" counsel-buffer-or-recentf)
-    ("fb" "bookmark" counsel-bookmark)
-    ("fg" "git" counsel-git)]
+    ("fb" "bookmark" counsel-bookmark)]
 
    ["Buffer"
     ("bk" "kill" mx-kill-buffer)
