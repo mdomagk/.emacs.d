@@ -2,7 +2,7 @@
 #+TAGS: custom(c) lisp(l) usepackage(u)
 #+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
 #+TITLE: config.org
-#+Changed: 26.04.2023
+#+Changed: 03.07.2023
 
 * Literate Emacs configuration
 ** Installation
@@ -22,7 +22,7 @@ M-x getenv <RET> PATH <RET>
   (let ((mypaths
          '("C:/Program Files (x86)/gnupg14"
            "C:/Program Files/Graphviz/bin"
-           "C:/Program Files/R/R-4.3.0/bin/x64"
+           "C:/Program Files/R/R-4.3.1/bin/x64"
            "C:/Program Files/git/bin"
            "C:/Python39"
            "C:/Windows/System32"
@@ -45,7 +45,7 @@ M-x getenv <RET> PATH <RET>
          '("C:/Program Files (x86)/GNU GnuPG"
            "C:/Program Files/Graphviz/bin"
            "C:/Program Files/Quarto/bin"
-           "C:/Program Files/R/R-4.3.0/bin/x64"
+           "C:/Program Files/R/R-4.3.1/bin/x64"
            "C:/Program Files/git/bin"
            "C:/Users/Max/AppData/Local/Pandoc"
            "C:/Windows/System32"
