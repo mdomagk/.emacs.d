@@ -2,7 +2,7 @@
 #+TAGS: custom(c) lisp(l) usepackage(u)
 #+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
 #+TITLE: config.org
-#+Changed: 10.08.2023
+#+Changed: 11.08.2023
 
 * Literate Emacs configuration
 ** Installation
@@ -16,28 +16,6 @@ to set path to ~.emacs.d/~ folder.
 
 * environment                                                        :custom:
 M-x getenv <RET> PATH <RET>
-** IEEH (Win10) EVMI60
-#+begin_src emacs-lisp
-(when (string-equal system-name "EVMI60")
-  (let ((mypaths
-         '("C:/Program Files (x86)/gnupg14"
-           "C:/Program Files/Graphviz/bin"
-           "C:/Program Files/R/R-4.3.1/bin/x64"
-           "C:/Program Files/git/bin"
-           "C:/Python39"
-           "C:/Windows/System32"
-           "C:/rtools40"
-           "C:/rtools40/mingw64/bin"
-           "C:/texlive/2021/bin/win32"
-           "D:/Privat/Ledger"
-           "D:/Users/domagk/AppData/Local/Pandoc"
-           "D:/Users/domagk/AppData/Local/Programs/Quarto/bin")))
-    (setenv "PATH" (mapconcat 'identity mypaths ";"))
-    (setq exec-path (append mypaths (list "." exec-directory))))
-  (setq mx-use-theme "leuven")
-)
-#+end_src
-
 ** IEEH (Win10) EVMI80
 #+begin_src emacs-lisp
 (when (string-equal system-name "EVMI80")
