@@ -1242,11 +1242,6 @@ https://oremacs.com/swiper/
   :if (string-equal mx-use-theme "leuven")
   :ensure t
   ;;:disabled t
-  :custom-face
-  (font-latex-sectioning-0-face ((t (:height 1.5))))
-  (font-latex-sectioning-1-face ((t (:height 1.4))))
-  (org-document-title ((t (:height 1.4))))
-  (font-lock-comment-face ((t (:slant normal))))
   :init
   (setq leuven-scale-outline-headlines nil)
   (setq leuven-scale-org-agenda-structure 1.2)
@@ -1257,8 +1252,19 @@ https://oremacs.com/swiper/
           ("NEXT"  . (:weight bold :box (:line-width 1 :color "#8ea1b2") :foreground "#8ea1b2" :background "#CCE7FF"))
           ("SOMEDAY"  . (:weight bold :box (:line-width 1 :color "#a8c2a8") :foreground "#a8c2a8" :background nil))))
   :custom-face
+  (font-latex-sectioning-0-face ((t (:height 1.5))))
+  (font-latex-sectioning-1-face ((t (:height 1.4))))
+  (org-document-title ((t (:height 1.4))))
   (mode-line-buffer-id  ((t (:weight normal))))
   (secondary-selection ((t (:background nil))))
+  ;;(font-lock-comment-face ((t (:slant normal))))
+  ;;(markdown-header-face-6 ((t (:slant normal))))
+  ;;(org-level-6 ((t (:slant normal))))
+  ;;(org-level-7 ((t (:slant normal))))
+  ;;(org-level-8 ((t (:slant normal))))
+  ;;(outline-6 ((t (:slant normal))))
+  ;;(outline-7 ((t (:slant normal))))
+  ;;(outline-8 ((t (:slant normal))))
   :config
   (load-theme 'leuven t))
 #+end_src
