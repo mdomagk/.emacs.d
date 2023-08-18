@@ -1,4 +1,4 @@
-﻿
+
 #+TAGS: custom(c) lisp(l) usepackage(u)
 #+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
 #+TITLE: config.org
@@ -422,9 +422,9 @@ ignore buffers while switching
 move cursor to brackets
 #+begin_src emacs-lisp
 (defvar xah-brackets nil "string of left/right brackets pairs.")
-(setq xah-brackets "()[]{}<>（）［］｛｝⦅⦆〚〛“”‘’‹›«»「」〈〉《》【】〔〕『』〖〗〘〙｢｣❛❜❝❞⁽⁾₍₎")
+(setq xah-brackets "()[]{}<>")
 
-(defvar xah-left-brackets '("(" "{" "[" "<" "〔" "【" "〖" "〈" "《" "「" "『" "“" "‘" "‹" "«" )
+(defvar xah-left-brackets '("(" "{" "[" "<")
   "List of left bracket chars.")
 (progn
   ;; make xah-left-brackets based on xah-brackets
@@ -435,7 +435,7 @@ move cursor to brackets
             xah-left-brackets)))
   (setq xah-left-brackets (reverse xah-left-brackets)))
 
-(defvar xah-right-brackets '(")" "]" "}" ">" "〕" "】" "〗" "〉" "》" "」" "』" "”" "’" "›" "»")
+(defvar xah-right-brackets '(")" "]" "}" ">")
   "list of right bracket chars.")
 (progn
   (setq xah-right-brackets '())
