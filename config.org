@@ -1256,7 +1256,7 @@ https://oremacs.com/swiper/
   (font-latex-sectioning-1-face ((t (:height 1.4))))
   (org-document-title ((t (:height 1.4))))
   (mode-line-buffer-id  ((t (:weight normal))))
-  (secondary-selection ((t (:background nil))))
+  (secondary-selection ((t (:background unspecified))))
   (font-lock-comment-face ((t (:slant normal))))
   (markdown-header-face-6 ((t (:slant normal))))
   (org-level-6 ((t (:slant normal))))
