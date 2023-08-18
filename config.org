@@ -1587,7 +1587,7 @@ Examples:
    ("oi" "work.org" mx-org-file-work)]
 
    ["Files"
-    ("ff" "git" counsel-git)
+    ("ff" "find" project-find-file)
     ("fd" "dired" counsel-find-file)
     ("fr" "recentf" counsel-buffer-or-recentf)
     ("fb" "bookmark" counsel-bookmark)]
