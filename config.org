@@ -516,7 +516,7 @@ move cursor to brackets
 (global-set-key (kbd "C-S-<tab>") 'mx-next-buffer)
 (global-set-key (kbd "C-<tab>") 'mx-previous-buffer)
 ;;(add-hook 'org-mode-hook
-;;          '(lambda ()
+;;          #'(lambda ()
 ;;             (define-key org-mode-map (kbd "C-<tab>") 'previous-buffer)))
 #+end_src
 
@@ -747,7 +747,7 @@ move cursor to brackets
      (org-capture nil "i"))
 
 (add-hook 'org-mode-hook
-          '(lambda ()
+          #'(lambda ()
              (local-set-key (kbd "S-C-<down>")  'enlarge-window)
              (local-set-key (kbd "S-C-<up>")    'shrink-window)
              (local-set-key (kbd "S-C-<left>")  'shrink-window-horizontally)
@@ -1028,7 +1028,7 @@ https://lists.gnu.org/archive/html/help-gnu-emacs/2010-12/msg02019.html
     ))
 ;; Define hooks
 (add-hook 'python-mode-hook             ; For Python script
-          '(lambda()
+          #'(lambda()
              (local-set-key (kbd "<S-return>") 'mx-python-eval)
              (local-set-key (kbd "<C-return>") 'mx-python-eval)))
 
@@ -1502,7 +1502,7 @@ add: .libPaths("D:/Daten/R/Library")
   :commands R
   :init
   (require 'ess-site)
-  (add-hook 'ess-mode-hook '(lambda ()
+  (add-hook 'ess-mode-hook #'(lambda ()
                               (local-set-key [(shift return)] 'R_eval_current_line_and_step)))
   :bind
   (:map inferior-ess-mode-map
