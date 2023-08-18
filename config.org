@@ -1258,10 +1258,10 @@ https://oremacs.com/swiper/
   (mode-line-buffer-id  ((t (:weight normal))))
   (secondary-selection ((t (:background unspecified))))
   (font-lock-comment-face ((t (:slant normal))))
-  (markdown-header-face-6 ((t (:slant normal))))
-  (org-level-6 ((t (:slant normal))))
-  (org-level-7 ((t (:slant normal))))
-  (org-level-8 ((t (:slant normal))))
+  (org-tag ((t (:slant normal))))
+  (ol6 ((t (:slant normal))))
+  (ol7 ((t (:slant normal))))
+  (ol8 ((t (:slant normal))))
   :config
   (load-theme 'leuven t))
 #+end_src
@@ -1713,6 +1713,7 @@ makes M-n and M-p look for and M-h highlight the symbol at point
          (yaml-mode . symbol-overlay-mode))
   :custom-face
   ;; no highlighting
-  (symbol-overlay-default-face ((t (:inherit nil)))))
+  (symbol-overlay-default-face ((t (:inherit nil))))
+  (symbol-overlay-face-1 ((t (:background "LightSkyBlue")))))
 #+end_src
 .
