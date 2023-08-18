@@ -1259,9 +1259,9 @@ https://oremacs.com/swiper/
   (secondary-selection ((t (:background unspecified))))
   (font-lock-comment-face ((t (:slant normal))))
   (org-tag ((t (:slant normal))))
-  (ol6 ((t (:slant normal))))
-  (ol7 ((t (:slant normal))))
-  (ol8 ((t (:slant normal))))
+  (org-level-6 ((t (:slant normal))))
+  (org-level-7 ((t (:slant normal))))
+  (org-level-8 ((t (:slant normal))))
   :config
   (load-theme 'leuven t))
 #+end_src
