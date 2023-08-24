@@ -2,7 +2,7 @@
 #+TAGS: custom(c) lisp(l) usepackage(u)
 #+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
 #+TITLE: config.org
-#+Changed: 18.08.2023
+#+Changed: 24.08.2023
 
 * Literate Emacs configuration
 ** Installation
@@ -1714,6 +1714,7 @@ makes M-n and M-p look for and M-h highlight the symbol at point
   :custom-face
   ;; no highlighting
   (symbol-overlay-default-face ((t (:inherit nil))))
-  (symbol-overlay-face-1 ((t (:background "LightSkyBlue")))))
+  (symbol-overlay-face-1 ((t (:background "turquoise"))))
+  (symbol-overlay-face-8 ((t (:background "dodger blue")))))
 #+end_src
 .
