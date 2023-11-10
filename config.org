@@ -2,7 +2,7 @@
 #+TAGS: custom(c) lisp(l) usepackage(u)
 #+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
 #+TITLE: config.org
-#+Changed: 25.08.2023
+#+Changed: 10.11.2023
 
 * Literate Emacs configuration
 ** Installation
@@ -34,27 +34,26 @@ M-x getenv <RET> PATH <RET>
            "D:/Users/domagk/AppData/Local/Programs/Quarto/bin")))
     (setenv "PATH" (mapconcat 'identity mypaths ";"))
     (setq exec-path (append mypaths (list "." exec-directory))))
+  (set-frame-font "Consolas-9" nil t)
   (setq mx-use-theme "leuven")
 )
 #+end_src
 
-** HOME (Win10) LAPTOP-ULMJC9IQ
+** HOME (Win11) Lenovo
 #+begin_src emacs-lisp
-(when (string-equal system-name "LAPTOP-ULMJC9IQ")
+(when (string-equal system-name "LENOVO")
   (let ((mypaths
          '("C:/Program Files (x86)/GNU GnuPG"
-           "C:/Program Files/Graphviz/bin"
-           "C:/Program Files/Quarto/bin"
-           "C:/Program Files/R/R-4.3.1/bin/x64"
+           ;;"C:/Program Files/Graphviz/bin"
+           ;;"C:/Program Files/Quarto/bin"
+           "C:/Program Files/R/R-4.3.2/bin/x64"
            "C:/Program Files/git/bin"
-           "C:/cygwin64"
-           "C:/Users/Max/AppData/Local/Pandoc"
-           "C:/Windows/System32"
-           "C:/texlive/2020/bin/win32"
+           "D:/Users/mdoma/AppData/Local/Pandoc"
            "D:/Max/Ledger_312")))
     (setenv "PATH" (mapconcat 'identity mypaths ";"))
     (setq exec-path (append mypaths (list "." exec-directory))))
   (setq mx-use-theme "leuven")
+  (set-frame-font "Consolas-10" nil t)
 )
 #+end_src
 
@@ -62,7 +61,7 @@ M-x getenv <RET> PATH <RET>
 ** default font
 additional options KEEP-SIZE and FRAMES
 #+begin_src emacs-lisp
-(set-frame-font "Consolas-9" nil t)
+
 
 ;; solve fixed-pitch issue for windows
 ;;https://yoo2080.wordpress.com/2013/05/30/ms-windows-emacs-fixed-pitch-got-no-anti-aliasing/
