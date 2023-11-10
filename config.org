@@ -48,8 +48,8 @@ M-x getenv <RET> PATH <RET>
            ;;"C:/Program Files/Quarto/bin"
            "C:/Program Files/R/R-4.3.2/bin/x64"
            "C:/Program Files/git/bin"
-           "D:/Users/mdoma/AppData/Local/Pandoc"
-           "D:/Max/Ledger_312")))
+           "C:/Users/mdoma/AppData/Local/Pandoc"
+           "C:/Max/Ledger_312")))
     (setenv "PATH" (mapconcat 'identity mypaths ";"))
     (setq exec-path (append mypaths (list "." exec-directory))))
   (setq mx-use-theme "leuven")
