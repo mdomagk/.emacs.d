@@ -1,7 +1,7 @@
 #+TAGS: custom(c) lisp(l) usepackage(u)
 #+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
 #+TITLE: config.org
-#+Changed: 17.11.2023
+#+Changed: 18.11.2023
 
 * Literate Emacs configuration
 ** Installation
@@ -47,6 +47,7 @@ M-x getenv <RET> PATH <RET>
            ;;"C:/Program Files/Quarto/bin"
            "C:/Program Files/R/R-4.3.2/bin/x64"
            "C:/Program Files/git/bin"
+           "C:/texlive/2023/bin/windows"
            "C:/Users/mdoma/AppData/Local/Pandoc"
            "C:/Max/Ledger_312")))
     (setenv "PATH" (mapconcat 'identity mypaths ";"))
