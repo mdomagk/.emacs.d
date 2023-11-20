@@ -1,7 +1,7 @@
 #+TAGS: custom(c) lisp(l) usepackage(u)
 #+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
 #+TITLE: config.org
-#+Changed: 18.11.2023
+#+Changed: 20.11.2023
 
 * Literate Emacs configuration
 ** Installation
@@ -22,6 +22,7 @@ M-x getenv <RET> PATH <RET>
          '("C:/Program Files (x86)/gnupg14"
            "C:/Program Files/R/R-4.3.2/bin/x64"
            "C:/Program Files/git/bin"
+           "C:/Program Files/Hunspell/hunspell-v1.7.2/bin/"
            "C:/cygwin64"
            "C:/Python311"
            "C:/Windows/System32"
