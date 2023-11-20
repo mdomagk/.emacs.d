@@ -1051,6 +1051,39 @@ https://www.emacswiki.org/emacs/ElectricPair (for specific modes only)
 #+end_src
 
 
+* FIX ispell (for hunspell)                                          :custom:
+Spellchecking with multiple languages
+https://200ok.ch/posts/2020-08-22_setting_up_spell_checking_with_multiple_dictionaries.html
+- FIX: "ispell-find-hunspell-dictionaries: Can’t find Hunspell dictionary with a .aff affix file"
+#+begin_src emacs-lisp
+;; ;; do not order not by the default of alphabetical ordering
+;; (setq flyspell-sort-corrections nil)
+
+;; ;; do not print messages for every word (major performance gain)
+;; (setq flyspell-issue-message-flag nil)
+
+;; (with-eval-after-load "ispell"
+;;   ;; Configure `LANG`, otherwise ispell.el cannot find a 'default
+;;   ;; dictionary' even though multiple dictionaries will be configured
+;;   ;; in next line.
+;;   (setenv "LANG" "en_US.UTF-8")
+;;   (setq ispell-program-name (executable-find "hunspell"))
+;;   ;; Configure German and two variants of English.
+;;   (setq ispell-dictionary "de_DE_frami,en_GB,en_US")
+;;   ;; ispell-set-spellchecker-params has to be called
+;;   ;; before ispell-hunspell-add-multi-dic will work
+;;   (ispell-set-spellchecker-params)
+;;   (ispell-hunspell-add-multi-dic "de_DE_frami,en_GB,en_US")
+;;   ;; For saving words to the personal dictionary, don't infer it from
+;;   ;; the locale, otherwise it would save to ~/.hunspell_de_DE.
+;;   (setq ispell-personal-dictionary "~/.hunspell_personal"))
+
+;; ;; The personal dictionary file has to exist, otherwise hunspell will
+;; ;; silently not use it.
+;; ;; (unless (file-exists-p ispell-personal-dictionary)
+;; ;;   (write-region "" nil ispell-personal-dictionary nil 0))
+#+end_src
+
 * xah-find                                                             :lisp:
 - http://ergoemacs.org/emacs/elisp-xah-find-text.html
 - reposository: https://github.com/maxmagmilch/xah-find
