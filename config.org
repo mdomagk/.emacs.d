@@ -1,7 +1,7 @@
 #+TAGS: custom(c) lisp(l) usepackage(u)
 #+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
 #+TITLE: config.org
-#+Changed: 20.11.2023
+#+Changed: 23.11.2023
 
 * Literate Emacs configuration
 ** Installation
@@ -460,6 +460,17 @@ move cursor to brackets
   Version 2015-10-01"
   (interactive)
   (re-search-forward (regexp-opt xah-right-brackets) nil t))
+#+end_src
+
+
+
+** sort-lines-nocase
+- sort lines without case sensitivity
+#+begin_src emacs-lisp
+(defun sort-lines-nocase ()
+  (interactive)
+  (let ((sort-fold-case t))
+    (call-interactively 'sort-lines)))
 #+end_src
 
 * keybindings                                                        :custom:
