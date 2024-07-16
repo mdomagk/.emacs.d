@@ -1,7 +1,7 @@
 #+TAGS: custom(c) lisp(l) usepackage(u)
 #+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
 #+TITLE: config.org
-#+Changed: 26.06.2024
+#+Changed: 16.07.2024
 
 * Literate Emacs configuration
 ** Installation
@@ -1027,7 +1027,7 @@ https://lists.gnu.org/archive/html/help-gnu-emacs/2010-12/msg02019.html
           (python-nav-forward-statement)        ; Move to the next statement
           )
       ;; If it is not def, do all the following
-      (python-shell-send-region (point-at-bol) (point-at-eol))  ; Send the current line
+      (python-shell-send-region (point-at-bol) (pos-eol))  ; Send the current line
       (python-nav-forward-statement)                            ; Move to the next statement
       )
     ;; Activate shell window, and switch back
