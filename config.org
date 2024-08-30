@@ -1,7 +1,7 @@
 #+TAGS: custom(c) lisp(l) usepackage(u)
 #+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
 #+TITLE: config.org
-#+Changed: 16.07.2024
+#+Changed: 30.08.2024
 
 * Literate Emacs configuration
 ** Installation
@@ -840,6 +840,7 @@ move cursor to brackets
 #+begin_src emacs-lisp
 (define-abbrev-table 'global-abbrev-table '(
 
+ ("9f" "tar_file(@@),")
  ("9t" "tar_target(@@),")
  ("9tt" "tar_target(@@, format = \"fst_tbl\"),")
 
