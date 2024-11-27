@@ -1390,16 +1390,11 @@ https://github.com/Fanael/rainbow-delimiters
   (add-to-list 'auto-mode-alist '("\\.ledger$" . ledger-mode)))
 #+end_src
 
-* FIX org-super-agenda                                           :usepackage:
-#+begin_src emacs-lisp
-;;(use-package org-super-agenda
-;;  :ensure t)
-#+end_src
-
 * FIX org-ql                                                     :usepackage:
+- find to make use of it
 #+begin_src emacs-lisp
-;;(use-package org-ql
-;;  :ensure t)
+(use-package org-ql
+  :ensure t)
 #+end_src
 
 * org-pomodoro                                                   :usepackage:
