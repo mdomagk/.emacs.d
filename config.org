@@ -1,7 +1,7 @@
 #+TAGS: custom(c) lisp(l) usepackage(u)
 #+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
 #+TITLE: config.org
-#+Changed: 30.08.2024
+#+Changed: 27.11.2024
 
 * Literate Emacs configuration
 ** Installation
@@ -1390,6 +1390,18 @@ https://github.com/Fanael/rainbow-delimiters
   (add-to-list 'auto-mode-alist '("\\.ledger$" . ledger-mode)))
 #+end_src
 
+* FIX org-super-agenda                                           :usepackage:
+#+begin_src emacs-lisp
+;;(use-package org-super-agenda
+;;  :ensure t)
+#+end_src
+
+* FIX org-ql                                                     :usepackage:
+#+begin_src emacs-lisp
+;;(use-package org-ql
+;;  :ensure t)
+#+end_src
+
 * org-pomodoro                                                   :usepackage:
 #+begin_src emacs-lisp
 (use-package org-pomodoro
@@ -1601,10 +1613,11 @@ add: .libPaths("D:/Daten/R/Library")
   (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode)))
 #+end_src
 
-* magit                                                          :usepackage:
+* DISABLED magit                                                 :usepackage:
 #+begin_src emacs-lisp
 (use-package magit
-  :ensure t
+  ;;:ensure t
+  :disabled t
   ;;:config
   ;;;; update mode-line git status more often
   ;;(setq auto-revert-check-vc-info t)
@@ -1657,10 +1670,10 @@ Examples:
     ("df" "function" counsel-describe-function)
     ("dv" "variable" counsel-describe-variable)]]
 
-  [["Git"
-    ("g" "magit" magit-status)]
+  ;; [["Git"
+  ;;   ("g" "magit" magit-status)]
 
-   ["{targets} run"
+  [["{targets} run"
     ("tm" "make" R_tar_make)
     ("tM" "make summary" R_tar_make_summary)
     ("tv" "visnetwork" R_tar_visnetwork_targets_only)
