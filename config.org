@@ -523,7 +523,7 @@ move cursor to brackets
 #+begin_src emacs-lisp
 (global-set-key (kbd "C-s") 'save-buffer)
 (global-set-key (kbd "C-w") 'mx-kill-buffer)
-(global-set-key (kbd "C-b") 'switch-to-buffer)
+;;(global-set-key (kbd "C-b") 'switch-to-buffer)
 (global-set-key (kbd "C-S-<tab>") 'mx-next-buffer)
 (global-set-key (kbd "C-<tab>") 'mx-previous-buffer)
 ;;(add-hook 'org-mode-hook
@@ -1220,7 +1220,7 @@ https://oremacs.com/swiper/
    ("<f2>" . ivy-resume)
    ("M-y" . counsel-yank-pop)
    ("M-x" . counsel-M-x)
-   ;;("C-b" . counsel-buffer-or-recentf)
+   ("C-b" . counsel-ibuffer)
    ("C-x C-f" . counsel-find-file)
    ("C-x C-r" . counsel-recentf) ;; counsel-buffer-or-recentf
    :map org-mode-map
