@@ -1,7 +1,7 @@
 #+TAGS: custom(c) lisp(l) usepackage(u)
 #+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
 #+TITLE: config.org
-#+Changed: 27.11.2024
+#+Changed: 29.11.2024
 
 * Literate Emacs configuration
 ** Installation
@@ -1203,6 +1203,8 @@ https://oremacs.com/swiper/
 
 (use-package counsel
   :ensure t
+  :custom-face
+  (counsel-outline-default ((t (:inherit 'default))))
   :config
   ;; ignore . files or temporary files
   (setq counsel-find-file-ignore-regexp
@@ -1214,16 +1216,15 @@ https://oremacs.com/swiper/
          ;; File names ending with .aux
          "\\|\\.aux\\'"))
   :bind
-  ("C-f" . swiper) ; swiper-isearch
-  ("<f2>" . ivy-resume)
-  ("M-y" . counsel-yank-pop)
-  ("M-x" . counsel-M-x)
-  ;;("C-b" . counsel-buffer-or-recentf)
-  ("C-x C-f" . counsel-find-file)
-  ("C-x C-r" . counsel-recentf) ;; counsel-buffer-or-recentf
-  ("<f1> v" . counsel-describe-variable)
-  ("<f1> f" . counsel-describe-function)
-  ("<f1> k" . counsel-descbinds))
+  (("C-f" . swiper) ; swiper-isearch
+   ("<f2>" . ivy-resume)
+   ("M-y" . counsel-yank-pop)
+   ("M-x" . counsel-M-x)
+   ;;("C-b" . counsel-buffer-or-recentf)
+   ("C-x C-f" . counsel-find-file)
+   ("C-x C-r" . counsel-recentf) ;; counsel-buffer-or-recentf
+   :map org-mode-map
+   ("C-c C-j" . counsel-org-goto))) ;; counsel-org-agenda-headlines
 #+end_src
 
 * swiper (for ivy)                                               :usepackage:
