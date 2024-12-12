@@ -1,7 +1,7 @@
 #+TAGS: custom(c) lisp(l) usepackage(u)
 #+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
 #+TITLE: config.org
-#+Changed: 29.11.2024
+#+Changed: 12.12.2024
 
 * Literate Emacs configuration
 ** Installation
@@ -1224,7 +1224,8 @@ https://oremacs.com/swiper/
    ("C-x C-f" . counsel-find-file)
    ("C-x C-r" . counsel-recentf) ;; counsel-buffer-or-recentf
    :map org-mode-map
-   ("C-c C-j" . counsel-org-goto))) ;; counsel-org-agenda-headlines
+   ("C-c C-j" . counsel-org-goto)
+   ("C-j" . counsel-org-goto))) ;; counsel-org-agenda-headlines
 #+end_src
 
 * swiper (for ivy)                                               :usepackage:
