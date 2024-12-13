@@ -1,7 +1,7 @@
 #+TAGS: custom(c) lisp(l) usepackage(u)
 #+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
 #+TITLE: config.org
-#+Changed: 12.12.2024
+#+Changed: 13.12.2024
 
 * Literate Emacs configuration
 ** Installation
@@ -1612,15 +1612,15 @@ add: .libPaths("D:/Daten/R/Library")
 
 * DISABLED magit                                                 :usepackage:
 #+begin_src emacs-lisp
-(use-package magit
-  ;;:ensure t
-  :disabled t
-  ;;:config
-  ;;;; update mode-line git status more often
-  ;;(setq auto-revert-check-vc-info t)
-  ;;;; check every 5 seconds
-  ;;(setq auto-revert-interval 5)
-  )
+;;(use-package magit
+;;  ;;:ensure t
+;;  :disabled t
+;;  ;;:config
+;;  ;;;; update mode-line git status more often
+;;  ;;(setq auto-revert-check-vc-info t)
+;;  ;;;; check every 5 seconds
+;;  ;;(setq auto-revert-interval 5)
+;;  )
 #+end_src
 
 * transient (transient keybinds)                                 :usepackage:
@@ -1754,6 +1754,20 @@ Examples:
  (interactive)
  (polymode-export)
  (delete-other-windows))
+#+end_src
+
+* org-roam                                                       :usepackage:
+- https://www.orgroam.com/
+- https://github.com/org-roam/org-roam
+#+begin_src emacs-lisp
+(use-package org-roam
+  :ensure t
+  :config
+  (setq org-roam-directory (file-truename "~/.emacs.d/org-roam"))
+  :bind
+  (("C-c o t" . org-roam-buffer-toggle)
+   ("C-c o f" . org-roam-node-find)
+   ("C-c o i" . org-roam-node-insert)))
 #+end_src
 
 * symbol-overlay                                                 :usepackage:
