@@ -1776,7 +1776,7 @@ makes M-n and M-p look for and M-h highlight the symbol at point
   (symbol-overlay-face-8 ((t (:background "dodger blue")))))
 #+end_src
 .
-* org-roam                                                       :usepackage:
+* FIX org-roam (Fix: mx-org-roam-node-from-cite)                 :usepackage:
 - https://www.orgroam.com/
 - https://github.com/org-roam/org-roam
 - https://systemcrafters.net/build-a-second-brain-in-emacs/getting-started-with-org-roam/
@@ -1805,4 +1805,44 @@ makes M-n and M-p look for and M-h highlight the symbol at point
          ("C-c o i" . org-roam-node-insert))
   :config
   (org-roam-setup))
+
+
+(defun mx-org-roam-node-from-cite (keys-entries)
+  (interactive (list (citar-select-ref)))
+  (let* ((key (car keys-entries))
+         (entry (citar-get-entry key))
+         (title (concat
+                 (or (citar-get-value "author" entry)
+                     (citar-get-value "editor" entry)
+                     "Unknown Author")
+                 " :: "
+                 (or (citar-get-value "title" entry) "Untitled"))))
+    (org-roam-capture-
+     :templates
+     '(("r" "reference" plain "%?" :if-new
+        (file+head "reference/${citekey}.org"
+                   ":PROPERTIES:
+:ROAM_REFS: [cite:@${citekey}]
+:END:
+#+title: ${title}\n")
+        :immediate-finish t
+        :unnarrowed t))
+     :info (list :citekey key)
+     :node (org-roam-node-create :title title)
+     :props '(:finalize find-file))))
+#+end_src
+
+* citar                                                          :usepackage:
+- https://github.com/emacs-citar/citar?tab=readme-ov-file
+#+begin_src emacs-lisp
+(use-package citar
+  :ensure t
+  :custom
+  (org-cite-global-bibliography '("~/.emacs.d/org-roam/zotero.bib"))
+  (org-cite-insert-processor 'citar)
+  (org-cite-follow-processor 'citar)
+  (org-cite-activate-processor 'citar)
+  (citar-bibliography org-cite-global-bibliography)
+  :bind
+  (:map org-mode-map :package org ("C-c b" . #'org-cite-insert)))
 #+end_src
