@@ -1756,20 +1756,6 @@ Examples:
  (delete-other-windows))
 #+end_src
 
-* org-roam                                                       :usepackage:
-- https://www.orgroam.com/
-- https://github.com/org-roam/org-roam
-#+begin_src emacs-lisp
-(use-package org-roam
-  :ensure t
-  :config
-  (setq org-roam-directory (file-truename "~/.emacs.d/org-roam"))
-  :bind
-  (("C-c o t" . org-roam-buffer-toggle)
-   ("C-c o f" . org-roam-node-find)
-   ("C-c o i" . org-roam-node-insert)))
-#+end_src
-
 * symbol-overlay                                                 :usepackage:
 makes M-n and M-p look for and M-h highlight the symbol at point
 #+begin_src emacs-lisp
@@ -1790,3 +1776,33 @@ makes M-n and M-p look for and M-h highlight the symbol at point
   (symbol-overlay-face-8 ((t (:background "dodger blue")))))
 #+end_src
 .
+* org-roam                                                       :usepackage:
+- https://www.orgroam.com/
+- https://github.com/org-roam/org-roam
+- https://systemcrafters.net/build-a-second-brain-in-emacs/getting-started-with-org-roam/
+- https://jethrokuan.github.io/org-roam-guide/
+#+begin_src emacs-lisp
+(use-package org-roam
+  :ensure t
+  :init
+  (setq org-roam-v2-ack t)
+  :custom
+  (org-roam-directory "~/.emacs.d/org-roam")
+  (org-roam-capture-templates
+      '(("m" "main" plain
+         "%?"
+         :if-new (file+head "main/${slug}.org"
+                            "#+title: ${title}\n")
+         :immediate-finish t
+         :unnarrowed t)
+        ("r" "reference" plain "%?"
+         :if-new
+         (file+head "reference/${title}.org" "#+title: ${title}\n")
+         :immediate-finish t
+         :unnarrowed t)))
+  :bind (("C-c o l" . org-roam-buffer-toggle)
+         ("C-c o f" . org-roam-node-find)
+         ("C-c o i" . org-roam-node-insert))
+  :config
+  (org-roam-setup))
+#+end_src
