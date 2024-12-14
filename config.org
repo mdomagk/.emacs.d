@@ -1,7 +1,7 @@
 #+TAGS: custom(c) lisp(l) usepackage(u)
 #+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
 #+TITLE: config.org
-#+Changed: 13.12.2024
+#+Changed: 14.12.2024
 
 * Literate Emacs configuration
 ** Installation
@@ -1805,31 +1805,6 @@ makes M-n and M-p look for and M-h highlight the symbol at point
          ("C-c o i" . org-roam-node-insert))
   :config
   (org-roam-setup))
-
-
-(defun mx-org-roam-node-from-cite (keys-entries)
-  (interactive (list (citar-select-ref)))
-  (let* ((key (car keys-entries))
-         (entry (citar-get-entry key))
-         (title (concat
-                 (or (citar-get-value "author" entry)
-                     (citar-get-value "editor" entry)
-                     "Unknown Author")
-                 " :: "
-                 (or (citar-get-value "title" entry) "Untitled"))))
-    (org-roam-capture-
-     :templates
-     '(("r" "reference" plain "%?" :if-new
-        (file+head "reference/${citekey}.org"
-                   ":PROPERTIES:
-:ROAM_REFS: [cite:@${citekey}]
-:END:
-#+title: ${title}\n")
-        :immediate-finish t
-        :unnarrowed t))
-     :info (list :citekey key)
-     :node (org-roam-node-create :title title)
-     :props '(:finalize find-file))))
 #+end_src
 
 * citar                                                          :usepackage:
@@ -1845,4 +1820,13 @@ makes M-n and M-p look for and M-h highlight the symbol at point
   (citar-bibliography org-cite-global-bibliography)
   :bind
   (:map org-mode-map :package org ("C-c b" . #'org-cite-insert)))
+#+end_src
+
+* FIX citar-org-roam (capture template reference/domagk2024.org)
+- https://github.com/emacs-citar/citar-org-roam
+#+begin_src emacs-lisp
+(use-package citar-org-roam
+  :after (citar org-roam)
+  :config
+  (citar-org-roam-mode))
 #+end_src
