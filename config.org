@@ -1,7 +1,7 @@
 #+TAGS: custom(c) lisp(l) usepackage(u)
 #+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
 #+TITLE: config.org
-#+Changed: 15.12.2024
+#+Changed: 16.12.2024
 
 * Literate Emacs configuration
 ** Installation
@@ -1776,11 +1776,12 @@ makes M-n and M-p look for and M-h highlight the symbol at point
   (symbol-overlay-face-8 ((t (:background "dodger blue")))))
 #+end_src
 .
-* FIX org-roam (Fix: mx-org-roam-node-from-cite)                 :usepackage:
+* org-roam                                                       :usepackage:
 - https://www.orgroam.com/
 - https://github.com/org-roam/org-roam
 - https://systemcrafters.net/build-a-second-brain-in-emacs/getting-started-with-org-roam/
 - https://jethrokuan.github.io/org-roam-guide/
+- https://www.reddit.com/r/emacs/comments/18qtno9/how_to_autopopulate_journal_name_and_year_from/
 #+begin_src emacs-lisp
 (use-package org-roam
   :ensure t
@@ -1802,26 +1803,33 @@ makes M-n and M-p look for and M-h highlight the symbol at point
          :unnarrowed t)))
   :bind (("C-c o l" . org-roam-buffer-toggle)
          ("C-c o f" . org-roam-node-find)
-         ("C-c o i" . org-roam-node-insert))
+         ("C-c o i" . org-roam-node-insert)
+         ("C-c o b" . mx-org-roam-node-from-cite))
   :config
   (org-roam-setup))
 
-(defun mx-org-roam-node-from-cite (keys-entries)
-    (interactive (list (citar-select-ref)))
-    (let ((title (citar-format--entry (cdr keys-entries)
-                                                "${author editor} :: ${title}")))
-      (org-roam-capture- :templates
-                         '(("r" "reference" plain "%?" :if-new
-                            (file+head "reference/${citekey}.org"
-                                       ":PROPERTIES:
-:ROAM_REFS: [cite:@${citekey}]
+(defun mx-org-roam-node-from-cite (citekey)
+  (interactive (list (citar-select-ref)))
+  (message "Selected citekey: %s" citekey)
+  (let* ((entry (citar-get-entry citekey))
+         (title (concat (format "@%s - " citekey) (citar-get-value 'title entry)))
+         (author (citar-get-value 'author entry))
+         (type (or (citar-get-value '=type= entry) "reference"))
+         (filepath (format "reference/%s.org" citekey))
+         (head (format ":PROPERTIES:
+:ROAM_REFS: [cite:@%s]
 :END:
-#+title: ${citekey} - ${title}\n")
-                            :immediate-finish t
-                            :unnarrowed t))
-                         :info (list :citekey (car keys-entries))
-                         :node (org-roam-node-create :title title)
-                         :props '(:finalize find-file))))
+#+title: %s
+#+author: %s
+#+type: %s\n" citekey title author type)))
+    (org-roam-capture- :templates
+       `(("r" "reference" plain "%?"
+          :if-new
+          (file+head ,filepath ,head)
+          :immediate-finish t
+          :unnarrowed t))
+       :node (org-roam-node-create :title title)
+       :props '(:finalize find-file))))
 #+end_src
 
 * citar                                                          :usepackage:
@@ -1839,11 +1847,12 @@ makes M-n and M-p look for and M-h highlight the symbol at point
   (:map org-mode-map :package org ("C-c b" . #'org-cite-insert)))
 #+end_src
 
-* FIX citar-org-roam (capture template reference/domagk2024.org)
+* citar-org-roam
 - https://github.com/emacs-citar/citar-org-roam
 #+begin_src emacs-lisp
 (use-package citar-org-roam
+  :ensure t
   :after (citar org-roam)
-  :config
-  (citar-org-roam-mode))
+  :config (citar-org-roam-mode)
+  )
 #+end_src
