@@ -1,7 +1,7 @@
 #+TAGS: custom(c) lisp(l) usepackage(u)
 #+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
 #+TITLE: config.org
-#+Changed: 14.12.2024
+#+Changed: 15.12.2024
 
 * Literate Emacs configuration
 ** Installation
@@ -1805,6 +1805,23 @@ makes M-n and M-p look for and M-h highlight the symbol at point
          ("C-c o i" . org-roam-node-insert))
   :config
   (org-roam-setup))
+
+(defun mx-org-roam-node-from-cite (keys-entries)
+    (interactive (list (citar-select-ref)))
+    (let ((title (citar-format--entry (cdr keys-entries)
+                                                "${author editor} :: ${title}")))
+      (org-roam-capture- :templates
+                         '(("r" "reference" plain "%?" :if-new
+                            (file+head "reference/${citekey}.org"
+                                       ":PROPERTIES:
+:ROAM_REFS: [cite:@${citekey}]
+:END:
+#+title: ${citekey} - ${title}\n")
+                            :immediate-finish t
+                            :unnarrowed t))
+                         :info (list :citekey (car keys-entries))
+                         :node (org-roam-node-create :title title)
+                         :props '(:finalize find-file))))
 #+end_src
 
 * citar                                                          :usepackage:
