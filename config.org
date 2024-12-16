@@ -1790,12 +1790,12 @@ makes M-n and M-p look for and M-h highlight the symbol at point
   :custom
   (org-roam-directory "~/.emacs.d/org-roam")
   (org-roam-capture-templates
-      '(("e" "evergreen" plain "%?"
-         :if-new (file+head "evergreen/${title}.org" "#+title: ${title}\n")
+      '(("f" "fleeting" plain "%?"
+         :if-new (file+head "fleeting/${title}.org" "#+title: ${title}\n")
          :immediate-finish t
          :unnarrowed t)
-        ("f" "fleeting" plain "%?"
-         :if-new (file+head "fleeting/${title}.org" "#+title: ${title}\n")
+        ("p" "permanent" plain "%?"
+         :if-new (file+head "permanent/${title}.org" "#+title: ${title}\n")
          :immediate-finish t
          :unnarrowed t)
         ("r" "reference" plain "%?"
