@@ -1831,6 +1831,12 @@ makes M-n and M-p look for and M-h highlight the symbol at point
           :unnarrowed t))
        :node (org-roam-node-create :title title)
        :props '(:finalize find-file))))
+
+(defun mx-org-highlight-pdf-numbers ()
+  "Highlight text matching the regex ^pdf[0-9]+ in Org-mode."
+  (highlight-regexp "^pdf[0-9]+" 'org-target))
+
+(add-hook 'org-mode-hook 'mx-org-highlight-pdf-numbers)
 #+end_src
 
 * citar                                                          :usepackage:
