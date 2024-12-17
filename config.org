@@ -1811,6 +1811,7 @@ makes M-n and M-p look for and M-h highlight the symbol at point
   :bind (("C-c o l" . org-roam-buffer-toggle)
          ("C-c o f" . org-roam-node-find)
          ("C-c o i" . org-roam-node-insert)
+         ("C-c o u" . org-roam-db-build-cache)
          ("C-c o b" . mx-org-roam-node-from-cite))
   :config
   (org-roam-setup))
