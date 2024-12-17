@@ -1397,6 +1397,13 @@ https://github.com/Fanael/rainbow-delimiters
 #+begin_src emacs-lisp
 (use-package org-ql
   :ensure t)
+
+(defun mx-org-ql-search-literatur ()
+  "Search for TODO items with the tag 'Literatur' in org-agenda-files."
+  (interactive)
+  (org-ql-search (org-agenda-files)
+    '(and (todo) (tags "Literatur"))
+    :super-groups '((:auto-outline-path t))))
 #+end_src
 
 * org-pomodoro                                                   :usepackage:
@@ -1643,9 +1650,8 @@ Examples:
   "Main"
 
   [["Org"
-   ("oa" "agenda" org-agenda)
-   ("oh" "home.org" mx-org-file-home)
-   ("oi" "work.org" mx-org-file-work)]
+   ("ol" "ql literature" mx-org-ql-search-literatur)
+   ("of" "roam find" org-roam-node-find)]
 
    ["Files"
     ("ff" "find" counsel-git)
