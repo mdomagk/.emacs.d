@@ -1,7 +1,7 @@
 #+TAGS: custom(c) lisp(l) usepackage(u)
 #+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
 #+TITLE: config.org
-#+Changed: 16.12.2024
+#+Changed: 17.12.2024
 
 * Literate Emacs configuration
 ** Installation
@@ -1809,6 +1809,22 @@ makes M-n and M-p look for and M-h highlight the symbol at point
   :config
   (org-roam-setup))
 
+;; Highlight text matching the regex ^pdf[0-9]+ in Org-mode.
+;; https://zzamboni.org/post/beautifying-org-mode-in-emacs/
+(font-lock-add-keywords 'org-mode
+                        '(("^pdf[0-9]+" . 'org-target)))
+
+(defun mx-org-unfold-org-roam-directory ()
+  "Unfold org files in a specific directory at startup."
+    (when (and (eq major-mode 'org-mode)
+             (buffer-file-name)
+             (file-in-directory-p
+              (buffer-file-name)
+              (expand-file-name "~/.emacs.d/org-roam")))
+    (org-show-all)))
+
+(add-hook 'org-mode-hook 'mx-org-unfold-org-roam-directory)
+
 (defun mx-org-roam-node-from-cite (citekey)
   (interactive (list (citar-select-ref)))
   (message "Selected citekey: %s" citekey)
@@ -1831,12 +1847,6 @@ makes M-n and M-p look for and M-h highlight the symbol at point
           :unnarrowed t))
        :node (org-roam-node-create :title title)
        :props '(:finalize find-file))))
-
-(defun mx-org-highlight-pdf-numbers ()
-  "Highlight text matching the regex ^pdf[0-9]+ in Org-mode."
-  (highlight-regexp "^pdf[0-9]+" 'org-target))
-
-(add-hook 'org-mode-hook 'mx-org-highlight-pdf-numbers)
 #+end_src
 
 * citar                                                          :usepackage:
