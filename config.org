@@ -1811,15 +1811,16 @@ makes M-n and M-p look for and M-h highlight the symbol at point
   :bind (("C-c o l" . org-roam-buffer-toggle)
          ("C-c o f" . org-roam-node-find)
          ("C-c o i" . org-roam-node-insert)
-         ("C-c o u" . org-roam-db-build-cache)
-         ("C-c o b" . mx-org-roam-node-from-cite))
+         ("C-c o b" . mx-org-roam-node-from-cite)
+         ("C-c b" . mx-insert-citekey))
   :config
   (org-roam-setup))
 
 ;; Highlight text matching the regex ^pdf[0-9]+ in Org-mode.
 ;; https://zzamboni.org/post/beautifying-org-mode-in-emacs/
 (font-lock-add-keywords 'org-mode
-                        '(("^pdf[0-9]+" . 'org-target)))
+                        '(("^pdf[0-9]+" . 'org-target)
+                          ("\\[@[a-z|-]+[0-9]+[a-z]*\\]" . 'org-target)))
 
 (defun mx-org-unfold-org-roam-directory ()
   "Unfold org files in a specific directory at startup."
@@ -1832,9 +1833,14 @@ makes M-n and M-p look for and M-h highlight the symbol at point
 
 (add-hook 'org-mode-hook 'mx-org-unfold-org-roam-directory)
 
+(defun mx-insert-citekey (citekey)
+  (interactive (list (citar-select-ref)))
+  (let* ((formatted-cite (format "[@%s]" citekey)))
+    (insert formatted-cite)))
+
 (defun mx-org-roam-node-from-cite (citekey)
   (interactive (list (citar-select-ref)))
-  (message "Selected citekey: %s" citekey)
+  ;;(message "Selected citekey: %s" citekey)
   (let* ((entry (citar-get-entry citekey))
          (title (concat (format "@%s - " citekey) (citar-get-value 'title entry)))
          (author (citar-get-value 'author entry))
@@ -1866,9 +1872,7 @@ makes M-n and M-p look for and M-h highlight the symbol at point
   (org-cite-insert-processor 'citar)
   (org-cite-follow-processor 'citar)
   (org-cite-activate-processor 'citar)
-  (citar-bibliography org-cite-global-bibliography)
-  :bind
-  (:map org-mode-map :package org ("C-c b" . #'org-cite-insert)))
+  (citar-bibliography org-cite-global-bibliography))
 #+end_src
 
 * citar-org-roam                                                 :usepackage:
