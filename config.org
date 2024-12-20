@@ -873,6 +873,8 @@ move cursor to brackets
 
  ("8R" "#+begin_src R\n@@\n#+end_src")
 
+ ("8Q" "#+begin_quote\n@@\n#+end_quote")
+
  ("8ä" "\\344")
  ("8Ä" "\\304")
 
