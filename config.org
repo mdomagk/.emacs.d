@@ -1,7 +1,7 @@
 #+TAGS: custom(c) lisp(l) usepackage(u)
 #+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
 #+TITLE: config.org
-#+Changed: 17.12.2024
+#+Changed: 21.12.2024
 
 * Literate Emacs configuration
 ** Installation
@@ -873,6 +873,8 @@ move cursor to brackets
 
  ("8R" "#+begin_src R\n@@\n#+end_src")
 
+ ("8Q" "#+begin_quote\n@@\n#+end_quote")
+
  ("8ä" "\\344")
  ("8Ä" "\\304")
 
@@ -1392,7 +1394,7 @@ https://github.com/Fanael/rainbow-delimiters
   (add-to-list 'auto-mode-alist '("\\.ledger$" . ledger-mode)))
 #+end_src
 
-* FIX org-ql                                                     :usepackage:
+* org-ql                                                         :usepackage:
 - find to make use of it
 #+begin_src emacs-lisp
 (use-package org-ql
@@ -1404,6 +1406,24 @@ https://github.com/Fanael/rainbow-delimiters
   (org-ql-search (org-agenda-files)
     '(and (todo) (tags "Literatur"))
     :super-groups '((:auto-outline-path t))))
+
+(defun mx-org-ql-search-priority-in-home ()
+  "Search for priority TODO items in 'home.org', ordered by priority."
+  (interactive)
+  (org-ql-search "~/.emacs.d/org/home.org"
+    '(and (todo) (priority))
+    :super-groups '((:auto-priority ?A)
+                    (:auto-priority ?B)
+                    (:auto-priority ?C))))
+
+(defun mx-org-ql-search-priority-in-work ()
+  "Search for priority TODO items in 'work.org', ordered by priority."
+  (interactive)
+  (org-ql-search "~/.emacs.d/org/work.org"
+    '(and (todo) (priority))
+    :super-groups '((:auto-priority ?A)
+                    (:auto-priority ?B)
+                    (:auto-priority ?C))))
 #+end_src
 
 * org-pomodoro                                                   :usepackage:
@@ -1651,7 +1671,8 @@ Examples:
 
   [["Org"
    ("ol" "ql literature" mx-org-ql-search-literatur)
-   ("of" "roam find" org-roam-node-find)]
+   ("ow" "ql work" mx-org-ql-search-priority-in-work)
+   ("ox" "ql home" mx-org-ql-search-priority-in-home)]
 
    ["Files"
     ("ff" "find" counsel-git)
@@ -1811,6 +1832,7 @@ makes M-n and M-p look for and M-h highlight the symbol at point
   :bind (("C-c o l" . org-roam-buffer-toggle)
          ("C-c o f" . org-roam-node-find)
          ("C-c o i" . org-roam-node-insert)
+         ("C-c o u" . org-roam-db-build-cache)
          ("C-c o b" . mx-org-roam-node-from-cite)
          ("C-c b" . mx-insert-citekey))
   :config
