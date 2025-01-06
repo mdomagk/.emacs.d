@@ -1,7 +1,7 @@
 #+TAGS: custom(c) lisp(l) usepackage(u)
 #+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
 #+TITLE: config.org
-#+Changed: 21.12.2024
+#+Changed: 06.01.2025
 
 * Literate Emacs configuration
 ** Installation
@@ -796,7 +796,6 @@ move cursor to brackets
          ((todo "NEXT|TODO|WAITING"
                 ((org-agenda-overriding-header "Tasks at Home")
                  (org-agenda-files (remove "~/.emacs.d/org/work.org" org-agenda-files))))))
-        ;;(tags-todo "Lehre" ((org-agenda-overriding-header "Lehre & Betreuung"))))
 
         ("w" "Agenda at work"
          ((agenda ""
@@ -813,9 +812,10 @@ move cursor to brackets
                 ((org-agenda-overriding-header "Tasks at Work")
                  (org-agenda-files (remove "~/.emacs.d/org/home.org" org-agenda-files))))))
 
-        )
-      )
-
+        ("h" "Habits"
+         ((agenda ""
+                  ((org-agenda-files '("~/.emacs.d/org/habits.org"))))))
+      ))
 #+end_src
 
 ** auto-update headers
