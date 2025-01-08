@@ -1204,6 +1204,8 @@ https://oremacs.com/swiper/
   :custom-face
   (counsel-outline-default ((t (:inherit 'default))))
   :config
+  ;; disable opening of temporary buffers in counsel-switch-buffer
+  (setq counsel-switch-buffer-preview-virtual-buffers nil)
   ;; ignore . files or temporary files
   (setq counsel-find-file-ignore-regexp
         (concat
