@@ -1,7 +1,7 @@
 #+TAGS: custom(c) lisp(l) usepackage(u)
 #+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
 #+TITLE: config.org
-#+Changed: 08.01.2025
+#+Changed: 09.01.2025
 
 * Literate Emacs configuration
 ** Installation
@@ -1916,4 +1916,20 @@ makes M-n and M-p look for and M-h highlight the symbol at point
         org-roam-ui-follow t
         org-roam-ui-update-on-save t
         org-roam-ui-open-on-start t))
+#+end_src
+
+* ultra-scroll                                                   :usepackage:
+- https://github.com/jdtsmith/ultra-scroll
+- Not yet in a package archive. For Emacs 29.1 and later, use
+  package-vc-install. In the *scratch* buffer, enter:
+
+  (package-vc-install '(ultra-scroll :vc-backend Git :url  "https://github.com/jdtsmith/ultra-scroll"))
+
+#+begin_src emacs-lisp
+(use-package ultra-scroll
+  :init
+  (setq scroll-conservatively 101 ; important!
+        scroll-margin 0)
+  :config
+  (ultra-scroll-mode 1))
 #+end_src
