@@ -1,7 +1,7 @@
 #+TAGS: custom(c) lisp(l) usepackage(u)
 #+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
 #+TITLE: config.org
-#+Changed: 09.01.2025
+#+Changed: 27.01.2025
 
 * Literate Emacs configuration
 ** Installation
@@ -12,7 +12,6 @@ Add ~site-start.el~ in ~c:\Program Files\GNU Emacs\emacs_27.2\share\emacs\27.2\s
 #+end_src
 to set path to ~.emacs.d/~ folder.
 
-
 * environment                                                        :custom:
 M-x getenv <RET> PATH <RET>
 ** IEEH (Win10) EVMI80
@@ -20,7 +19,7 @@ M-x getenv <RET> PATH <RET>
 (when (string-equal system-name "EVMI80")
   (let ((mypaths
          '("C:/Program Files (x86)/gnupg14"
-           "C:/Program Files/R/R-4.4.1/bin/x64"
+           "C:/Program Files/R/R-4.4.2/bin/x64"
            "C:/Program Files/git/bin"
            "C:/Program Files/Hunspell/hunspell-v1.7.2/bin/"
            "C:/cygwin64"
@@ -46,7 +45,7 @@ M-x getenv <RET> PATH <RET>
          '("C:/Program Files (x86)/GNU GnuPG"
            ;;"C:/Program Files/Graphviz/bin"
            ;;"C:/Program Files/Quarto/bin"
-           "C:/Program Files/R/R-4.4.1/bin/x64"
+           "C:/Program Files/R/R-4.4.2/bin/x64"
            "C:/Program Files/git/bin"
            "C:/texlive/2023/bin/windows"
            "C:/Users/mdoma/AppData/Local/Pandoc"
