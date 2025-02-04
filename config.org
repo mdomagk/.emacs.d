@@ -1,7 +1,7 @@
 #+TAGS: custom(c) lisp(l) usepackage(u)
 #+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
 #+TITLE: config.org
-#+Changed: 29.01.2025
+#+Changed: 04.02.2025
 
 * Literate Emacs configuration
 ** Installation
@@ -1623,6 +1623,8 @@ add: .libPaths("D:/Daten/R/Library")
   ;;    '(("^\\*R"
   ;;       (display-buffer-reuse-window display-buffer-pop-up-frame)
   ;;       (reusable-frames . 0))))
+  ;; disable tracebug
+  (setq ess-use-tracebug nil); default is 't'
   )
 #+end_src
 
