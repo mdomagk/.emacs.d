@@ -1,7 +1,7 @@
 #+TAGS: custom(c) lisp(l) usepackage(u)
 #+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
 #+TITLE: config.org
-#+Changed: 04.02.2025
+#+Changed: 05.02.2025
 
 * Literate Emacs configuration
 ** Installation
@@ -1557,7 +1557,7 @@ add: .libPaths("D:/Daten/R/Library")
     "switch" "function" "return" "on.exit" "stop" ".Defunct" "tryCatch"
     "withRestarts" "invokeRestart"
     "recover" "browser"
-    "tar_target" "tar_render" "tar_file" "tar_map")
+    "tar_target" "tar_render" "tar_file" "tar_map" "tar_combine")
   "Reserved words or special functions in the R language.")
 
 ;; https://stackoverflow.com/a/67654699
