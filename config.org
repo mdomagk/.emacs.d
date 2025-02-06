@@ -1,7 +1,7 @@
 #+TAGS: custom(c) lisp(l) usepackage(u)
 #+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
 #+TITLE: config.org
-#+Changed: 05.02.2025
+#+Changed: 06.02.2025
 
 * Literate Emacs configuration
 ** Installation
@@ -857,6 +857,8 @@ move cursor to brackets
  ("8ra" "&rarr;")
 
  ("8eq" "\\begin{equation}\n@@\n\\end{equation}")
+
+ ("8c" "## -----------------------------------------------------------------------------\n## @@\n## -----------------------------------------------------------------------------")
 
  ("8n" "&nbsp;")
 
