@@ -1,7 +1,7 @@
 #+TAGS: custom(c) lisp(l) usepackage(u)
 #+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
 #+TITLE: config.org
-#+Changed: 06.02.2025
+#+Changed: 07.02.2025
 
 * Literate Emacs configuration
 ** Installation
@@ -1935,4 +1935,27 @@ makes M-n and M-p look for and M-h highlight the symbol at point
         scroll-margin 0)
   :config
   (ultra-scroll-mode 1))
+#+end_src
+
+* company                                                        :usepackage:
+- complete anything
+- https://company-mode.github.io/
+#+begin_src emacs-lisp
+(use-package company
+  :diminish company-mode
+  :hook ((prog-mode LaTeX-mode latex-mode ess-r-mode) . company-mode)
+  :bind
+  (:map company-active-map
+        ([tab] . smarter-tab-to-complete)
+        ("TAB" . smarter-tab-to-complete))
+  :custom
+  (company-minimum-prefix-length 1)
+  (company-tooltip-align-annotations t)
+  (company-require-match 'never)
+  ;; Trigger completion immediately.
+  (company-idle-delay 0.2)
+  ;; Number the candidates (use M-1, M-2 etc to select completions).
+  (company-show-numbers t)
+  :config
+  (global-company-mode 1))
 #+end_src
