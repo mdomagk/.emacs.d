@@ -1,7 +1,7 @@
 #+TAGS: custom(c) lisp(l) usepackage(u)
 #+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
 #+TITLE: config.org
-#+Changed: 17.03.2025
+#+Changed: 18.03.2025
 
 * Literate Emacs configuration
 ** Installation
@@ -1779,10 +1779,12 @@ Examples:
   (setq markdown-max-image-size (cons 600  nil)))
 
 (defun mx-polymode-export ()
- "Delete process-buffer window after polymode-export"
- (interactive)
- (polymode-export)
- (delete-other-windows))
+  "Export current buffer to markdown+ess with auto output and delete the process buffer window."
+  (interactive)
+  (let ((polymode-exporter 'markdown+ess)
+        (polymode-export-output 'auto))
+    (polymode-export)
+    (delete-other-windows)))
 #+end_src
 
 * symbol-overlay                                                 :usepackage:
