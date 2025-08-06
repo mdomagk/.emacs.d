@@ -1298,7 +1298,9 @@ https://oremacs.com/swiper/
         '(("PROJ"  . (:weight bold :box (:line-width 1 :color "#C8ABD8") :foreground "#C8ABD8" :background "#E0E0F9"))
           ("WAITING"  . (:weight bold :box (:line-width 1 :color "#BFBF65") :foreground "#BFBF65" :background "#FFFFCC"))
           ("NEXT"  . (:weight bold :box (:line-width 1 :color "#8ea1b2") :foreground "#8ea1b2" :background "#CCE7FF"))
-          ("SOMEDAY"  . (:weight bold :box (:line-width 1 :color "#a8c2a8") :foreground "#a8c2a8" :background nil))))
+          ("SOMEDAY"  . (:weight bold :box (:line-width 1 :color "#a8c2a8") :foreground "#a8c2a8" :background nil))
+          ("DONE"  . (:weight bold :box (:line-width 1 :color "#BBBBBB") :foreground "#BBBBBB" :background "#F0F0F0"))
+          ("CANCELED"  . (:weight bold :box (:line-width 1 :color "#BBBBBB") :foreground "#BBBBBB" :background "#F0F0F0")))
   :custom-face
   (font-latex-sectioning-0-face ((t (:height 1.5))))
   (font-latex-sectioning-1-face ((t (:height 1.4))))
