@@ -1293,7 +1293,7 @@ https://oremacs.com/swiper/
   :init
   (setq leuven-scale-outline-headlines nil)
   (setq leuven-scale-org-agenda-structure 1.2)
-  (setq org-fontify-whole-heading-line t)
+  (setq org-fontify-whole-heading-line nil)
   (setq org-todo-keyword-faces
         '(("PROJ"  . (:weight bold :box (:line-width 1 :color "#C8ABD8") :foreground "#C8ABD8" :background "#E0E0F9"))
           ("WAITING"  . (:weight bold :box (:line-width 1 :color "#BFBF65") :foreground "#BFBF65" :background "#FFFFCC"))
