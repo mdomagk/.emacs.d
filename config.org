@@ -1,7 +1,7 @@
 #+TAGS: custom(c) lisp(l) usepackage(u)
 #+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
 #+TITLE: config.org
-#+Changed: 06.08.2025
+#+Changed: 05.09.2025
 
 * Literate Emacs configuration
 ** Installation
@@ -1666,8 +1666,12 @@ Examples:
   - https://www.youtube.com/watch?v=w3krYEeqnyk
   - https://gist.github.com/abrochard/dd610fc4673593b7cbce7a0176d897de
 #+begin_src emacs-lisp
-(global-set-key (kbd "<f1>") 'mx-main-transient)
-(global-set-key (kbd "<apps>") 'mx-main-transient)
+(use-package transient
+  :ensure t
+  :init
+  (global-set-key (kbd "<f1>") 'mx-main-transient)
+  (global-set-key (kbd "<apps>") 'mx-main-transient)
+  )
 
 (defun transient-prefix-object ()
      (or transient--prefix transient-current-prefix))
