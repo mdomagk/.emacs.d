@@ -1465,6 +1465,11 @@ add: .libPaths("D:/Daten/R/Library")
       (call-interactively 'ess-eval-region)
     (call-interactively 'ess-eval-line-and-step)))
 
+(defun R_bookdown_render_book ()
+  "call bookdown::render_book."
+  (interactive)
+    (ess-eval-linewise "bookdown::render_book(\"index.Rmd\")\n"))
+
 (defun R_tar_load_target_at_point ()
   "call targets::tar_load on object at point to load it into environment."
   (interactive)
@@ -1480,15 +1485,10 @@ add: .libPaths("D:/Daten/R/Library")
 (defun R_tar_make ()
   "call targets::tar_make."
   (interactive)
-    (ess-eval-linewise "targets::tar_make(reporter = \"verbose_positives\")\n"))
+    (ess-eval-linewise "targets::tar_make()\n"))
 
-(defun R_bookdown_render_book ()
-  "call bookdown::render_book."
-  (interactive)
-    (ess-eval-linewise "bookdown::render_book(\"index.Rmd\")\n"))
-
-(defun R_tar_make_summary ()
-  "call targets::tar_make(reporter = \"summary\")."
+(defun R_tar_make_timestamp ()
+  "call targets::tar_make(reporter = \"timestamp\")."
   (interactive)
     (ess-eval-linewise "Sys.time(); targets::tar_make(reporter = \"summary\", shortcut = TRUE)\n"))
 
@@ -1709,7 +1709,7 @@ Examples:
 
   [["{targets} run"
     ("tm" "make" R_tar_make)
-    ("tM" "make summary" R_tar_make_summary)
+    ("tM" "make timestamp" R_tar_make_timestamp)
     ("tv" "visnetwork" R_tar_visnetwork_targets_only)
     ("tV" "visnetwork complete" R_tar_visnetwork)]
 
