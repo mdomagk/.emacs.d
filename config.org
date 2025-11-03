@@ -595,8 +595,8 @@ move cursor to brackets
 ;; log DONE status change
 (setq org-log-done t)
 
-;; Do not log repeated items
-(setq org-log-repeat nil)
+;; log repeated items
+(setq org-log-repeat t)
 
 ;; keep log state notes in LOGBOOK
 (setq org-log-state-notes-into-drawer "LOGBOOK")
