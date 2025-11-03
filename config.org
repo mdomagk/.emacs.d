@@ -1,7 +1,7 @@
 #+TAGS: custom(c) lisp(l) usepackage(u)
 #+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
 #+TITLE: config.org
-#+Changed: 08.09.2025
+#+Changed: 03.11.2025
 
 * Literate Emacs configuration
 ** Installation
@@ -594,6 +594,9 @@ move cursor to brackets
 
 ;; log DONE status change
 (setq org-log-done t)
+
+;; Do not log repeated items
+(setq org-log-repeat nil)
 
 ;; keep log state notes in LOGBOOK
 (setq org-log-state-notes-into-drawer "LOGBOOK")
