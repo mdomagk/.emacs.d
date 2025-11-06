@@ -1,7 +1,7 @@
 #+TAGS: custom(c) lisp(l) usepackage(u)
 #+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
 #+TITLE: config.org
-#+Changed: 03.11.2025
+#+Changed: 06.11.2025
 
 * Literate Emacs configuration
 ** Installation
@@ -491,6 +491,11 @@ move cursor to brackets
 ;; comment marked lines (matlab-like)
 (global-set-key (kbd "C-t") 'uncomment-region)
 (global-set-key (kbd "C-r") 'comment-region)
+
+;; Disable or override in org-mode
+(with-eval-after-load 'org
+  (define-key org-mode-map (kbd "C-t") nil)
+  (define-key org-mode-map (kbd "C-r") nil))
 
 (global-set-key (kbd "M-ö") 'comment-or-uncomment-region)
 
