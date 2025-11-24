@@ -1,7 +1,7 @@
 #+TAGS: custom(c) lisp(l) usepackage(u)
 #+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
 #+TITLE: config.org
-#+Changed: 21.11.2025
+#+Changed: 24.11.2025
 
 * Literate Emacs configuration
 ** Installation
@@ -879,6 +879,8 @@ move cursor to brackets
  ("8R" "#+begin_src R\n@@\n#+end_src")
 
  ("8Q" "#+begin_quote\n@@\n#+end_quote")
+
+ ("8t" "library(tidyverse)")
 
  ("8ä" "\\344")
  ("8Ä" "\\304")
