@@ -1,7 +1,7 @@
 #+TAGS: custom(c) lisp(l) usepackage(u)
 #+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
 #+TITLE: config.org
-#+Changed: 24.11.2025
+#+Changed: 03.12.2025
 
 * Literate Emacs configuration
 ** Installation
@@ -19,7 +19,7 @@ M-x getenv <RET> PATH <RET>
 (when (string-equal system-name "EVMI80")
   (let ((mypaths
          '("C:/Program Files (x86)/gnupg14"
-           "C:/Program Files/R/R-4.5.1/bin/x64"
+           "C:/Program Files/R/R-4.5.2/bin/x64"
            "C:/Program Files/git/bin"
            "C:/Program Files/Hunspell/hunspell-v1.7.2/bin/"
            "C:/cygwin64"
@@ -45,14 +45,14 @@ M-x getenv <RET> PATH <RET>
          '("C:/Program Files (x86)/GNU GnuPG"
            ;;"C:/Program Files/Graphviz/bin"
            ;;"C:/Program Files/Quarto/bin"
-           "C:/Program Files/R/R-4.5.1/bin/x64"
+           "C:/Program Files/R/R-4.5.2/bin/x64"
            "C:/Program Files/git/bin"
            "C:/texlive/2023/bin/windows"
            "C:/Users/mdoma/AppData/Local/Pandoc"
            "C:/Max/Ledger_312")))
     (setenv "PATH" (mapconcat 'identity mypaths ";"))
     (setq exec-path (append mypaths (list "." exec-directory))))
-  (setq mx-use-theme "leuven")
+  (setq mx-use-theme "dracula")
   (set-frame-font "Consolas-10" nil t)
 )
 #+end_src
@@ -1133,6 +1133,8 @@ minor mode sets background color to strings that match color names, e.g. #0000ff
   (setq org-todo-keyword-faces
         '(("PROJ"  . (:inherit org-todo))
           ("WAITING"  . (:inherit org-todo))))
+  (custom-set-faces
+   '(ansi-color-blue ((t (:foreground "#FFB86C")))))
   (load-theme 'dracula t))
 #+end_src
 
