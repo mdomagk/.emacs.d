@@ -1,7 +1,7 @@
 #+TAGS: custom(c) lisp(l) usepackage(u)
 #+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
 #+TITLE: config.org
-#+Changed: 03.12.2025
+#+Changed: 10.12.2025
 
 * Literate Emacs configuration
 ** Installation
@@ -52,7 +52,7 @@ M-x getenv <RET> PATH <RET>
            "C:/Max/Ledger_312")))
     (setenv "PATH" (mapconcat 'identity mypaths ";"))
     (setq exec-path (append mypaths (list "." exec-directory))))
-  (setq mx-use-theme "dracula")
+  (setq mx-use-theme "ef-themes")
   (set-frame-font "Consolas-10" nil t)
 )
 #+end_src
@@ -1295,6 +1295,38 @@ https://oremacs.com/swiper/
        (define-key hl-todo-mode-map (kbd "C-c o") 'hl-todo-occur)
        (define-key hl-todo-mode-map (kbd "C-c i") 'hl-todo-insert))
 #+end_src
+
+* ef-themes                                                      :usepackage:
+#+begin_src emacs-lisp
+(use-package ef-themes
+  :if (string-equal mx-use-theme "ef-themes")
+  :ensure t
+  :init
+  (ef-themes-take-over-modus-themes-mode 1)
+  :bind
+  (("<f6>" . modus-themes-rotate)
+   ("C-<f6>" . modus-themes-select)
+   ("M-<f6>" . modus-themes-load-random))
+  :config
+  ;; All customisations here.
+  (setq modus-themes-mixed-fonts t)
+  (setq modus-themes-italic-constructs nil)
+
+  ;; Override Org TODO keyword faces AFTER theme loads
+  (add-hook
+   'ef-themes-after-load-theme-hook
+   (lambda ()
+     (setq org-todo-keyword-faces
+           '(("PROJ"    . (:inherit org-todo))
+             ("WAITING" . (:inherit org-todo))
+             ("NEXT" . (:inherit org-sexp-date))
+             ("SOMEDAY" . (:inherit org-done))))))
+
+  ;; Finally, load your theme of choice (or a random one with
+  ;; `modus-themes-load-random', `modus-themes-load-random-dark',
+  ;; `modus-themes-load-random-light').
+  (modus-themes-load-theme 'ef-owl))
+  #+end_src
 
 * leuven-theme                                                   :usepackage:
 #+begin_src emacs-lisp
