@@ -1535,7 +1535,7 @@ add: .libPaths("D:/Daten/R/Library")
 (defun R_tar_make_timestamp ()
   "call targets::tar_make(reporter = \"timestamp\")."
   (interactive)
-    (ess-eval-linewise "Sys.time(); targets::tar_make(reporter = \"summary\", shortcut = TRUE)\n"))
+    (ess-eval-linewise "Sys.time(); targets::tar_make(reporter = \"timestamp\")\n"))
 
 (defun R_tar_visnetwork ()
   "call targets::tar_visnetwork."
