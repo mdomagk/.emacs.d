@@ -152,22 +152,6 @@ adjust window title to "emacs: path/actual-buffer"
                                #'delete-trailing-whitespace nil t)))
 #+end_src
 
-** update date on save
-update date in header on save
-#+begin_src emacs-lisp
-(setq
- time-stamp-active t
- ;; check first 10 buffer lines for Time-stamp:
- time-stamp-line-limit 10
- ;; date format
- time-stamp-format "%02d.%02m.%Y"
- ;; identifier
- time-stamp-start "Changed: "
- time-stamp-end "$")
-
-(add-hook 'write-file-hooks 'time-stamp)
-#+end_src
-
 ** set default frame width
 #+begin_src emacs-lisp
 (add-to-list 'default-frame-alist '(width . 82))
