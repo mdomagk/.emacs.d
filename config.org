@@ -1329,7 +1329,7 @@ https://oremacs.com/swiper/
   :init
   (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)
         aw-dispatch-always nil
-        aw-scope 'frame))
+        aw-scope 'global))
 #+end_src
 
 
