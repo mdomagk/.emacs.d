@@ -1,7 +1,6 @@
 #+TAGS: custom(c) lisp(l) usepackage(u)
 #+SEQ_TODO: TODO(t) FIX(f) DISABLED(i) | DONE(d)
 #+TITLE: config.org
-#+Changed: 14.08.2026
 
 * Literate Emacs configuration
 ** Installation
@@ -14,6 +13,12 @@ to set path to ~.emacs.d/~ folder.
 
 * environment                                                        :custom:
 M-x getenv <RET> PATH <RET>
+
+** mx-use-theme
+#+begin_src emacs-lisp
+(defvar mx-use-theme "leuven")
+#+end_src
+
 ** IEEH (Win10) EVMI80
 #+begin_src emacs-lisp
 (when (string-equal system-name "EVMI80")
@@ -142,7 +147,25 @@ adjust window title to "emacs: path/actual-buffer"
 
 ** delete trailing whitespace
 #+begin_src emacs-lisp
-(add-hook 'before-save-hook (lambda () (delete-trailing-whitespace)))
+(add-hook 'prog-mode-hook
+          (lambda () (add-hook 'before-save-hook
+                               #'delete-trailing-whitespace nil t)))
+#+end_src
+
+** update date on save
+update date in header on save
+#+begin_src emacs-lisp
+(setq
+ time-stamp-active t
+ ;; check first 10 buffer lines for Time-stamp:
+ time-stamp-line-limit 10
+ ;; date format
+ time-stamp-format "%02d.%02m.%Y"
+ ;; identifier
+ time-stamp-start "Changed: "
+ time-stamp-end "$")
+
+(add-hook 'write-file-hooks 'time-stamp)
 #+end_src
 
 ** set default frame width
@@ -1566,14 +1589,14 @@ add: .libPaths("D:/Daten/R/Library")
    (interactive)
    (let* ((input-context (text-around-cursor))
           (text (prin1-to-string (car input-context)))
-          (index (cdr input-context)))
+          (index (cadr input-context)))
      (ess-eval-linewise (format "fnmate::fnmate_fn.R(%s, %s)" text index))))
 
 (defun fnmate-below ()
   (interactive)
   (let* ((input-context (text-around-cursor))
          (text (prin1-to-string (car input-context)))
-         (index (cdr input-context))
+         (index (cadr input-context))
          (args (format "%s, %s" text index)))
     (exec-r-fn-to-buffer "fnmate::fnmate_below" args)))
 #+end_src
