@@ -800,18 +800,15 @@ move cursor to brackets
 - auto-update [x/y] in org-headers
 - http://whattheemacsd.com/setup-org.el-01.html
 #+begin_src emacs-lisp
-(defun myorg-update-parent-cookie ()
-  (when (equal major-mode 'org-mode)
+(defun myorg-update-parent-cookie (&rest _)
+  (when (derived-mode-p 'org-mode)
     (save-excursion
       (ignore-errors
         (org-back-to-heading)
         (org-update-parent-todo-statistics)))))
 
-(defadvice org-kill-line (after fix-cookies activate)
-  (myorg-update-parent-cookie))
-
-(defadvice kill-whole-line (after fix-cookies activate)
-  (myorg-update-parent-cookie))
+(advice-add 'org-kill-line   :after #'myorg-update-parent-cookie)
+(advice-add 'kill-whole-line :after #'myorg-update-parent-cookie)
 #+end_src
 
 * abbreviations                                                      :custom:
