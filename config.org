@@ -1971,3 +1971,12 @@ makes M-n and M-p look for and M-h highlight the symbol at point
   :config
   (global-company-mode 1))
 #+end_src
+
+* which-key                                                      :usepackage:
+#+begin_src emacs-lisp
+(use-package which-key
+  :ensure t
+  :config
+  (which-key-mode 1)
+  (setq which-key-idle-delay 0.8))
+#+end_src
