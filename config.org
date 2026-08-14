@@ -204,7 +204,7 @@ https://emacs.stackexchange.com/questions/28736/emacs-pointcursor-movement-lag/2
 ** make alarm sound only
 visible (t), not visible (nil)
 #+begin_src emacs-lisp
-(setq visible-bell t)
+(setq ring-bell-function #'ignore)
 #+end_src
 
 ** enable winner mode
@@ -216,12 +216,6 @@ C-c <left> to get to the previous window configuration
 ** show unfinished keystrokes early
 #+begin_src emacs-lisp
 (setq echo-keystrokes 0.1)
-#+end_src
-
-** blinking cursor on
-1 (on) / 0 (off)
-#+begin_src emacs-lisp
-(blink-cursor-mode 1)
 #+end_src
 
 ** highligh current line off
@@ -239,27 +233,9 @@ Common User Access
 (cua-mode)
 #+end_src
 
-** syntax highlighting everywhere
-#+begin_src emacs-lisp
-(global-font-lock-mode t)
-#+end_src
-
-** sane select (mark) mode
-#+begin_src emacs-lisp
-(transient-mark-mode 1)
-#+end_src
-
 ** entry deletes marked text
 #+begin_src emacs-lisp
 (delete-selection-mode t)
-#+end_src
-
-** match parentheses
-#+begin_src emacs-lisp
-(show-paren-mode t)
-;;(setq show-paren-style 'expression)
-;;(setq show-paren-when-point-in-periphery t)
-;;(setq show-paren-when-point-inside-paren nil)
 #+end_src
 
 ** font highlighting matlab .m files
@@ -270,7 +246,7 @@ Common User Access
 ** quit emacs with y or n
 instead of yes or no accept y or n
 #+begin_src emacs-lisp
-(fset 'yes-or-no-p 'y-or-n-p)
+(setq use-short-answers t)
 #+end_src
 
 ** make sure all backup files only live in one place
@@ -297,14 +273,10 @@ instead of yes or no accept y or n
 ** visual line mode and toggle to truncate my lines
 #+begin_src emacs-lisp
 (global-visual-line-mode 1)
-;; enable line wrap
-(setq default-truncate-lines t)
 ;; make side by side buffers function the same as the main window
 (setq truncate-partial-width-windows nil)
 ;; Add F3 to toggle line wrap
 (global-set-key (kbd "<f3>") 'toggle-truncate-lines)
-
-;;(setq-default truncate-lines nil)
 #+end_src
 
 ** explicitly show the end of a buffer
@@ -1040,8 +1012,8 @@ https://lists.gnu.org/archive/html/help-gnu-emacs/2010-12/msg02019.html
           (python-nav-forward-statement)        ; Move to the next statement
           )
       ;; If it is not def, do all the following
-      (python-shell-send-region (point-at-bol) (pos-eol))  ; Send the current line
-      (python-nav-forward-statement)                            ; Move to the next statement
+      (python-shell-send-region (pos-bol) (pos-eol)) ; Send the current line
+      (python-nav-forward-statement)                 ; Move to the next statement
       )
     ;; Activate shell window, and switch back
     (progn
