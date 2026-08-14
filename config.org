@@ -1335,6 +1335,16 @@ https://oremacs.com/swiper/
         '(("todo" "[{") ("discuss" "[{"))))
 #+end_src
 
+* avy (better ace-jump-mode)                                     :usepackage:
+#+begin_src emacs-lisp
+(use-package avy
+  :ensure t
+  :bind
+  ("M-SPC" . avy-goto-char-timer)
+  (:map org-mode-map        ("M-SPC" . avy-goto-char-timer))
+  (:map inferior-ess-mode-map ("M-SPC" . avy-goto-char-timer)))
+#+end_src
+
 * ace-window                                                     :usepackage:
 #+begin_src emacs-lisp
 (use-package ace-window
