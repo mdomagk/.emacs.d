@@ -248,10 +248,9 @@ instead of yes or no accept y or n
 
 ** set auto-save directory
 #+begin_src emacs-lisp
-(setq auto-save-default nil) ; just turn off
-
-;; ;; move to one directory
-;;(setq auto-save-file-name-transforms `((".*" "~/.emacs.d/auto-save/" t)))
+(setq auto-save-default t)
+(setq auto-save-file-name-transforms
+      `((".*" ,(concat user-emacs-directory "auto-save/") t)))
 #+end_src
 
 ** visual line mode and toggle to truncate my lines
@@ -1950,9 +1949,7 @@ makes M-n and M-p look for and M-h highlight the symbol at point
   ;; Trigger completion slower.
   (company-idle-delay 0.3)
   ;; Number the candidates (use M-1, M-2 etc to select completions).
-  (company-show-numbers t)
-  :config
-  (global-company-mode 1))
+  (company-show-numbers t))
 #+end_src
 
 * which-key                                                      :usepackage:
