@@ -1213,20 +1213,6 @@ https://oremacs.com/swiper/
    ("C-j" . counsel-org-goto))) ;; counsel-org-agenda-headlines
 #+end_src
 
-* swiper (for ivy)                                               :usepackage:
-https://oremacs.com/swiper/
-#+begin_src emacs-lisp
-(use-package swiper
-  :ensure t)
-#+end_src
-
-* smex (for ivy)                                                 :usepackage:
-- enable history for M-x commands
-#+begin_src emacs-lisp
-(use-package smex
-  :ensure t)
-#+end_src
-
 * multiple-cursors                                               :usepackage:
 #+begin_src emacs-lisp
 (use-package multiple-cursors
@@ -1755,9 +1741,6 @@ Examples:
 - Quarto (https://github.com/quarto-dev/quarto-emacs)
 
 #+begin_src emacs-lisp
-(use-package request
-  :ensure t)
-
 (use-package quarto-mode
   :ensure t
   :mode (("\\.qmd" . poly-quarto-mode)))
