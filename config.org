@@ -1291,6 +1291,12 @@ https://oremacs.com/swiper/
   (org-level-6 ((t (:slant normal))))
   (org-level-7 ((t (:slant normal))))
   (org-level-8 ((t (:slant normal))))
+  (font-latex-sectioning-0-face ((t (:height 1.0))))
+  (font-latex-sectioning-1-face ((t (:height 1.0))))
+  (font-latex-sectioning-2-face ((t (:height 1.0))))
+  (font-latex-sectioning-3-face ((t (:height 1.0))))
+  (font-latex-sectioning-4-face ((t (:height 1.0))))
+  (font-latex-sectioning-5-face ((t (:height 1.0))))
   :config
   (load-theme 'leuven t))
 #+end_src
