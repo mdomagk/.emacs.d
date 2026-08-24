@@ -58,7 +58,7 @@ M-x getenv <RET> PATH <RET>
     (setenv "PATH" (mapconcat 'identity mypaths ";"))
     (setq exec-path (append mypaths (list "." exec-directory))))
   (set-frame-font "Consolas-10" nil t)
-  (setq mx-use-theme "leuven")
+  (setq mx-use-theme "dracula")
 )
 #+end_src
 
