@@ -1720,11 +1720,32 @@ Examples:
 * polymode (Rmarkdown/Quarto)                                    :usepackage:
 - Pandoc (https://pandoc.org/)
 - Quarto (https://github.com/quarto-dev/quarto-emacs)
+** custom font-lock
+#+begin_src emacs-lisp
+(defun mx-markdown-font-lock ()
+  (font-lock-add-keywords
+   nil
+   '(;; latex commands
+     ("\\\\[[:alpha:]]+" . font-lock-type-face)
+     ;; display math delimiters, incl. quarto label: $$ {#eq-x}
+     ("^\\$\\$\\(?: *{#[^}]+}\\)?$" . font-lock-type-face)
+     ;; inline math, not across backticks or lines
+     ("\\$[^$`\n]+?\\$" . font-lock-type-face)
+     ;; citations [@key] and quarto crossrefs @fig-x / @tbl-x / @eq-x / @sec-x
+     ("\\[@[^]]+\\]" . font-lock-builtin-face)
+     ("@\\(?:fig\\|tbl\\|eq\\|sec\\)-[[:alnum:]_-]+" . font-lock-builtin-face)
+     ;; bookdown / latex refs
+     ("\\\\@ref([^)]+)" . font-lock-builtin-face)
+     ("\\\\ref{[^}]+}" . font-lock-builtin-face)
+     ;; own markers
+     ("\\\\\\(?:todo\\|discuss\\)\\|<!-- *TODO[^>]*-->" 0 font-lock-warning-face t))))
+#+end_src
 
+** settings
 #+begin_src emacs-lisp
 (use-package quarto-mode
   :ensure t
-  :mode (("\\.qmd" . poly-quarto-mode)))
+  :commands (quarto-preview quarto-render))
 
 (use-package markdown-mode
   :ensure t
@@ -1733,25 +1754,7 @@ Examples:
   :custom-face
   (markdown-italic-face ((t (:slant normal)))))
 
-(add-hook 'markdown-mode-hook
-          (lambda ()
-            ;; latex commands: \some
-            (font-lock-add-keywords nil '(("\\\\[[:alnum:]]+" . font-lock-type-face)))
-            ;; inline math: $...$
-            (font-lock-add-keywords nil '(("\\$\\(.+?\\)\\$" . font-lock-type-face)))
-            ;; diyplay math: $$
-            (font-lock-add-keywords nil '(("^\\$\\$\n" . font-lock-type-face)))
-            ;; citations: [@...]
-            (font-lock-add-keywords nil '(("\\[\\(\\@.+?\\)\\]" . font-lock-builtin-face)))
-            ;; references: \@ref()
-            (font-lock-add-keywords nil '(("\\\\\\@ref\\((.+?)\\)" . font-lock-builtin-face)))
-            ;; references: \ref{}
-            (font-lock-add-keywords nil '(("\\\\\\ref\\({.+?}\\)" . font-lock-builtin-face)))
-            ;; custom latex command: \todo
-            (font-lock-add-keywords nil '(("\\\\todo" . font-lock-warning-face)))
-            ;; custom latex command: \discuss
-            (font-lock-add-keywords nil '(("\\\\discuss" . font-lock-warning-face)))
-            ))
+(add-hook 'markdown-mode-hook #'mx-markdown-font-lock)
 
 (use-package poly-markdown
   :ensure t)
@@ -1766,9 +1769,9 @@ Examples:
   (require 'poly-markdown)
   (require 'poly-R)
   :config
-  (add-to-list 'auto-mode-alist '("\\.md$" . poly-gfm-mode))
-  (add-to-list 'auto-mode-alist '("\\.Rmd$" . poly-markdown+r-mode))
-  ;;(add-to-list 'auto-mode-alist '("\\.Rmd$" . poly-gfm+r-mode))
+  (add-to-list 'auto-mode-alist '("\\.md\\'"  . poly-gfm-mode))
+  (add-to-list 'auto-mode-alist '("\\.Rmd\\'" . poly-markdown+r-mode))
+  (add-to-list 'auto-mode-alist '("\\.qmd\\'" . poly-markdown+r-mode))
   (setq polymode-display-output-file nil)
   (setq polymode-display-process-buffers nil)
   (setq markdown-max-image-size (cons 600  nil)))
