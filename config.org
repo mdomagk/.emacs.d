@@ -1707,9 +1707,10 @@ Examples:
     ("tr" "read at point" R_tar_read_target_at_point)
     ("tf" "fnmate at point" fnmate)]
 
-   ["{Rmarkdown}"
+   ["{Rmarkdown/Quarto}"
     ("e" "polymode export" mx-polymode-export)
-    ("r" "render book" R_bookdown_render_book)]]
+    ("r" "render book" R_bookdown_render_book)
+    ("q" "quarto render" mx-quarto-render)]]
 
   [" "
    ("<f1>" "quit" transient-quit-one)
@@ -1720,7 +1721,7 @@ Examples:
 * polymode (Rmarkdown/Quarto)                                    :usepackage:
 - Pandoc (https://pandoc.org/)
 - Quarto (https://github.com/quarto-dev/quarto-emacs)
-** custom font-lock
+** custom functions
 #+begin_src emacs-lisp
 (defun mx-markdown-font-lock ()
   (font-lock-add-keywords
@@ -1739,6 +1740,14 @@ Examples:
      ("\\\\ref{[^}]+}" . font-lock-builtin-face)
      ;; own markers
      ("\\\\\\(?:todo\\|discuss\\)\\|<!-- *TODO[^>]*-->" 0 font-lock-warning-face t))))
+
+(defun mx-quarto-render ()
+  "Save and render the current .qmd with `quarto render' via `compile'."
+  (interactive)
+  (save-buffer)
+  (let ((default-directory (file-name-directory buffer-file-name)))
+    (compile (concat "quarto render "
+                     (shell-quote-argument (file-name-nondirectory buffer-file-name))))))
 #+end_src
 
 ** settings
@@ -1784,6 +1793,7 @@ Examples:
     (polymode-export)
     (delete-other-windows)))
 #+end_src
+
 
 * symbol-overlay                                                 :usepackage:
 makes M-n and M-p look for and M-h highlight the symbol at point
