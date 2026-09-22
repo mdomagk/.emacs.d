@@ -1742,19 +1742,33 @@ Examples:
      ("\\\\\\(?:todo\\|discuss\\)\\|<!-- *TODO[^>]*-->" 0 font-lock-warning-face t))))
 
 (defun mx-quarto-render ()
-  "Save and render the current .qmd with `quarto render' via `compile'."
+  "Save and render the current .qmd with `quarto render', buffer hidden."
   (interactive)
   (save-buffer)
-  (let ((default-directory (file-name-directory buffer-file-name)))
-    (compile (concat "quarto render "
-                     (shell-quote-argument (file-name-nondirectory buffer-file-name))))))
+  (let ((default-directory (file-name-directory buffer-file-name))
+        (compilation-buffer-name-function
+         (lambda (_mode) "*quarto compilation*")))
+    (save-window-excursion
+      (compile (concat "quarto render "
+                       (shell-quote-argument (file-name-nondirectory buffer-file-name)))))))
+
+(defun mx-quarto-show-compilation ()
+  "Peek at the *quarto compilation* buffer."
+  (interactive)
+  (if (get-buffer "*quarto compilation*")
+      (switch-to-buffer-other-window "*quarto compilation*")
+    (message "No *quarto compilation* buffer yet")))
 #+end_src
 
 ** settings
 #+begin_src emacs-lisp
 (use-package quarto-mode
   :ensure t
-  :commands (quarto-preview quarto-render))
+  :commands (quarto-preview quarto-render)
+  :init
+  (setq compilation-scroll-output t)
+  :bind
+  ("C-c q" . mx-quarto-show-compilation))
 
 (use-package markdown-mode
   :ensure t
