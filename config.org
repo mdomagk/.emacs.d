@@ -1742,15 +1742,15 @@ Examples:
      ("\\\\\\(?:todo\\|discuss\\)\\|<!-- *TODO[^>]*-->" 0 font-lock-warning-face t))))
 
 (defun mx-quarto-render ()
-  "Save and render the current .qmd with `quarto render', buffer hidden."
+  "Save and render the current .qmd with `quarto render'."
   (interactive)
   (save-buffer)
   (let ((default-directory (file-name-directory buffer-file-name))
         (compilation-buffer-name-function
          (lambda (_mode) "*quarto compilation*")))
-    (save-window-excursion
-      (compile (concat "quarto render "
-                       (shell-quote-argument (file-name-nondirectory buffer-file-name)))))))
+    (pop-to-buffer
+     (compile (concat "quarto render "
+                      (shell-quote-argument (file-name-nondirectory buffer-file-name)))))))
 
 (defun mx-quarto-show-compilation ()
   "Peek at the *quarto compilation* buffer."
