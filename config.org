@@ -736,39 +736,60 @@ move cursor to brackets
 ** custom agenda views
 - https://blog.aaronbieber.com/2016/09/24/an-agenda-for-life-with-org-mode.html
 #+begin_src emacs-lisp
+(defvar mx-agenda-files-home (remove "~/.emacs.d/org/work.org" org-agenda-files))
+(defvar mx-agenda-files-work (remove "~/.emacs.d/org/home.org" org-agenda-files))
+
+(defun mx-entry-end ()
+  (save-excursion (or (outline-next-heading) (point-max))))
+
+(defun mx-habit-p ()
+  (member "habit" (org-get-tags)))
+
+(defun mx-skip-habit ()
+  (when (mx-habit-p) (mx-entry-end)))
+
+(defun mx-skip-not-habit ()
+  (unless (mx-habit-p) (mx-entry-end)))
+
+(defun mx-skip-not-focus ()
+  "Only prio A/B, no habits."
+  (when (or (mx-habit-p)
+            (not (looking-at-p ".*\\[#[AB]\\]")))
+    (mx-entry-end)))
+
+(defun mx-skip-not-pool ()
+  "Only entries without prio A/B, no habits."
+  (when (or (mx-habit-p)
+            (looking-at-p ".*\\[#[AB]\\]"))
+    (mx-entry-end)))
+
+(defun mx-agenda-blocks (files)
+  `((agenda ""
+            ((org-agenda-files ',files)
+             (org-agenda-skip-function #'mx-skip-habit)))
+    (agenda ""
+            ((org-agenda-files ',files)
+             (org-agenda-overriding-header "Habits")
+             (org-agenda-format-date "")
+             (org-agenda-time-grid nil)
+             (org-agenda-show-all-dates nil)
+             (org-agenda-skip-function #'mx-skip-not-habit)))
+    (todo "NEXT|TODO"
+          ((org-agenda-files ',files)
+           (org-agenda-overriding-header "Fokus")
+           (org-agenda-skip-function #'mx-skip-not-focus)
+           (org-agenda-sorting-strategy '(priority-down category-keep))))
+    (todo "NEXT"
+          ((org-agenda-files ',files)
+           (org-agenda-overriding-header "NEXT-Pool")
+           (org-agenda-skip-function #'mx-skip-not-pool)))
+    (todo "WAITING"
+          ((org-agenda-files ',files)
+           (org-agenda-overriding-header "Waiting")))))
 
 (setq org-agenda-custom-commands
-      '(
-        ("x" "Agenda at home"
-         ((agenda ""
-                  ((org-agenda-files (remove "~/.emacs.d/org/work.org" org-agenda-files))))
-          (todo "NEXT"
-                ((org-agenda-overriding-header "Tasks")
-                 (org-agenda-files (remove "~/.emacs.d/org/work.org" org-agenda-files))))
-          (todo "WAITING"
-                ((org-agenda-overriding-header "Waiting")
-                 (org-agenda-files (remove "~/.emacs.d/org/work.org" org-agenda-files))))))
-
-        ("X" "Tasks at home"
-         ((todo "NEXT|TODO|WAITING"
-                ((org-agenda-overriding-header "Tasks at Home")
-                 (org-agenda-files (remove "~/.emacs.d/org/work.org" org-agenda-files))))))
-
-        ("w" "Agenda at work"
-         ((agenda ""
-                  ((org-agenda-files (remove "~/.emacs.d/org/home.org" org-agenda-files))))
-          (todo "NEXT"
-                ((org-agenda-overriding-header "Tasks")
-                 (org-agenda-files (remove "~/.emacs.d/org/home.org" org-agenda-files))))
-          (todo "WAITING"
-                ((org-agenda-overriding-header "Waiting")
-                 (org-agenda-files (remove "~/.emacs.d/org/home.org" org-agenda-files))))))
-
-        ("W" "Tasks at Work"
-         ((todo "NEXT|TODO|WAITING"
-                ((org-agenda-overriding-header "Tasks at Work")
-                 (org-agenda-files (remove "~/.emacs.d/org/home.org" org-agenda-files))))))
-       ))
+      `(("x" "Agenda at home" ,(mx-agenda-blocks mx-agenda-files-home))
+        ("w" "Agenda at work" ,(mx-agenda-blocks mx-agenda-files-work))))
 #+end_src
 
 ** auto-update headers
@@ -1707,9 +1728,10 @@ Examples:
     ("tr" "read at point" R_tar_read_target_at_point)
     ("tf" "fnmate at point" fnmate)]
 
-   ["{Rmarkdown}"
+   ["{Rmarkdown/Quarto}"
     ("e" "polymode export" mx-polymode-export)
-    ("r" "render book" R_bookdown_render_book)]]
+    ("r" "render book" R_bookdown_render_book)
+    ("q" "quarto render" mx-quarto-render)]]
 
   [" "
    ("<f1>" "quit" transient-quit-one)
@@ -1720,7 +1742,7 @@ Examples:
 * polymode (Rmarkdown/Quarto)                                    :usepackage:
 - Pandoc (https://pandoc.org/)
 - Quarto (https://github.com/quarto-dev/quarto-emacs)
-** custom font-lock
+** custom functions
 #+begin_src emacs-lisp
 (defun mx-markdown-font-lock ()
   (font-lock-add-keywords
@@ -1739,13 +1761,35 @@ Examples:
      ("\\\\ref{[^}]+}" . font-lock-builtin-face)
      ;; own markers
      ("\\\\\\(?:todo\\|discuss\\)\\|<!-- *TODO[^>]*-->" 0 font-lock-warning-face t))))
+
+(defun mx-quarto-render ()
+  "Save and render the current .qmd with `quarto render'."
+  (interactive)
+  (save-buffer)
+  (let ((default-directory (file-name-directory buffer-file-name))
+        (compilation-buffer-name-function
+         (lambda (_mode) "*quarto compilation*")))
+    (pop-to-buffer
+     (compile (concat "quarto render "
+                      (shell-quote-argument (file-name-nondirectory buffer-file-name)))))))
+
+(defun mx-quarto-show-compilation ()
+  "Peek at the *quarto compilation* buffer."
+  (interactive)
+  (if (get-buffer "*quarto compilation*")
+      (switch-to-buffer-other-window "*quarto compilation*")
+    (message "No *quarto compilation* buffer yet")))
 #+end_src
 
 ** settings
 #+begin_src emacs-lisp
 (use-package quarto-mode
   :ensure t
-  :commands (quarto-preview quarto-render))
+  :commands (quarto-preview quarto-render)
+  :init
+  (setq compilation-scroll-output t)
+  :bind
+  ("C-c q" . mx-quarto-show-compilation))
 
 (use-package markdown-mode
   :ensure t
@@ -1785,6 +1829,7 @@ Examples:
     (delete-other-windows)))
 #+end_src
 
+
 * symbol-overlay                                                 :usepackage:
 makes M-n and M-p look for and M-h highlight the symbol at point
 #+begin_src emacs-lisp
@@ -1819,12 +1864,8 @@ makes M-n and M-p look for and M-h highlight the symbol at point
   :custom
   (org-roam-directory "~/.emacs.d/org-roam")
   (org-roam-capture-templates
-      '(("f" "fleeting" plain "%?"
-         :if-new (file+head "fleeting/${title}.org" "#+title: ${title}\n")
-         :immediate-finish t
-         :unnarrowed t)
-        ("p" "permanent" plain "%?"
-         :if-new (file+head "permanent/${title}.org" "#+title: ${title}\n")
+      '(("c" "concept" plain "%?"
+         :if-new (file+head "concepts/${title}.org" "#+title: ${title}\n")
          :immediate-finish t
          :unnarrowed t)
         ("r" "reference" plain "%?"
