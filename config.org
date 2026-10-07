@@ -49,7 +49,7 @@ M-x getenv <RET> PATH <RET>
   (let ((mypaths
          '("C:/Program Files (x86)/GNU GnuPG"
            ;;"C:/Program Files/Graphviz/bin"
-           ;;"C:/Program Files/Quarto/bin"
+           "c:/Users/mdoma/AppData/Local/Programs/Quarto/bin"
            "C:/Program Files/R/R-4.6.1/bin/x64"
            "C:/Program Files/git/bin"
            "C:/texlive/2023/bin/windows"
