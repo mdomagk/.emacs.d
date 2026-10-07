@@ -49,12 +49,13 @@ M-x getenv <RET> PATH <RET>
   (let ((mypaths
          '("C:/Program Files (x86)/GNU GnuPG"
            ;;"C:/Program Files/Graphviz/bin"
-           "c:/Users/mdoma/AppData/Local/Programs/Quarto/bin"
            "C:/Program Files/R/R-4.6.1/bin/x64"
            "C:/Program Files/git/bin"
            "C:/texlive/2023/bin/windows"
            "C:/Users/mdoma/AppData/Local/Pandoc"
-           "C:/Max/Ledger_312")))
+           "C:/Users/mdoma/AppData/Local/Programs/Quarto/bin"
+           "C:/Max/Ledger_312"
+           "C:/Windows/System32")))
     (setenv "PATH" (mapconcat 'identity mypaths ";"))
     (setq exec-path (append mypaths (list "." exec-directory))))
   (set-frame-font "Consolas-10" nil t)
