@@ -1211,6 +1211,14 @@ https://oremacs.com/swiper/
    ("C-j" . counsel-org-goto))) ;; counsel-org-agenda-headlines
 #+end_src
 
+* smex (M-x Historie fuer counsel)                               :usepackage:
+counsel-M-x sortiert mit smex nach Haeufigkeit und zuletzt benutzt.
+Ablage ~/.smex-items, pro Rechner (in Nextcloud ausgeschlossen).
+#+begin_src emacs-lisp
+(use-package smex
+  :ensure t)
+#+end_src
+
 * multiple-cursors                                               :usepackage:
 #+begin_src emacs-lisp
 (use-package multiple-cursors
