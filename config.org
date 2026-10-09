@@ -1575,7 +1575,7 @@ add: .libPaths("D:/Daten/R/Library")
     "switch" "function" "return" "on.exit" "stop" ".Defunct" "tryCatch"
     "withRestarts" "invokeRestart"
     "recover" "browser"
-    "tar_target" "tar_render" "tar_file" "tar_map" "tar_combine")
+    "tar_target" "tar_render" "tar_file" "tar_map" "tar_combine" "tar_quarto")
   "Reserved words or special functions in the R language.")
 
 ;; https://stackoverflow.com/a/67654699
