@@ -16,6 +16,7 @@ M-x getenv <RET> PATH <RET>
 
 ** mx-use-theme
 #+begin_src emacs-lisp
+;;; config.el --- tangled from config.org  -*- lexical-binding: t; -*-
 (defvar mx-use-theme "leuven")
 #+end_src
 
@@ -1244,7 +1245,7 @@ Ablage ~/.smex-items, pro Rechner (in Nextcloud ausgeschlossen).
 (use-package hl-todo
        :ensure t
        :custom-face
-       (hl-todo ((t (:inherit hl-todo :italic t))))
+       (hl-todo ((t (:weight bold :italic t))))
        :hook ((prog-mode . hl-todo-mode)
               (yaml-mode . hl-todo-mode))
        :init

@@ -1,4 +1,4 @@
-;;; init.el
+;;; init.el  -*- lexical-binding: t; -*-
 
 (org-babel-load-file
  (expand-file-name
