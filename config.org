@@ -1800,7 +1800,9 @@ Examples:
   :init
   (setq-default markdown-enable-math t)
   :config
-  (custom-set-faces '(markdown-italic-face ((t (:slant normal))))))
+  (custom-set-faces
+   '(markdown-italic-face ((t (:slant normal))))
+   '(markdown-math-face ((t (:inherit font-lock-type-face))))))
 
 (add-hook 'markdown-mode-hook #'mx-markdown-font-lock)
 
