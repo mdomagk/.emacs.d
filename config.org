@@ -1756,12 +1756,7 @@ Examples:
 (defun mx-markdown-font-lock ()
   (font-lock-add-keywords
    nil
-   '(;; latex commands
-     ("\\\\[[:alpha:]]+" . font-lock-type-face)
-     ;; display math delimiters, incl. quarto label: $$ {#eq-x}
-     ("^\\$\\$\\(?: *{#[^}]+}\\)?$" . font-lock-type-face)
-     ;; inline math, not across backticks or lines
-     ("\\$[^$`\n]+?\\$" . font-lock-type-face)
+   '(;; math ($..$, $$..$$) is handled by `markdown-enable-math'
      ;; citations [@key] and quarto crossrefs @fig-x / @tbl-x / @eq-x / @sec-x
      ("\\[@[^]]+\\]" . font-lock-builtin-face)
      ("@\\(?:fig\\|tbl\\|eq\\|sec\\)-[[:alnum:]_-]+" . font-lock-builtin-face)
@@ -1803,14 +1798,17 @@ Examples:
 (use-package markdown-mode
   :ensure t
   :init
-  (setq markdown-enable-math nil) ;; nil t
+  (setq-default markdown-enable-math t)
   :config
   (custom-set-faces '(markdown-italic-face ((t (:slant normal))))))
 
 (add-hook 'markdown-mode-hook #'mx-markdown-font-lock)
 
 (use-package poly-markdown
-  :ensure t)
+  :ensure t
+  :init
+  ;; no LaTeX-mode chunks for $..$ / $$..$$, markdown-mode fontifies math
+  (setq poly-markdown-enable-latex-math nil))
 
 (use-package poly-R
   :ensure t)
