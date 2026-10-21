@@ -619,6 +619,17 @@ move cursor to brackets
           (lambda ()
             (visual-line-mode -1)
             (toggle-truncate-lines 1)))
+
+;; keep the agenda scrolled where it was when redoing it (g / r)
+(defun mx-org-agenda-keep-window-start (orig &rest args)
+  (let ((start-line (line-number-at-pos (window-start))))
+    (apply orig args)
+    (set-window-start nil (save-excursion
+                            (goto-char (point-min))
+                            (forward-line (1- start-line))
+                            (point)))))
+
+(advice-add 'org-agenda-redo :around #'mx-org-agenda-keep-window-start)
 #+end_src
 
 ** org-refile
