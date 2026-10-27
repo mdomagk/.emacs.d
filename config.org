@@ -20,6 +20,12 @@ M-x getenv <RET> PATH <RET>
 (defvar mx-use-theme "leuven")
 #+end_src
 
+** DirectWrite aus (Emacs 31, GDI-Rendering wie in 29.4)
+#+begin_src emacs-lisp
+(when (boundp 'w32-inhibit-dwrite)
+  (setq w32-inhibit-dwrite t))
+#+end_src
+
 ** IEEH (Win10) EVMI80
 #+begin_src emacs-lisp
 (when (string-equal system-name "EVMI80")
