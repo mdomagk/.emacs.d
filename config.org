@@ -1148,93 +1148,85 @@ Set up ~package~ and ~use-package~.
 
 
 
-* ivy                                                            :usepackage:
-- http://oremacs.com/swiper/
-- https://sam217pa.github.io/2016/09/13/from-helm-to-ivy/
+* vertico (Completion-UI, ersetzt ivy)                          :usepackage:
+- https://github.com/minad/vertico
 #+begin_src emacs-lisp
-(use-package ivy
+(use-package vertico
   :ensure t
-  ;; :custom-face
-    ;; (ivy-current-match ((t :background "#FFE8FF" :foreground "#670034" :weight bold)))
-    ;; (ivy-virtual ((t :foreground #7F7F7F)))
-    ;; (ivy-minibuffer-match-face-2 ((t :background "#dddddd" :weight bold)))
-  :config
-  (ivy-mode 1)
-  (setq ivy-display-style ' fancy) ; 'fancy ' plain nil
-  ;; use recentf and bookmark files
-  (setq ivy-use-virtual-buffers t)
-  ;; no "^" for counsel-M-x etc.
-  (setq ivy-initial-inputs-alist nil)
-  ;; No extra directories "./" and "../" in find-file
-  (setq ivy-extra-directories '("./"))
-  ;; ;; Always ignore buffers set in `ivy-ignore-buffers'
-  ;; (setq ivy-use-ignore-default 'always)
-  ;; ;; Ignore some buffers in `ivy-switch-buffer'
-  ;; (setq ivy-ignore-buffers mx-skippable-buffers)
-  ;; custom faces for ivy-switch-buffer
-  ;; M-x list-faces-display
-  ;; (setq ivy-switch-buffer-faces-alist
-  ;;       '((dired-mode . ivy-subdir)
-  ;;         (org-mode . ivy-org)))
-  ;; minibuffer
-  (bind-key "C-SPC" 'ivy-restrict-to-matches ivy-minibuffer-map)
-  ;; minibuffer - scrolling - up
-  (bind-key "<next>" 'ivy-scroll-up-command ivy-minibuffer-map)
-  (bind-key "<right>" 'ivy-scroll-up-command ivy-minibuffer-map)
-    ;; minibuffer - scrolling - down
-  (bind-key "<prior>" 'ivy-scroll-down-command ivy-minibuffer-map)
-  (bind-key "<left>" 'ivy-scroll-down-command ivy-minibuffer-map)
-  (bind-key "C-m" 'ivy-alt-done ivy-minibuffer-map)
-  (setq ivy-count-format "(%d/%d) ")
-  ;; allow input not in order while searching
-  (setq ivy-re-builders-alist '((t . ivy--regex-ignore-order))))
-#+end_src
-
-* counsel (for ivy)                                              :usepackage:
-https://oremacs.com/swiper/
-#+begin_src emacs-lisp
-
-;; dont truncate lines in minibuffer
-;; to fully see long file names with counsel-find-file
-(add-hook 'minibuffer-setup-hook
-      (lambda () (setq truncate-lines nil)))
-
-(use-package counsel
-  :ensure t
-  :custom-face
-  (counsel-outline-default ((t (:inherit 'default))))
-  :config
-  ;; disable opening of temporary buffers in counsel-switch-buffer
-  (setq counsel-switch-buffer-preview-virtual-buffers nil)
-  ;; ignore . files or temporary files
-  (setq counsel-find-file-ignore-regexp
-        (concat
-         ;; File names beginning with # or .
-         "\\(?:\\`[#.]\\)"
-         ;; File names ending with # or ~
-         "\\|\\(?:\\`.+?[#~]\\'\\)"
-         ;; File names ending with .aux
-         "\\|\\.aux\\'"))
+  :init
+  (vertico-mode 1)
   :bind
-  (("C-f" . swiper) ; swiper-isearch
-   ("<f2>" . ivy-resume)
-   ("M-y" . counsel-yank-pop)
-   ("M-x" . counsel-M-x)
-   ("C-b" . counsel-switch-buffer)
-   ("C-r" . counsel-recentf)
-   ("C-x C-r" . counsel-recentf) ;; counsel-buffer-or-recentf
-   ("C-x C-f" . counsel-find-file)
-   :map org-mode-map
-   ("C-c C-j" . counsel-org-goto)
-   ("C-j" . counsel-org-goto))) ;; counsel-org-agenda-headlines
+  ("<f2>" . vertico-repeat)) ; wie ivy-resume
+
+(add-hook 'minibuffer-setup-hook #'vertico-repeat-save)
+
+;; RET/DEL in find-file wie ivy-alt-done: Verzeichnisse betreten/verlassen
+(use-package vertico-directory
+  :ensure nil
+  :after vertico
+  :bind (:map vertico-map
+              ("RET" . vertico-directory-enter)
+              ("DEL" . vertico-directory-delete-char)
+              ("M-DEL" . vertico-directory-delete-word)))
+
+(use-package vertico-repeat
+  :ensure nil
+  :after vertico)
+
+;; M-x Historie und Sortierung nach Haeufigkeit (ersetzt smex)
+;; Ablage pro Rechner in ~ (nicht in Nextcloud/.emacs.d)
+(use-package savehist
+  :ensure nil
+  :init
+  (setq savehist-file (expand-file-name ".savehist" "~"))
+  (savehist-mode 1))
 #+end_src
 
-* smex (M-x Historie fuer counsel)                               :usepackage:
-counsel-M-x sortiert mit smex nach Haeufigkeit und zuletzt benutzt.
-Ablage ~/.smex-items, pro Rechner (in Nextcloud ausgeschlossen).
+* orderless (Suche in beliebiger Reihenfolge)                    :usepackage:
 #+begin_src emacs-lisp
-(use-package smex
-  :ensure t)
+(use-package orderless
+  :ensure t
+  :custom
+  (completion-styles '(orderless basic))
+  (completion-category-overrides '((file (styles basic partial-completion)))))
+#+end_src
+
+* marginalia (Zusatzinfos im Minibuffer)                         :usepackage:
+#+begin_src emacs-lisp
+(use-package marginalia
+  :ensure t
+  :init
+  (marginalia-mode 1))
+#+end_src
+
+* consult (ersetzt counsel/swiper)                               :usepackage:
+- https://github.com/minad/consult
+#+begin_src emacs-lisp
+(use-package consult
+  :ensure t
+  :bind
+  (("C-f" . consult-line)
+   ("M-y" . consult-yank-pop)
+   ("C-b" . consult-buffer)
+   ("C-r" . consult-recent-file)
+   ("C-x C-r" . consult-recent-file)
+   :map org-mode-map
+   ("C-c C-j" . consult-org-heading)
+   ("C-j" . consult-org-heading)))
+#+end_src
+
+* embark (Aktionen auf Kandidaten)                               :usepackage:
+- C-. auf einem Kandidaten/Symbol: Menue mit Aktionen
+#+begin_src emacs-lisp
+(use-package embark
+  :ensure t
+  :bind
+  (("C-." . embark-act)
+   ("C-h B" . embark-bindings)))
+
+(use-package embark-consult
+  :ensure t
+  :hook (embark-collect-mode . consult-preview-at-point-mode))
 #+end_src
 
 * multiple-cursors                                               :usepackage:
@@ -1721,10 +1713,10 @@ Examples:
    ("ox" "ql home" mx-org-ql-search-priority-in-home)]
 
    ["Files"
-    ("ff" "find" counsel-git)
-    ("fd" "dired" counsel-find-file)
-    ("fr" "recentf" counsel-buffer-or-recentf)
-    ("fb" "bookmark" counsel-bookmark)]
+    ("ff" "find" project-find-file)
+    ("fd" "dired" find-file)
+    ("fr" "recentf" consult-recent-file)
+    ("fb" "bookmark" consult-bookmark)]
 
    ["Buffer"
     ("bk" "kill" mx-kill-buffer)
@@ -1736,9 +1728,9 @@ Examples:
     ("ww" "new" make-frame)]
 
    ["Describe"
-    ("dk" "keybind" counsel-descbinds)
-    ("df" "function" counsel-describe-function)
-    ("dv" "variable" counsel-describe-variable)]]
+    ("dk" "keybind" describe-bindings)
+    ("df" "function" describe-function)
+    ("dv" "variable" describe-variable)]]
 
   ;; [["Git"
   ;;   ("g" "magit" magit-status)]
