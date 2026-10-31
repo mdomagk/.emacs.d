@@ -1151,12 +1151,23 @@ Set up ~package~ and ~use-package~.
 * vertico (Completion-UI, ersetzt ivy)                          :usepackage:
 - https://github.com/minad/vertico
 #+begin_src emacs-lisp
+(defun mx-vertico-down-5 ()
+  (interactive)
+  (vertico-next 5))
+
+(defun mx-vertico-up-5 ()
+  (interactive)
+  (vertico-previous 5))
+
 (use-package vertico
   :ensure t
   :init
   (vertico-mode 1)
   :bind
-  ("<f2>" . vertico-repeat)) ; wie ivy-resume
+  (("<f2>" . vertico-repeat) ; wie ivy-resume
+   :map vertico-map
+   ("<right>" . mx-vertico-down-5)
+   ("<left>" . mx-vertico-up-5)))
 
 (add-hook 'minibuffer-setup-hook #'vertico-repeat-save)
 
@@ -1173,6 +1184,16 @@ Set up ~package~ and ~use-package~.
   :ensure nil
   :after vertico)
 
+;; find-file: Prompt vorausgewaehlt, RET nimmt die Eingabe statt des ersten
+;; Treffers (Pfeil runter waehlt einen Treffer aus)
+(use-package vertico-multiform
+  :ensure nil
+  :after vertico
+  :custom
+  (vertico-multiform-categories '((file (vertico-preselect . prompt))))
+  :config
+  (vertico-multiform-mode 1))
+
 ;; M-x Historie und Sortierung nach Haeufigkeit (ersetzt smex)
 ;; Ablage pro Rechner in ~ (nicht in Nextcloud/.emacs.d)
 (use-package savehist
@@ -1187,8 +1208,8 @@ Set up ~package~ and ~use-package~.
 (use-package orderless
   :ensure t
   :custom
-  (completion-styles '(orderless basic))
-  (completion-category-overrides '((file (styles basic partial-completion)))))
+  ;; auch bei Dateinamen: Teilwoerter in beliebiger Reihenfolge, nicht nur Praefix
+  (completion-styles '(orderless basic)))
 #+end_src
 
 * marginalia (Zusatzinfos im Minibuffer)                         :usepackage:
@@ -1196,7 +1217,10 @@ Set up ~package~ and ~use-package~.
 (use-package marginalia
   :ensure t
   :init
-  (marginalia-mode 1))
+  (marginalia-mode 1)
+  :config
+  ;; keine Dateirechte (-rw-rw-rw-) bei Dateien anzeigen
+  (advice-add 'marginalia--file-modes :override #'ignore))
 #+end_src
 
 * consult (ersetzt counsel/swiper)                               :usepackage:
@@ -1212,7 +1236,12 @@ Set up ~package~ and ~use-package~.
    ("C-x C-r" . consult-recent-file)
    :map org-mode-map
    ("C-c C-j" . consult-org-heading)
-   ("C-j" . consult-org-heading)))
+   ("C-j" . consult-org-heading))
+  :config
+  ;; keine Vorschau (Datei/Buffer oeffnen) beim Bewegen ueber Kandidaten
+  (consult-customize consult-buffer consult-recent-file consult-bookmark
+                     consult-project-buffer
+                     :preview-key nil))
 #+end_src
 
 * embark (Aktionen auf Kandidaten)                               :usepackage:
