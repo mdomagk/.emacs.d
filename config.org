@@ -1195,11 +1195,11 @@ Set up ~package~ and ~use-package~.
   (vertico-multiform-mode 1))
 
 ;; M-x Historie und Sortierung nach Haeufigkeit (ersetzt smex)
-;; Ablage pro Rechner in ~ (nicht in Nextcloud/.emacs.d)
+;; Ablage in .emacs.d, ".savehist" ist in Nextcloud vom Sync ausgeschlossen
 (use-package savehist
   :ensure nil
   :init
-  (setq savehist-file (expand-file-name ".savehist" "~"))
+  (setq savehist-file (expand-file-name ".savehist" user-emacs-directory))
   (savehist-mode 1))
 #+end_src
 
