@@ -1184,15 +1184,6 @@ Set up ~package~ and ~use-package~.
   :ensure nil
   :after vertico)
 
-;; find-file: Prompt vorausgewaehlt, RET nimmt die Eingabe statt des ersten
-;; Treffers (Pfeil runter waehlt einen Treffer aus)
-(use-package vertico-multiform
-  :ensure nil
-  :after vertico
-  :custom
-  (vertico-multiform-categories '((file (vertico-preselect . prompt))))
-  :config
-  (vertico-multiform-mode 1))
 
 ;; M-x Historie und Sortierung nach Haeufigkeit (ersetzt smex)
 ;; Ablage in .emacs.d, ".savehist" ist in Nextcloud vom Sync ausgeschlossen
