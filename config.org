@@ -847,27 +847,16 @@ move cursor to brackets
 
  ("9p" "paint::paint(@@)")
 
- ("8png" "png(filename = \"@@.png\", units = \"cm\", res = 300, width = 16, height = 10)\n\ndev.off()")
+ ;; multi-line blocks moved to yasnippet (see * yasnippet):
+ ;; 8png -> png, 8rr -> chunk, 8eq -> eq, 8c -> hdr, 8nn -> notes,
+ ;; 8cc -> cols, 8R -> srcr, 8Q -> quote
 
  ("8r" "`r @@`")
- ("8rr" "```{r}\n@@\n```")
  ("8ra" "&rarr;")
-
- ("8eq" "\\begin{equation}\n@@\n\\end{equation}")
-
- ("8c" "## ============================================================================= \n## @@\n## =============================================================================")
 
  ("8n" "&nbsp;")
 
  ("8f" "(\\(x) @@)()")
-
- ("8nn" "::: notes\n\n@@\n\n:::")
-
- ("8cc" ":::::: {.columns}\n::: {.column}\n\n@@\n\n:::\n:::{.column}\n\n\n\n:::\n::::::")
-
- ("8R" "#+begin_src R\n@@\n#+end_src")
-
- ("8Q" "#+begin_quote\n@@\n#+end_quote")
 
  ("8t" "library(tidyverse)")
 
@@ -2033,6 +2022,43 @@ makes M-n and M-p look for and M-h highlight the symbol at point
   (company-idle-delay 0.3)
   ;; Number the candidates (use M-1, M-2 etc to select completions).
   (company-show-numbers t))
+#+end_src
+
+* yasnippet                                                      :usepackage:
+- snippets with TAB-able fields: type key, press TAB, TAB jumps to next field
+- snippets are defined right here (no snippets/ directory), so copying
+  config.org is enough
+- .qmd/.Rmd text parts are markdown-mode, R chunks are ess-r-mode
+- template syntax: $1 $2 = fields, ${1:default} = field with default,
+  $0 = final cursor position, a literal $ is written \\$
+- simple one-line replacements stay in the abbrev table
+- https://github.com/joaotavora/yasnippet
+#+begin_src emacs-lisp
+(use-package yasnippet
+  :ensure t
+  :config
+  ;; no snippet directories, everything is defined below.
+  ;; yas-global-mode would run yas-reload-all, which prompts for a
+  ;; directory when yas-snippet-dirs is empty, so drop that hook.
+  (setq yas-snippet-dirs nil)
+  (remove-hook 'yas-global-mode-hook #'yas--global-mode-reload-with-jit-maybe)
+  (yas-global-mode 1)
+
+  ;; each entry: (KEY TEMPLATE NAME)
+  (yas-define-snippets 'markdown-mode
+   '(("slide" "## ${1:Titel}\n\n$0" "slide")
+     ("cols" ":::::: {.columns}\n::: {.column width=\"${1:50}%\"}\n\n$2\n\n:::\n::: {.column width=\"${3:50}%\"}\n\n$4\n\n:::\n::::::\n$0" "two columns")
+     ("notes" "::: {.notes}\n\n$1\n\n:::\n$0" "speaker notes")
+     ("chunk" "\\`\\`\\`{r}\n$1\n\\`\\`\\`\n$0" "R chunk")
+     ("eq" "\\begin{equation}\n$1\n\\end{equation}\n$0" "equation")))
+
+  (yas-define-snippets 'ess-r-mode
+   '(("png" "png(filename = \"$1.png\", units = \"cm\", res = 300, width = ${2:16}, height = ${3:10})\n$0\ndev.off()" "png device")
+     ("hdr" "## =============================================================================\n## $1\n## =============================================================================\n$0" "section header")))
+
+  (yas-define-snippets 'org-mode
+   '(("srcr" "#+begin_src R\n$1\n#+end_src\n$0" "R src block")
+     ("quote" "#+begin_quote\n$1\n#+end_quote\n$0" "quote block"))))
 #+end_src
 
 * which-key                                                      :usepackage:
