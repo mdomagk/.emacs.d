@@ -1216,6 +1216,7 @@ Set up ~package~ and ~use-package~.
    ("C-b" . consult-buffer)
    ("C-r" . consult-recent-file)
    ("C-x C-r" . consult-recent-file)
+   ("C-j" . consult-outline)
    :map org-mode-map
    ("C-c C-j" . consult-org-heading)
    ("C-j" . consult-org-heading))
@@ -1822,6 +1823,9 @@ Examples:
   :ensure t
   :init
   (setq-default markdown-enable-math t)
+  :bind (:map markdown-mode-map
+              ("M-n" . markdown-outline-next)
+              ("M-p" . markdown-outline-previous))
   :config
   (custom-set-faces
    '(markdown-italic-face ((t (:slant normal))))
