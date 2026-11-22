@@ -67,7 +67,7 @@ M-x getenv <RET> PATH <RET>
            "C:/Windows/System32")))
     (setenv "PATH" (mapconcat 'identity mypaths ";"))
     (setq exec-path (append mypaths (list "." exec-directory))))
-  (set-frame-font "Consolas-10" nil t)
+  (set-frame-font "Aporetic Sans Mono-10" nil t)
   (setq mx-use-theme "leuven")
 )
 #+end_src
@@ -1313,6 +1313,15 @@ Set up ~package~ and ~use-package~.
   ;; `modus-themes-load-random-light').
   (modus-themes-load-theme 'ef-owl))
   #+end_src
+
+* modus-themes                                                   :usepackage:
+#+begin_src emacs-lisp
+(when (string-equal mx-use-theme "modus")
+  (set-frame-font "Aporetic Sans Mono-10" nil t)
+  (set-face-attribute 'fixed-pitch nil :family "Aporetic Sans Mono")
+  (setq modus-themes-italic-constructs nil)
+  (load-theme 'modus-operandi-tinted t))
+#+end_src
 
 * leuven-theme                                                   :usepackage:
 #+begin_src emacs-lisp
