@@ -1689,22 +1689,65 @@ add: .libPaths("D:/Daten/R/Library")
   (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode)))
 #+end_src
 
-* DISABLED magit                                                 :usepackage:
+* magit (Git-Oberfläche)                                         :usepackage:
+- https://magit.vc/manual/
+- Navigation: n/p Abschnitt, M-n/M-p gleiche Ebene, ^ hoch, TAB klappen,
+  1-4 Ebenen, s/u stage/unstage (auch Region), k verwerfen, d Diff-Menü,
+  l l Log, e Ediff, C-c M-g Datei-Menü
 #+begin_src emacs-lisp
-;;(use-package magit
-;;  ;;:ensure t
-;;  :disabled t
-;;  ;;:config
-;;  ;;;; update mode-line git status more often
-;;  ;;(setq auto-revert-check-vc-info t)
-;;  ;;;; check every 5 seconds
-;;  ;;(setq auto-revert-interval 5)
-;;  )
+(use-package magit
+  :ensure t
+  :bind (("C-x g" . magit-status)
+         ("C-c M-g" . magit-file-dispatch))
+  :config
+  ;; Windows: git.exe direkt statt cmd/git.exe-Wrapper (schneller)
+  (when (eq system-type 'windows-nt)
+    (let ((git "C:/Program Files/Git/bin/git.exe"))
+      (when (file-executable-p git)
+        (setq magit-git-executable git))))
+
+  ;; Diff-Farben nur hinter dem Text statt über die ganze Fensterbreite
+  (dolist (face '(magit-diff-added magit-diff-added-highlight
+                  magit-diff-removed magit-diff-removed-highlight
+                  magit-diff-context-highlight))
+    (set-face-attribute face nil :extend nil))
+
+  ;; Performance (Windows): Status-Buffer nur aktualisieren, wenn er sichtbar ist
+  (setq magit-refresh-status-buffer nil)
+
+  ;; Teure Abschnitte im Status-Buffer weglassen
+  (remove-hook 'magit-status-headers-hook #'magit-insert-tags-header)
+  (remove-hook 'magit-status-sections-hook #'magit-insert-unpushed-to-pushremote)
+  (remove-hook 'magit-status-sections-hook #'magit-insert-unpulled-from-pushremote)
+
+  ;; Status-Buffer im aktuellen Fenster öffnen, Diffs daneben
+  (setq magit-display-buffer-function
+        #'magit-display-buffer-same-window-except-diff-v1)
+
+  ;; Nach dem Commit nicht nach dem Speichern fragen, einfach speichern
+  (setq magit-save-repository-buffers 'dontask))
+#+end_src
+
+* diff-hl (Git-Änderungen im Fringe)                             :usepackage:
+- C-x v ] / C-x v [ nächster/vorheriger Hunk, C-x v = Hunk anzeigen
+#+begin_src emacs-lisp
+;; ohne :after magit, damit diff-hl schon beim Start in jedem Buffer aktiv ist
+(use-package diff-hl
+  :ensure t
+  :hook ((magit-pre-refresh  . diff-hl-magit-pre-refresh)
+         (magit-post-refresh . diff-hl-magit-post-refresh)
+         (dired-mode . diff-hl-dired-mode))
+  :init
+  (global-diff-hl-mode 1)
+  :config
+  ;; Änderungen schon vor dem Speichern anzeigen
+  (diff-hl-flydiff-mode 1))
 #+end_src
 
 * transient (transient keybinds)                                 :usepackage:
-comes with magit
-Manuak:
+kommt mit magit; :ensure t holt eine aktuelle Version aus dem Archiv
+statt der in Emacs eingebauten (magit braucht meist eine neuere)
+Manual:
 - https://github.com/magit/transient/blob/master/docs/transient.org
 Examples:
 - https://www.reddit.com/r/emacs/comments/mx6xs2/transient_vs_hydra/
@@ -1751,10 +1794,11 @@ Examples:
    ["Describe"
     ("dk" "keybind" describe-bindings)
     ("df" "function" describe-function)
-    ("dv" "variable" describe-variable)]]
+    ("dv" "variable" describe-variable)]
 
-  ;; [["Git"
-  ;;   ("g" "magit" magit-status)]
+   ["Git"
+    ("gg" "status" magit-status)
+    ("gf" "datei" magit-file-dispatch)]]
 
   [["{targets} run"
     ("tm" "make" R_tar_make)
