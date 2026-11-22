@@ -1704,7 +1704,10 @@ add: .libPaths("D:/Daten/R/Library")
   (when (eq system-type 'windows-nt)
     (let ((git "C:/Program Files/Git/bin/git.exe"))
       (when (file-executable-p git)
-        (setq magit-git-executable git))))
+        (setq magit-git-executable git)))
+    ;; Emacs setzt HOME auf AppData/Roaming, Git findet dann die
+    (setenv "GIT_CONFIG_GLOBAL"
+            (expand-file-name ".gitconfig" (getenv "USERPROFILE"))))
 
   ;; Diff-Farben nur hinter dem Text statt über die ganze Fensterbreite
   (dolist (face '(magit-diff-added magit-diff-added-highlight
