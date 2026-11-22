@@ -1876,6 +1876,11 @@ Examples:
   (require 'poly-markdown)
   (require 'poly-R)
   :config
+  ;; M-n frei für markdown-outline-next: polymode-Präfix auf C-c M-n,
+  ;; poly-R belegt zusätzlich M-n M-m in seiner eigenen Map
+  (define-key polymode-minor-mode-map (kbd "M-n") nil)
+  (define-key polymode-minor-mode-map (kbd "C-c M-n") 'polymode-map)
+  (define-key poly-markdown+r-mode-map (kbd "M-n") nil)
   (add-to-list 'auto-mode-alist '("\\.md\\'"  . poly-gfm-mode))
   (add-to-list 'auto-mode-alist '("\\.Rmd\\'" . poly-markdown+r-mode))
   (add-to-list 'auto-mode-alist '("\\.qmd\\'" . poly-markdown+r-mode))
